@@ -1,0 +1,32 @@
+version: '3.2'
+services:
+  webapp-25-homologation-nginx:
+    image: terrabrasilis/webapp-25-homologation-nginx:v01
+    ports:
+      - "80"
+    networks:
+      - proxy
+      - frontend_webapp
+    depends_on:
+      - webapp-25-homologation
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+        
+  webapp-25-homologation:
+    image: terrabrasilis/terrabrasilis-webapp:v2.5-homologation
+    networks:
+      - frontend_webapp
+    ports:
+      - 80
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+
+networks:
+  proxy:
+    external: true
+  frontend_webapp:
+    external: false

@@ -1,0 +1,5 @@
+{
+    "configs" : {
+        "proxy" : "http://terrabrasilis2.dpi.inpe.br:7000/cgi-bin/proxy.cgi?url="
+    }
+}

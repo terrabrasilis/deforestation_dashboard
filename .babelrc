@@ -1,0 +1,9 @@
+{
+  "presets": [
+    ["env", {
+      "targets": {
+        "browserslist": [ ">0.25%", "last 2 years"]
+      }
+    }]
+  ]
+}
