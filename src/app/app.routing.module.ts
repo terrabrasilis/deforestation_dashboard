@@ -13,7 +13,7 @@ const routes: Routes = [
     { path: 'dashboard/deforestation/biomes/:biome/:type', component: DeforestationOptionsComponent },
     {
         path: "**",
-        redirectTo: "/map/deforestation",
+        redirectTo: "dashboard/deforestation/biomes/legal_amazon/rates",
         pathMatch: "full"
     }
 ];
