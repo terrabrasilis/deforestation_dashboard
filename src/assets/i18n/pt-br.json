@@ -219,6 +219,13 @@
                 "cerrado": "Escolha os estados do Cerrado",
                 "legal_amazon": "Escolha os estados da Amazônia Legal",
                 "amazon": "Escolha os estados da Amazônia"
+            },
+            "config": {
+                "title": "Configurações para gerar o CSV",
+                "fraction-chooser": "Separador decimal:",
+                "accent-chooser": "Sem acentuação:",
+                "point":"Ponto",
+                "comma":"Vírgula"
             }
         },
         "title": {

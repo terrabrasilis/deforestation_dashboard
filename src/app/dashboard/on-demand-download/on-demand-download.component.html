@@ -11,6 +11,12 @@
         <div *ngFor="let state of states" class="checkbox">
           <label><input type="checkbox" [value]="state"> {{ state }} </label>
         </div>
+        <div class="csv-config">
+          <h5>{{ 'dashboard.on-demand.config.title' | translate }}</h5>
+          {{ 'dashboard.on-demand.config.fraction-chooser' | translate }} <input type="radio" name="fraction" value="point" checked> {{ 'dashboard.on-demand.config.point' | translate }} <input type="radio" name="fraction" value="comma"> {{ 'dashboard.on-demand.config.comma' | translate }}
+          <br>
+          {{ 'dashboard.on-demand.config.accent-chooser' | translate }} <input type="checkbox" name="accent">
+        </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" (click)="clickHandler()">{{ 'dashboard.on-demand.download' | translate }}</button>

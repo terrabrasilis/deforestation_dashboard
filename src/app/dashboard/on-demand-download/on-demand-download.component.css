@@ -1,3 +1,7 @@
+.csv-config{
+    border-top: 1px solid #006950;
+    margin-top: 10px;
+}
 #search_lois{
     color: inherit;
     text-decoration: none;

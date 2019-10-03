@@ -213,6 +213,13 @@
                 "cerrado": "Choose the Cerrado states",
                 "legal_amazon": "Choose the Legal Amazon states",
                 "amazon": "Choose the Amazon states"
+            },
+            "config": {
+                "title": "Configurations to generate the CSV",
+                "fraction-chooser": "Decimal separator:",
+                "accent-chooser": "No accents:",
+                "point":"Point",
+                "comma":"Comma"
             }
         },
         "title": {
