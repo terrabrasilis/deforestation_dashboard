@@ -86,6 +86,7 @@ export class DeforestationOptionsComponent implements OnInit  {
   tableLess: any;
   tableTotal: any;
   initTab: any;
+  ctrlSto: any;
 
   private biomeSubscription: ISubscription;
   private typeSubscription: ISubscription;
@@ -208,6 +209,9 @@ export class DeforestationOptionsComponent implements OnInit  {
     
     // get data 
     this.getData(this.selectedClass);
+
+    // used to call functions ouside Angular
+    window["dashboard"]=function(){return self;};
     
   }
 
@@ -846,8 +850,6 @@ export class DeforestationOptionsComponent implements OnInit  {
       
     var barChartWidth = $('#bar-chart')[0].offsetWidth;
     var barChartHeight = $('#bar-chart')[0].offsetHeight;
-    
-    var barLegend = Constants.DASHBOARD_LEGEND_WIDTH_BAR_CHART;
 
     this.barChart.width(barChartWidth+10)
             .height(barChartHeight)
@@ -1207,25 +1209,32 @@ export class DeforestationOptionsComponent implements OnInit  {
     // when window resize
     $(window).resize(function() {
 
-      // update window size
-      var nh = $(window).height(), nw = $(window).width();
-      // compare previous and new window size
-      if (!(nh == h && nw == w)) {
-        h = nh;
-        w = nw;
-        var arrKeys = Array.from(self.listCharts.keys());
-        for (let item of arrKeys) {
-          DeforestationOptionsUtils.render(item, self.listCharts, transition, self.loiNames, self.selectedLoi, self.type); // when window resize render each graph again
+      if(self.ctrlSto) clearTimeout(self.ctrlSto);
+      self.ctrlSto=setTimeout(() => {
+        
+        // update window size
+        var nh = $(window).height(), nw = $(window).width();
+        // compare previous and new window size
+        if (!(nh == h && nw == w)) {
+          h = nh;
+          w = nw;
+          self.updateSizeCharts(transition);
         }
-      }
 
-      self.tagId = $(".ui-resizable-resizing > .grid-stack-item-content > div:nth-child(2)").attr("id");
+        self.tagId = $(".ui-resizable-resizing > .grid-stack-item-content > div:nth-child(2)").attr("id");
 
+      }, 300);
     });
     
     $('#main-grid').on('resizestop', function (event:any, ui:any) {
-      DeforestationOptionsUtils.render(self.tagId, self.listCharts, transition, self.loiNames, self.selectedLoi, self.type);      
+
+      if(self.ctrlSto) clearTimeout(self.ctrlSto);
+      self.ctrlSto=setTimeout(() => {
+        DeforestationOptionsUtils.render(self.tagId, self.listCharts, transition, self.loiNames, self.selectedLoi, self.type);
+      }, 300);
     });
+
+    $('#sidebarCollapse').on('click', function(){setTimeout(() => {self.updateSizeCharts(transition);}, 300);});
 
     this.updateGridstackLanguage();
 
@@ -1242,6 +1251,14 @@ export class DeforestationOptionsComponent implements OnInit  {
       $('[id="tools-menu"]').show();
     }
       
+  }
+
+  updateSizeCharts(transition:any) {
+    let self = this;
+    let arrKeys = Array.from(self.listCharts.keys());
+    for (let item of arrKeys) {
+      DeforestationOptionsUtils.render(item, self.listCharts, transition, self.loiNames, self.selectedLoi, self.type);
+    }
   }
 
   changeLanguage(value:string) {

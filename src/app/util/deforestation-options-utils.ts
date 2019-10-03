@@ -175,8 +175,6 @@ export class DeforestationOptionsUtils {
     var result = listCharts.get(id); // get result from list charts
         
     if (id == "bar-chart") {
-        var barChartLegend = Constants.DASHBOARD_LEGEND_WIDTH_BAR_CHART;    
-        
         result.width(width+10) // update width
               .height(height) // update height
               .transitionDuration(transition); // update transitions

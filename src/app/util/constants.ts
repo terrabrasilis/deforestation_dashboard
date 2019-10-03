@@ -59,10 +59,6 @@ export class Constants {
         return ['PARÁ', 'AMAZONAS', 'RORAIMA', 'ACRE', 'MATO GROSSO', 'RONDÔNIA', 'AMAPÁ', 'MARANHÃO', 'TOCANTINS'];
     };  
 
-    public static get DASHBOARD_LEGEND_WIDTH_BAR_CHART(): any {
-        return 69;
-    };  
-
     public static get DASHBOARD_LEGEND_WIDTH_SERIES_CHART(): any {
         var map = new Map();
         map.set("uf", 140);
