@@ -132,8 +132,9 @@ export class OnDemandDownloadComponent implements OnInit {
                                 (feature:any) => {                               
                                   return {
                                             year: feature.endDate,
-                                            '>1ha': feature.area,
-                                            '>6.25ha': feature.filteredArea,
+                                            'areakm': feature.area,
+                                            //'>1ha': feature.area,
+                                            //'>6.25ha': feature.filteredArea,
                                             municipality: loiNames[feature.loiName][0],
                                             state: loiNames[feature.loiName][1]
                                           }
