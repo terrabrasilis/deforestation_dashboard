@@ -210,8 +210,8 @@ export class DeforestationOptionsComponent implements OnInit  {
     // get data 
     this.getData(this.selectedClass);
 
-    // used to call functions ouside Angular
-    window["dashboard"]=function(){return self;};
+    // used to call functions ouside Angular (devel)
+    //window["dashboard"]=function(){return self;};
     
   }
 
@@ -1220,10 +1220,9 @@ export class DeforestationOptionsComponent implements OnInit  {
           w = nw;
           self.updateSizeCharts(transition);
         }
-
-        self.tagId = $(".ui-resizable-resizing > .grid-stack-item-content > div:nth-child(2)").attr("id");
-
       }, 300);
+      
+      self.tagId = $(".ui-resizable-resizing > .grid-stack-item-content > div:nth-child(2)").attr("id");
     });
     
     $('#main-grid').on('resizestop', function (event:any, ui:any) {
