@@ -2,7 +2,7 @@
  * Angular imports
  */
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
-import { CommonModule, APP_BASE_HREF } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
@@ -16,7 +16,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialCoreModule } from './core-modules/material-core.module';
 import { AppRoutingModule } from './app.routing.module';
 import { LocalStorageModule } from '@ngx-pwa/local-storage';
-import { DynamicComponentModule } from './core-modules/dynamic-component';
 import { SharedModule } from './core-modules/shared.module';
 import { PipeSharedModule } from './core-modules/pipe-shared.module';
 
@@ -24,28 +23,15 @@ import { PipeSharedModule } from './core-modules/pipe-shared.module';
  * Custom component imports
  */
 import { AppComponent } from './app.component';
-import { LoginComponent } from './login/login.component';
-import { UserComponent } from './user/user.component';
 import { DialogComponent } from './dialog/dialog.component';
-import { WmsSearchComponent } from './wms/wms-search/wms-search.component';
 import { ContactComponent } from './contact/contact.component';
-import { AboutComponent } from './about/about.component';
 import { TerrabrasilisApiComponent } from './tool/terrabrasilis-api/terrabrasilis-api.component';
-import { MapComponent } from './map/map.component';
 
 /**
  * Services
  */
-import { UserProviderService } from './services/user-provider.service';
-import { LayerInfoProviderService } from './services/layer-info-provider.service'; 
-import { WmsCapabilitiesProviderService } from './services/wms-capabilities-provider.service';
-import { MapWmsSearchDialogService } from './services/map-wms-search-dialog.service';
-import { ContactService } from './services/contact.service';
 import { DownloadService } from './services/download.service';
 import { LocalStorageService } from './services/local-storage.service';
-import { DatasourceService } from './services/datasource.service';
-import { LayerService } from './services/layer.service';
-import { VisionService } from './services/vision.service';
 
 /**
  * Providers
@@ -88,14 +74,9 @@ import * as gridstack from 'gridstack';
 @NgModule({
   declarations: [
     AppComponent,
-    MapComponent,
-    LoginComponent,
-    UserComponent,
     DialogComponent,
-    WmsSearchComponent,
     DeforestationOptionsComponent,
     ContactComponent,
-    AboutComponent,
     LoiSearchComponent,
     OnDemandDownloadComponent,
     TerrabrasilisApiComponent
@@ -126,34 +107,14 @@ import * as gridstack from 'gridstack';
    LocalStorageModule,
    CommonModule,
    SharedModule,
-   /**
-    * Enable DynamicComponentModule
-    */
-   DynamicComponentModule.forRoot({
-      imports: [ 
-        SharedModule
-      ]
-   }),
   ],
   providers: [
-    UserProviderService,
-    LayerInfoProviderService,
-    WmsCapabilitiesProviderService,
     DashboardApiProviderService,
-    MapWmsSearchDialogService,
-    ContactService,
     DownloadService,
     LocalStorageService,
     localStorageProviders({ prefix: 'TBV01_' }),
     GraphProviderService,
     DashboardLoiSearchService,
-    DatasourceService,
-    LayerService,
-    VisionService,
-    // {
-    //   provide: APP_BASE_HREF, 
-    //   useValue: '/map' /**https://angular.io/api/common/APP_BASE_HREF */
-    // }
   ],
   bootstrap: [
     AppComponent
@@ -161,7 +122,6 @@ import * as gridstack from 'gridstack';
   entryComponents: [
     DialogComponent,
     ContactComponent, 
-    AboutComponent,
     TerrabrasilisApiComponent
   ],
   exports: [
