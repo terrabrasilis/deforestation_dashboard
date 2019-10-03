@@ -29,7 +29,6 @@ import { TranslateService } from '@ngx-translate/core';
 import { LocalStorageService } from '../../../services/local-storage.service';
 
 import { ContactComponent } from '../../../contact/contact.component';
-import { AboutComponent } from '../../../about/about.component';
 
 declare var $ : any;
 
@@ -1312,15 +1311,5 @@ export class DeforestationOptionsComponent implements OnInit  {
     showContact() {
       this.cdRef.detectChanges();
       this.dialog.open(ContactComponent, { width : '450px' });
-    }
-
-    showAbout() {
-      this.cdRef.detectChanges();
-      this.dialog.open(AboutComponent, {
-          width : '980px',
-          minWidth: '700px',
-          height: '630px',
-          minHeight: '410px'
-      });
     }
 }
