@@ -174,18 +174,18 @@ export class DeforestationOptionsUtils {
   
     var result = listCharts.get(id); // get result from list charts
         
-    if (id == "bar-chart") {      
+    if (id == "bar-chart") {
         var barChartLegend = Constants.DASHBOARD_LEGEND_WIDTH_BAR_CHART;    
         
-        result.width(width-barChartLegend) // update width
+        result.width(width+10) // update width
               .height(height) // update height
               .transitionDuration(transition); // update transitions
 
         result.x(d3.scaleBand().rangeRound([0, width]).paddingInner(0.05))
               .xUnits(dc.units.ordinal);  
 
-        if (type != "rates")         
-          result.legend(dc.legend().x(width-barChartLegend).y(5).itemHeight(13).gap(4).legendText(function(d:any) { return d.name; }));        
+        // if (type != "rates")         
+        //   result.legend(dc.legend().x(width-barChartLegend).y(5).itemHeight(13).gap(4).legendText(function(d:any) { return d.name; }));        
 
         result.on("renderlet.a",function (chart:any) {
           // rotate x-axis labels

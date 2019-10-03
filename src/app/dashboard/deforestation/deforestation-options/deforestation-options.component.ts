@@ -656,7 +656,7 @@ export class DeforestationOptionsComponent implements OnInit  {
     // define dc charts
     this.barChart = dc.compositeChart("#bar-chart");
 		this.area = dc.barChart(this.barChart);
-		this.filteredArea = dc.barChart(this.barChart);
+		// this.filteredArea = dc.barChart(this.barChart);
 
     this.seriesChart = dc.seriesChart("#series-chart");
     
@@ -770,8 +770,8 @@ export class DeforestationOptionsComponent implements OnInit  {
       .clipPadding(0)
       .barPadding(0.3)
       //.group(snapToZero(this.areaByDate), ">1.00ha")
-      .group(snapToZero(this.areaByDate), ">1.00ha")
-      .colors("#bde397")
+      .group(snapToZero(this.areaByDate))
+      .colors("#ffd76d")
       .valueAccessor(
         function (d:any) {
           return d["value"];
@@ -782,12 +782,10 @@ export class DeforestationOptionsComponent implements OnInit  {
       })
       .title(
         function (d:any) {
-          // var value:any;
-          // isNaN(d["value"])?(value = 0):(value = Math.round(d["value"]));
-          let a=(self.type=='rates')?(""):(">1.00ha");
+          //let a=(self.type=='rates')?(""):(">1.00ha");
           return d.key + "\n"
-          + d.value.toFixed(2) + " km²\n"
-          + a;
+          + d.value.toFixed(2) + " km²";
+          //+ a;
         }
       )
       /*.addFilterHandler(function(filters:any, filter:any) {
@@ -807,6 +805,7 @@ export class DeforestationOptionsComponent implements OnInit  {
 				return filters;
 			}); */
 
+      /*
     this.filteredArea
       .clipPadding(0)
       .barPadding(0.3)
@@ -843,13 +842,14 @@ export class DeforestationOptionsComponent implements OnInit  {
 				});
 				return filters;
       });
+      */
       
     var barChartWidth = $('#bar-chart')[0].offsetWidth;
     var barChartHeight = $('#bar-chart')[0].offsetHeight;
     
     var barLegend = Constants.DASHBOARD_LEGEND_WIDTH_BAR_CHART;
 
-    this.barChart.width(barChartWidth-barLegend)
+    this.barChart.width(barChartWidth+10)
             .height(barChartHeight)
             .shareTitle(false)
             .transitionDuration(transition)
@@ -887,9 +887,9 @@ export class DeforestationOptionsComponent implements OnInit  {
               
             });
 
-    if(this.type != "rates") {
-      this.barChart.legend( dc.legend().x(barChartWidth-barLegend).y(5).itemHeight(13).gap(5).legendText(function(d:any, i:any) { return d.name; }) );
-    }
+    // if(this.type != "rates") {
+    //   this.barChart.legend( dc.legend().x(barChartWidth-barLegend).y(5).itemHeight(13).gap(5).legendText(function(d:any, i:any) { return d.name; }) );
+    // }
     
     this.barChart.on('renderlet', function (chart:any) {
       
