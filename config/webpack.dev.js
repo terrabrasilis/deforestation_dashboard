@@ -2,6 +2,7 @@ const webpackMerge = require('webpack-merge');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const { BaseHrefWebpackPlugin } = require('base-href-webpack-plugin');
 const commonConfig = require('./webpack.common.js');
 const webpack = require('webpack');
 const helpers = require('./helpers');
@@ -53,12 +54,13 @@ module.exports = webpackMerge(commonConfig, {
                 API_URL: JSON.stringify('http://localhost:4200/api/')
             }
         }),
-
         new HtmlWebpackPlugin({
             filename: 'index.html',
             template: 'src/index-dev.html'
         }),
-
+        new BaseHrefWebpackPlugin({
+            baseHref: '/'
+        }),
         new webpack.NamedModulesPlugin(),
 
         new webpack.HotModuleReplacementPlugin({

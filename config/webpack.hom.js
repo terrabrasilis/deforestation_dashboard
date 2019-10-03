@@ -3,6 +3,7 @@ const webpackMerge = require('webpack-merge');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const { BaseHrefWebpackPlugin } = require('base-href-webpack-plugin');
 const commonConfig = require('./webpack.common.js');
 const helpers = require('./helpers');
 //const path = require('path');
@@ -55,9 +56,12 @@ module.exports = webpackMerge(commonConfig, {
         'BUILD_TYPE': JSON.stringify(BUILD_TYPE)
       }
     }),
-
     new HtmlWebpackPlugin({
-        template: 'src/index-dev.html'
+      filename: 'index.html',
+      template: 'src/index-dev.html'
+    }),
+    new BaseHrefWebpackPlugin({
+      baseHref: '/homolog/'
     }),
 
     new webpack.LoaderOptionsPlugin({
