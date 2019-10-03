@@ -57,6 +57,7 @@ module.exports = webpackMerge(commonConfig, {
     }),
 
     new HtmlWebpackPlugin({
+        filename: 'index.html',
         template: 'src/index-prod.html'
     }),
 

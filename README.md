@@ -17,7 +17,7 @@ After all statements above was executed, the project will be prepare to run the 
 
 ## Development server
 
-Run `npm run start-webpack-dev` for a dev server. Navigate to `http://localhost:8080/`.
+Run `npm run webpack-dev` for a dev server. Navigate to `http://localhost:8080/`.
 
 ## Code scaffolding
 
@@ -25,7 +25,7 @@ Run `ng generate component component-name` to generate a new component. You can 
 
 ## Build
 
-Run `npm run start-build-prod` to build the project to production. The build artifacts will be stored in the `dist/` directory. 
+Run `npm run build-prod` to build the project to production. The build artifacts will be stored in the `dist/` directory. 
 
 ## Using dependency from link
 

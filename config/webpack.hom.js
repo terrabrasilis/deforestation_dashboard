@@ -18,7 +18,7 @@ module.exports = webpackMerge(commonConfig, {
 
   output: {
     path: helpers.root('dist'),
-    publicPath: '/app/',
+    publicPath: '',
     filename: '[name].[hash].js',
     chunkFilename: '[id].[hash].chunk.js'
   },
@@ -57,7 +57,7 @@ module.exports = webpackMerge(commonConfig, {
     }),
 
     new HtmlWebpackPlugin({
-        template: 'src/index-prod.html'
+        template: 'src/index-dev.html'
     }),
 
     new webpack.LoaderOptionsPlugin({
