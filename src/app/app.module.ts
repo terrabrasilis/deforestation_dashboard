@@ -16,7 +16,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialCoreModule } from './core-modules/material-core.module';
 import { AppRoutingModule } from './app.routing.module';
 import { LocalStorageModule } from '@ngx-pwa/local-storage';
-import { SharedModule } from './core-modules/shared.module';
 import { PipeSharedModule } from './core-modules/pipe-shared.module';
 
 /**
@@ -25,7 +24,6 @@ import { PipeSharedModule } from './core-modules/pipe-shared.module';
 import { AppComponent } from './app.component';
 import { DialogComponent } from './dialog/dialog.component';
 import { ContactComponent } from './contact/contact.component';
-import { TerrabrasilisApiComponent } from './tool/terrabrasilis-api/terrabrasilis-api.component';
 
 /**
  * Services
@@ -78,8 +76,7 @@ import * as gridstack from 'gridstack';
     DeforestationOptionsComponent,
     ContactComponent,
     LoiSearchComponent,
-    OnDemandDownloadComponent,
-    TerrabrasilisApiComponent
+    OnDemandDownloadComponent
   ],
   imports: [
     PipeSharedModule,
@@ -106,7 +103,6 @@ import * as gridstack from 'gridstack';
     */
    LocalStorageModule,
    CommonModule,
-   SharedModule,
   ],
   providers: [
     DashboardApiProviderService,
@@ -121,8 +117,7 @@ import * as gridstack from 'gridstack';
   ],
   entryComponents: [
     DialogComponent,
-    ContactComponent, 
-    TerrabrasilisApiComponent
+    ContactComponent,
   ],
   exports: [
   ],
