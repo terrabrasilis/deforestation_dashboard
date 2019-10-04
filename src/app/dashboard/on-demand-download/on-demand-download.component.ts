@@ -99,20 +99,27 @@ export class OnDemandDownloadComponent implements OnInit {
 
   downloadCSV():void {
 
+    // configuration to generate CSV
+    let fraction=$("input[name='fraction']:checked").val();
+    let accent=$("input[name='accent']:checked").val()=="on";
+
     // call function inside this
-    var checkedValues = $('input:checkbox:checked').map(function():any {
-      return $(this).val();
-    }).get(); 
+    var checkedValues = $('input:checkbox:checked').map(
+      function():any {
+        return $(this).val();
+      }
+    ).get();
 
     var loiNames = new Map<number, string[]>();
     this.loiNamesJson.lois.filter(
-                            (filteredLoi:any) => {
-                              return filteredLoi.gid === 2
-                          })
-                          .map(
-                            (loi:any) => { 
-                              DeforestationOptionsUtils.setLoiNamesDownload(loi, loiNames, checkedValues);
-                          });
+      (filteredLoi:any) => {
+        return filteredLoi.gid === 2;
+      }
+    ).map(
+      (loi:any) => {
+        DeforestationOptionsUtils.setLoiNamesDownload(loi, loiNames, checkedValues);
+      }
+    );
 
     var allFeatures:any[];
     if (this.type == "increments")
@@ -121,24 +128,35 @@ export class OnDemandDownloadComponent implements OnInit {
       allFeatures = DeforestationOptionsUtils.dataWranglingRates(this.dataJson);
     
     var dataCSV = allFeatures.filter(
-                                (filteredFeatures:any) => {
-                                  return filteredFeatures.loi === 2;
-                              })
-                              .filter(
-                                (filteredFeatures:any) => {     
-                                  return filteredFeatures.loiName in loiNames; 
-                              })
-                              .map(
-                                (feature:any) => {                               
-                                  return {
-                                            year: feature.endDate,
-                                            'areakm': feature.area,
-                                            //'>1ha': feature.area,
-                                            //'>6.25ha': feature.filteredArea,
-                                            municipality: loiNames[feature.loiName][0],
-                                            state: loiNames[feature.loiName][1]
-                                          }
-                              });
+      (filteredFeatures:any) => {
+        return filteredFeatures.loi === 2;
+      }
+    ).filter(
+      (filteredFeatures:any) => {     
+        return filteredFeatures.loiName in loiNames; 
+      }
+    ).map(
+      (feature:any) => {
+        let mun=loiNames[feature.loiName][0],
+        uf=loiNames[feature.loiName][1],
+        a=feature.area;
+        if(accent) {
+          mun=mun.normalize('NFD').replace(/[\u0300-\u036f]/g, "");
+          uf=uf.normalize('NFD').replace(/[\u0300-\u036f]/g, "");
+        }
+        if(fraction=="comma") {
+          a=(a+"").replace('.',',');
+        }
+        return {
+          year: feature.endDate,
+          'areakm': a,
+          //'>1ha': feature.area,
+          //'>6.25ha': feature.filteredArea,
+          municipality: mun,
+          state: uf
+        }
+      }
+    );
     
     dataCSV.sort(function (a, b) {
       var aMunicipality = a.municipality;
@@ -164,7 +182,9 @@ export class OnDemandDownloadComponent implements OnInit {
 
     });
 
-    let blob = new Blob([d3.csvFormat(dataCSV)], {type: "text/csv;charset=utf-8"}),
+    let d3DSV=(fraction=="comma")?(d3.dsvFormat(";").format(dataCSV)):(d3.csvFormat(dataCSV));
+
+    let blob = new Blob([d3DSV], {type: "text/csv;charset=utf-8"}),
     dt = new Date(),
     fileName = dt.getDate() + "_" + dt.getMonth() + "_" + dt.getFullYear() + "_" + dt.getTime();
     FileSaver.saveAs(blob, 'terrabrasilis_'+this.biome+'_'+fileName+'.csv');
