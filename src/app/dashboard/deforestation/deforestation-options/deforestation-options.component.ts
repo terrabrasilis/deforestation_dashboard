@@ -166,8 +166,12 @@ export class DeforestationOptionsComponent implements OnInit  {
 
     this.maxLoi = 13;
 
-    this.loiname = "*";
-    this.selectedTime = "*";
+    this._translate.get('dashboard.filters.loiname.all').subscribe((text) => {
+      this.loiname = text;
+    });
+    this._translate.get('dashboard.filters.time.all').subscribe((text) => {
+      this.selectedTime = text;
+    });
     
   }
 
@@ -922,13 +926,17 @@ export class DeforestationOptionsComponent implements OnInit  {
 
     this.area.on('filtered', function(chart:any) {
       if (!chart.hasFilter())
-        self.selectedTime="*";
+        self._translate.get('dashboard.filters.time.all').subscribe((text) => {
+          self.selectedTime = text;
+        });
     });
 
     this.area.filterPrinter(function(filters:any) {
       
       if (!filters.length)
-         self.selectedTime="*";
+        self._translate.get('dashboard.filters.time.all').subscribe((text) => {
+          self.selectedTime = text;
+        });
       else {
         self.selectedTime = "[";
         var first = 1;
@@ -943,10 +951,13 @@ export class DeforestationOptionsComponent implements OnInit  {
         self.selectedTime = self.selectedTime + "]";
       }
 
-      return (filters.length)?(self.selectedTime):("*");
+      //return (filters.length)?(self.selectedTime):(self._translate.get('dashboard.filters.time.all'));
+      return self.selectedTime;
     });
 
-    self.selectedTime="*";
+    self._translate.get('dashboard.filters.time.all').subscribe((text) => {
+      self.selectedTime = text;
+    });
 
     // add one graph
     this.listCharts.set('bar-chart', this.barChart);
@@ -1139,13 +1150,17 @@ export class DeforestationOptionsComponent implements OnInit  {
 
     this.rowChart.on('filtered', function(chart:any) {
       if (!chart.hasFilter())
-        self.loiname="*";
+        self._translate.get('dashboard.filters.loiname.all').subscribe((text) => {
+          self.loiname = text;
+        });
     });
 
     this.rowChart.filterPrinter(function(filters:any) {
       
       if (!filters.length)
-         self.loiname="*";
+        self._translate.get('dashboard.filters.loiname.all').subscribe((text) => {
+          self.loiname = text;
+        });
       else {
         self.loiname = "[";
         var first = 1;
@@ -1160,22 +1175,18 @@ export class DeforestationOptionsComponent implements OnInit  {
         self.loiname = self.loiname + "]";
       }
 
-      return (filters.length)?(self.loiname):("*");
+      //return (filters.length)?(self.loiname):(self._translate.get('dashboard.filters.loiname.all'));
+      return self.loiname;
     });
 
-    self.loiname="*";
+    self._translate.get('dashboard.filters.loiname.all').subscribe((text) => {
+      self.loiname = text;
+    });
 
     // render chart   
     this.listCharts.set('row-chart', this.rowChart);
 
-    $('#reset_filter').click(function() {    
-      self.barChart.filterAll();
-      self.rowChart.filterAll();      
-      self.seriesChart.filterAll();
-      self.loiname="*";
-      self.selectedTime="*";
-      dc.redrawAll();
-    });
+    $('#reset_filter').click(()=>{self.resetFilters(self);});
 
     (function(j, dc){
       setTimeout(() => {
@@ -1252,6 +1263,22 @@ export class DeforestationOptionsComponent implements OnInit  {
       
   }
 
+  resetFilters(context:any) {
+
+    if(!context) return;
+
+    context.barChart.filterAll();
+    context.rowChart.filterAll();      
+    context.seriesChart.filterAll();
+    context._translate.get('dashboard.filters.loiname.all').subscribe((text:any) => {
+      context.loiname = text;
+    });
+    context._translate.get('dashboard.filters.time.all').subscribe((text:any) => {
+      context.selectedTime = text;
+    });
+    dc.redrawAll();
+  }
+
   updateSizeCharts(transition:any) {
     let self = this;
     let arrKeys = Array.from(self.listCharts.keys());
@@ -1263,7 +1290,7 @@ export class DeforestationOptionsComponent implements OnInit  {
   changeLanguage(value:string) {
     
     this.localStorageService.setValue(this.languageKey, value);
-    this._translate.use(value);  
+    this._translate.use(value);
     this.updateGridstackLanguage();
     
   }
@@ -1306,7 +1333,13 @@ export class DeforestationOptionsComponent implements OnInit  {
                 $('#2').text(data[11]);
                 $('#3').text(data[12]);
               });
-    
+
+              this._translate.get('dashboard.filters.loiname.all').subscribe((text) => {
+                this.loiname = text;
+              });
+              this._translate.get('dashboard.filters.time.all').subscribe((text) => {
+                this.selectedTime = text;
+              });
     }
   
     showContact() {

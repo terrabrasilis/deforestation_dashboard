@@ -135,6 +135,10 @@
         "technology.services": "Servidor de compartilhamento de dados geoespaciais (Geoserver) e catálogo de busca de metadados (Geonetwork)."        
     },
     "dashboard": {
+        "filters": {
+            "loiname":{"all":"Todos"},
+            "time":{"all":"Todos"}
+        },
         "class": {
             "title": "Classe:",
             "deforestation": "Desmatamento"
