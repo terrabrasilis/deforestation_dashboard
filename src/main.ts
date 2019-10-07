@@ -7,6 +7,7 @@ import { AppModule } from './app/app.module';
 //if (environment.production) {
 if ( process.env.ENV === 'production' ) {
   enableProdMode();
+  if(window) window.console.log = function () { };// disable any console.log debugging statements in production mode
 }
 
 platformBrowserDynamic().bootstrapModule(AppModule)
