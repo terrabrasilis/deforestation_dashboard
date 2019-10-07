@@ -531,11 +531,12 @@ export class DeforestationOptionsComponent implements OnInit  {
       .order(d3.ascending)
       .on('renderlet', function (table:any) {
           table.selectAll('.dc-table-group').classed('info', true);
+          let tc=$('#table-chart'),tcp=tc.parent(),tcs=tc.siblings();
+          tc.height(tcp.height() - (tcs.height()+16));
       });
 
       // add one graph
-      this.listCharts.set('table-chart', this.tableArea);
-      
+      this.listCharts.set('table-chart', this.tableArea);      
   }
 
   makeGraphs():void {
