@@ -233,7 +233,7 @@
             }
         },
         "title": {
-            "analysis": "Análise - ",
+            "filters": "Filtros - ",
             "increments": "PRODES (Desmatamento)",
             "rates": "PRODES (Desmatamento)",
             "legal_amazon": "Amazônia Legal",

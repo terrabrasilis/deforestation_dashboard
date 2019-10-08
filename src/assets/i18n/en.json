@@ -227,7 +227,7 @@
             }
         },
         "title": {
-            "analysis": "Analyses - ",
+            "filters": "Filters - ",
             "increments": "PRODES (Deforestation)",
             "rates": "PRODES (Deforestation)",
             "legal_amazon": "Legal Amazon",
