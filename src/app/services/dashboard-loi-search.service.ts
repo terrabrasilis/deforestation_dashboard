@@ -25,16 +25,26 @@ export class DashboardLoiSearchService {
   searchEntries(term: any) {
     let results:Array<Object>=new Array();
     function searchInMapElements(element: any) {
-      if(element.value.indexOf(term.toUpperCase())>=0) {                
+      if(element.value.indexOf(term.toUpperCase())>=0) {
         results.push({key:element.key,value:element.value});
         results = results.sort(function(a:any, b:any) {
                     return ('' + a.value).localeCompare(b.value);
-                  });        
+                  });
       }
     }
     this.lois = this.panelReference.getLoiNames();
     this.lois.forEach(searchInMapElements);
-    let observable=Observable.merge(results);
-    return observable;
+
+    const simpleObservable = new Observable<Object>(
+      (observer) => {
+        results.forEach(
+          (result) => {
+            observer.next(result)
+          }
+        );
+        observer.complete();
+      }
+    );
+    return simpleObservable;
   }
 }
