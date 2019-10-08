@@ -23,7 +23,7 @@ export class DashboardLoiSearchService {
   }
 
   searchEntries(term: any) {
-    let results:Array<Object>=new Array();
+    let results:Array<{key:any,value:any}>=new Array();
     function searchInMapElements(element: any) {
       if(element.value.indexOf(term.toUpperCase())>=0) {
         results.push({key:element.key,value:element.value});
@@ -34,8 +34,8 @@ export class DashboardLoiSearchService {
     }
     this.lois = this.panelReference.getLoiNames();
     this.lois.forEach(searchInMapElements);
-
-    const simpleObservable = new Observable<Object>(
+    //new Array<{key:any,value:any}>();
+    const simpleObservable = new Observable<{key:any,value:any}>(
       (observer) => {
         results.forEach(
           (result) => {

@@ -16,7 +16,7 @@ import { LocalStorageService } from '../../services/local-storage.service';
 
 export class LoiSearchComponent implements OnInit {
 
-  results: Array<Object> = new Array();
+  results: Array<{key:any,value:any}>=new Array();
   searchTerm$: Subject<string> = new Subject<string>();
   panelReference: DeforestationOptionsComponent;
   
@@ -46,7 +46,7 @@ export class LoiSearchComponent implements OnInit {
    * @param term The typed term.
    */
   handleFilterChange(term: string) {
-    this.results = new Array();
+    this.results=new Array();
     if(!this.searchSubscription || this.searchSubscription.closed){
     
       this.searchSubscription=this.searchService.search(this.filterString)
@@ -57,8 +57,7 @@ export class LoiSearchComponent implements OnInit {
     this.filterString.next(term);
   }
   
-  ngOnInit() {
-  }
+  ngOnInit() { }
 
   /**
    * Apply the filter on enabled charts.
@@ -74,7 +73,41 @@ export class LoiSearchComponent implements OnInit {
     this.panelReference.filterByLoi(key);
   }
 
+  resetActives() {
+    this.results.forEach(
+      (item) => {
+        $('#'+item.key+'_item').removeClass('active');
+      }
+    );
+  }
+
+  evaluateActives(actives:Array<any>) {
+    this.resetActives();
+    actives.forEach(
+      (item) => {
+        $('#'+item.key+'_item').addClass('active');
+      }
+    );
+  }
+
   updateLoi() {
+    let oldTerm=$('#search-county').val();
+    $('#search-county').val('');
+    $('#search-county').val(oldTerm);
+
+    if(this.loi != this.panelReference.selectedLoi){
+      this.panelReference.rowChart.filterAll();
+      this.results=new Array();
+    }else{
+      let selectedFilters=this.panelReference.rowChart.filters();
+      let highlight: Array<{key:any,value:any}>=new Array();
+      for(let i=0;i<this.results.length;i++) {
+        if( selectedFilters.includes(this.results[i].key) ) {
+          highlight.push(this.results[i]);
+        }
+      }
+      this.evaluateActives(highlight);
+    }
     this.loi = this.panelReference.selectedLoi;
   }
 
