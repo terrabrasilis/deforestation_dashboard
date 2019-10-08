@@ -485,6 +485,19 @@ export class DeforestationOptionsComponent implements OnInit  {
 
   }
 
+  getOrdinalColors(len:number): Array<any> {
+    let c=[],cor=[];
+    let schemes=["schemePaired","schemeCategory10","schemeAccent","schemeDark2","schemePastel1","schemePastel2","schemeSet1","schemeSet2"],sl=0;
+    while(c.length<len) {
+      cor=d3[schemes[sl]];
+      for(let i=0;i<cor.length;i++) {
+        c.push(cor[i]);
+      }
+      sl++;
+    }
+		return c;
+	}
+
   makeTables(): void {
     
     // call function inside this
@@ -972,16 +985,18 @@ export class DeforestationOptionsComponent implements OnInit  {
 			auxYears.push(+y.key);
 			auxRates.push(y.value);
     });
+
+    var	seriesColors = this.getOrdinalColors(self.maxLoi);
     
 		var xScale = d3.scaleLinear()
 			.domain([auxYears[0] -1,auxYears[auxYears.length-1]+1])
-			.range([auxRates[0],auxRates[auxRates.length-1]]);
+      .range([auxRates[0],auxRates[auxRates.length-1]]);
 
     this.seriesChart.chart(function(c:any) {
                   return dc.lineChart(c)
                     .curve(d3.curveCardinal.tension(0.5))
                     .renderDataPoints({radius: 4})
-                    .evadeDomainFilter(true);
+                    .evadeDomainFilter(true)
                 })
                 .width(seriesChartWidth-self.legendSize)
                 .height(seriesChartHeight)
@@ -997,6 +1012,7 @@ export class DeforestationOptionsComponent implements OnInit  {
                 .valueAccessor(function(d:any) {
                   return d.value; // connect with y axis
                 })
+                .ordinalColors(seriesColors)
                 .title(function(d:any) {
                   return  self.loiNames[d.key[0]] + "\n" +
                           d.key[1] + "\n" +
@@ -1010,7 +1026,7 @@ export class DeforestationOptionsComponent implements OnInit  {
                 .mouseZoomable(false)
                 .renderHorizontalGridLines(true)
                 .renderVerticalGridLines(true)
-                .legend(dc.legend().x(seriesChartWidth-self.legendSize).y(10).gap(5).legendText(function(d:any) { 
+                .legend(dc.legend().x(seriesChartWidth-self.legendSize).y(10).gap(5).legendText(function(d:any) {
                   return self.loiNames[d.name];
                 }))
                 .brushOn(false);
