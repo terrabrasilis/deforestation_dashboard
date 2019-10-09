@@ -8,6 +8,8 @@ import {  ISubscription } from "rxjs/Subscription";
 import {  Observable  } from 'rxjs/Observable';
 import {  forkJoin  } from "rxjs/observable/forkJoin";
 
+import {  ChartmenuComponent } from "../../../chartmenu/chartmenu.component";
+
 import {  DialogComponent } from "../../../dialog/dialog.component";
 import {  MatDialog } from "@angular/material";
 
@@ -122,7 +124,7 @@ export class DeforestationOptionsComponent implements OnInit  {
 
   private labelArea: string;
   private labelRates: string;
-  private languageKey: string = "translate";  
+  private languageKey: string = "translate";
 
 
   constructor(private route: ActivatedRoute,    
@@ -309,6 +311,10 @@ export class DeforestationOptionsComponent implements OnInit  {
     return aux;
   }
 
+  chartDownloadCSV(chartId:any):void {
+    console.log(chartId);
+  }
+
   /**
    * Used to generate the CSV and push as stream to download by browser.
    */
@@ -396,7 +402,7 @@ export class DeforestationOptionsComponent implements OnInit  {
       this.loadGrid = function () {
       
         // remove all the items from the main grid and add each widgets again
-        mainGrid.removeAll();      
+        mainGrid.removeAll();
         buildMainGrid();
         addEvents();
         self.makeGraphs();
@@ -424,18 +430,51 @@ export class DeforestationOptionsComponent implements OnInit  {
         let gsi=$('.grid-stack-item');
         for(let i=0;i<gsi.length;i++){
           let d1=document.createElement('div');
-          d1.className="more_options context-menu-one btn btn-neutral";
+          d1.className="more_options";
           gsi[i].append(d1);
-          $(d1).html("<i class='material-icons'>menu</i>");
+          let html='<button id="chartmenu_'+i+'" class="dropbtn"><i class="material-icons">menu</i></button>';
+          $(d1).html(html);
+          $('#chartmenu_'+i).on('click',(event:any)=>{
+            if(event.target.nodeName=='DIV' && event.target.className=='chartdown') {
+              self.chartDownloadCSV(event.target.id.split(':')[1]);
+            }else {
+              let dcChart=$(event.currentTarget);
+              dcChart=dcChart.parents('.grid-stack-item').find('.dc-chart');
+              if(dcChart && dcChart.length) {
+                let btid=dcChart[0].id;
+                if($('#dropdown-'+btid).length && $('#dropdown-'+btid).length==1) {
+                  $('#dropdown-'+btid).attr('style','display:block;');
+                }else{
+                  let m=document.createElement('div');
+                  m.className='dropdown';
+                  m.id='dropdown-'+btid;
+                  $(event.currentTarget).append(m);
+                  let mHtml='<div class="dropdown-content">'+
+                              '<div class="chartdown" id="chartdown:'+btid+'">Download CSV</div>'+
+                            '</div>';
+                  $(m).html(mHtml);
+                }
+              }
+            }
+          });
         }
+        $('html').on('mouseover',()=>{
+          setTimeout(() => {
+            let items=$('.dropdown');
+            for(let i=0;i<items.length;i++){
+              $(items[i]).on('mouseout',()=>{
+                $(items[i]).hide();
+              });
+            }
+          },2500);
+        });
       }
-      
+
       // add on click handle loadGrid call for restore view button 
       $('#load_grid').click(this.loadGrid);
 
       addEvents();
       moreOptions();
-
     });
 
   } 
