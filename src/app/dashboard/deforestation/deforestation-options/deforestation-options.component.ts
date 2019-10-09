@@ -410,7 +410,7 @@ export class DeforestationOptionsComponent implements OnInit  {
           revert: 'invalid',
           handle: '.grid-stack-item-content',
           scroll: true,
-          appendTo: 'body'          
+          appendTo: 'body'
       });
 
       function addEvents() {
@@ -419,11 +419,22 @@ export class DeforestationOptionsComponent implements OnInit  {
           self.downloadCSV();
         });
       }
+
+      function moreOptions() {
+        let gsi=$('.grid-stack-item');
+        for(let i=0;i<gsi.length;i++){
+          let d1=document.createElement('div');
+          d1.className="more_options context-menu-one btn btn-neutral";
+          gsi[i].append(d1);
+          $(d1).html("<i class='material-icons'>menu</i>");
+        }
+      }
       
       // add on click handle loadGrid call for restore view button 
       $('#load_grid').click(this.loadGrid);
 
       addEvents();
+      moreOptions();
 
     });
 

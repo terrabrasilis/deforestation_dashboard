@@ -9,6 +9,18 @@ body {
     overflow-y: auto !important;
 }
 
+.more_options{
+    width: 10px;
+    height: 18px;
+    position: absolute;
+    top: 5px;
+    left: 15px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #00796b;
+    cursor: pointer;
+}
+
 .dropdown-menu {
     min-width: 18rem;
 }
@@ -197,7 +209,7 @@ a[data-toggle="collapse"] {
 
 .material-icons:hover {
     text-shadow: #2a9a74 1px 1px 0;
-    color: #fff !important;
+    /* color: #fff !important; */
 }
 
 #navbarSupportedContent {
