@@ -45,18 +45,10 @@ export class AppComponent implements OnInit {
   }
   
   private loadDefaultLanguage(): void {        
-    this.localStorageService.getValue(this.languageKey).subscribe((item:any) => {      
+    this.localStorageService.getValue(this.languageKey).subscribe((item:any) => {
       let toUse = JSON.parse(item);
-      //console.log(toUse);
-      
-      if(toUse === null) {      
-        this._translate.setDefaultLang('pt-br');
-        this._translate.use('pt-br');
-        return;
-      } 
-      
-      this._translate.setDefaultLang(toUse.value);
-      this._translate.use(toUse.value);
+      this._translate.setDefaultLang((toUse===null)?('pt-br'):(toUse.value));
+      this._translate.use((toUse===null)?('pt-br'):(toUse.value));
     });              
   }
 }

@@ -8,8 +8,6 @@ import {  ISubscription } from "rxjs/Subscription";
 import {  Observable  } from 'rxjs/Observable';
 import {  forkJoin  } from "rxjs/observable/forkJoin";
 
-import {  ChartmenuComponent } from "../../../chartmenu/chartmenu.component";
-
 import {  DialogComponent } from "../../../dialog/dialog.component";
 import {  MatDialog } from "@angular/material";
 
@@ -84,7 +82,7 @@ export class DeforestationOptionsComponent implements OnInit  {
   labelFilteredArea: any;
   tableYear: any;
   tableRegular: any;
-  tableLess: any;
+  // tableLess: any;
   tableTotal: any;
   initTab: any;
   ctrlSto: any;
@@ -125,7 +123,7 @@ export class DeforestationOptionsComponent implements OnInit  {
   private labelArea: string;
   private labelRates: string;
   private languageKey: string = "translate";
-
+  private lang: string;
 
   constructor(private route: ActivatedRoute,    
               private router: Router,
@@ -186,7 +184,14 @@ export class DeforestationOptionsComponent implements OnInit  {
     if (!this.checkBiome())
       this.dialog.open(DialogComponent, {
         data: {message: "This is not a valid URL!"}, width : '450px'
-      }); 
+      });
+
+    this.localStorageService.getValue(this.languageKey).subscribe(
+      (value:any) => {
+        let l=JSON.parse(value);
+        this.lang=(l===null)?('pt-br'):(l.value);
+      }
+    );
     
     // draw grid
     this.drawGrid();
@@ -312,34 +317,142 @@ export class DeforestationOptionsComponent implements OnInit  {
   }
 
   chartDownloadCSV(chartId:any):void {
-    console.log(chartId);
+    let targetChart = this.listCharts.get(chartId);
+    let filters=(targetChart.hasFilter())?(targetChart.filters()):([]);
+    let csv=[],content=null,fileType="text/csv;charset=utf-8",fileExtension='csv';
+    switch (chartId) {
+      case 'bar-chart':
+        csv=this.prepareBarChartToDownload(targetChart.group().all());
+        content=this.csvFormat(csv);
+        break;
+
+      case 'loi-chart':
+        csv.length=this.mapJson.features.length;
+        content=JSON.stringify(this.mapJson);
+        fileType="text/json;charset=utf-8";
+        fileExtension='json'
+        break;
+    
+      case 'series-chart':
+        csv=this.prepareSeriesChartToDownload(targetChart.data());
+        Terrabrasilis.disableLoading("#series-chart");
+        content=this.csvFormat(csv);
+        break;
+      
+      case 'row-chart':
+        csv=this.prepareRowChartToDownload(targetChart.group().all(),filters);
+        content=this.csvFormat(csv);
+        break;
+
+      case 'tb-area':
+        csv=this.downloadDataTableCSV();
+        content=this.csvFormat(csv);
+        break;
+    }
+
+    if(csv && csv.length) {
+      let blob = new Blob([content], {type: fileType}),
+      dt = new Date(),
+      fileName=dt.getDate() + "_" + dt.getMonth() + "_" + dt.getFullYear() + "_" + dt.getTime();
+      FileSaver.saveAs(blob, 'terrabrasilis_'+this.biome+'_'+fileName+'.'+fileExtension);
+    }else{
+      alert('Não há dados para exportar.');
+    }
+  }
+
+  prepareBarChartToDownload(data:any) {
+    // call function inside this
+    let self = this;
+    let formater=DeforestationOptionsUtils.numberFormat(self.lang);
+    let csv:any=[];
+    if(data && data.length) {
+      data.forEach(function(d:any) {
+        let aux = {
+          "year":d.key,
+          "area km²":formater(d.value)
+        }      
+        csv.push(aux);
+      });
+    }
+    return csv;
+  }
+
+  prepareRowChartToDownload(data:any,filters:Array<any>) {
+    // call function inside this
+    let self = this;
+    let formater=DeforestationOptionsUtils.numberFormat(self.lang);
+    let csv:any=[];
+    if(data && data.length) {
+      data.forEach(function(d:any) {
+        if(!filters.length || filters.includes(d.key)) {
+          let  aux={};
+          aux[self.selectedLoi]=self.loiNames[d.key];
+          aux["area km²"]=formater(d.value);
+          csv.push(aux);
+        }
+      });
+    }
+    return csv;
+  }
+
+  prepareSeriesChartToDownload(data:any) {
+    // call function inside this
+    let self = this;
+    let formater=DeforestationOptionsUtils.numberFormat(self.lang);
+    let csv:any=[];
+    if(data && data.length) {
+      data.forEach(function(d:any) {
+        let aux = {
+          "year":d.key[1],
+          "area km²":formater(d.value)
+        };
+        aux[self.selectedLoi]=self.loiNames[d.key[0]];
+        csv.push(aux);
+      });
+    }
+    return csv;
+  }
+
+  prepareLoiChartToDownload(data:any) {
+    // call function inside this
+    let self = this;
+    let formater=DeforestationOptionsUtils.numberFormat(self.lang);
+    let csv:any=[];
+    if(data && data.length) {
+      data.forEach(function(d:any) {
+        let aux = {
+          "year":d.key,
+          "area km²":formater(d.value)
+        }      
+        csv.push(aux);
+      });
+    }
+    return csv;
   }
 
   /**
    * Used to generate the CSV and push as stream to download by browser.
    */
-  downloadCSV():void {
+  downloadDataTableCSV() {
     // call function inside this
     let self = this;
+    let formater=DeforestationOptionsUtils.numberFormat(self.lang);
     let allData=this.tableDateDim.top(Infinity);
     let csv:any=[];
     allData.forEach(function(d:any) {
       let aux = {
-        time:d.endDate,
-        area:d.area
-        //filteredArea:d.filteredArea,        
+        "year":d.endDate,
+        "area km²":formater(d.area)
       }      
       aux[self.selectedLoi] = self.loiNames[d.loiName];
       csv.push(aux);
     });
-    let blob = new Blob([self.csvFormat(csv)], {type: "text/csv;charset=utf-8"}),
-    dt = new Date(),
-    fileName=dt.getDate() + "_" + dt.getMonth() + "_" + dt.getFullYear() + "_" + dt.getTime();
-    FileSaver.saveAs(blob, 'terrabrasilis_'+this.biome+'_'+fileName+'.csv');
+    return csv;
   }
 
   csvFormat(json:any):any {
-    return d3.csvFormat(json);
+    let dsv=d3.dsvFormat(';');
+    return dsv.format(json);
   }
 
   // check biome in the url 
@@ -391,9 +504,9 @@ export class DeforestationOptionsComponent implements OnInit  {
         append2Grid(mainGrid, '<div class="grid-stack-item"><div class="grid-stack-item-content"><div class="custom-drag-incr"> <span class="aggregateTemporal">Aggregated Temporal Data </span> <i class="material-icons pull-right">open_with</i> </div><div id="bar-chart"></div></div></div>', 0, 0, 7, 6);
         append2Grid(mainGrid, '<div class="grid-stack-item"><div class="grid-stack-item-content"><div class="custom-drag-incr"> <span class="absoluteData"> Absolute Data </span> <i class="material-icons pull-right">open_with</i> </div><div id="row-chart"></div></div></div>', 8, 0, 5, 6);
         append2Grid(mainGrid, '<div class="grid-stack-item"><div class="grid-stack-item-content"><div class="custom-drag-incr"> <span class="timeSeries"> Time Series </span> <i class="material-icons pull-right">open_with</i> </div><div id="series-chart"></div></div></div>', 0, 7, 12, 6);
-        append2Grid(mainGrid, '<div class="grid-stack-item"><div class="grid-stack-item-content"><div class="custom-drag-incr"> <span class="tableLois"> Area per years and Local of Interests </span> <i class="material-icons pull-right">open_with</i><button id="download-csv" class="btn btn-primary btn-success btn-sm btn-csv" ng-click="downloadCSV()">Download CSV</button> </div><div id="table-chart"><table id="tb-area" class="table table-hover dc-data-table dc-chart"></table></div></div></div>', 8, 15, 5, 6);
+        append2Grid(mainGrid, '<div class="grid-stack-item"><div class="grid-stack-item-content"><div class="custom-drag-incr"> <span class="tableLois"> Area per years and Local of Interests </span> <i class="material-icons pull-right">open_with</i></div><div id="table-chart"><table id="tb-area" class="table table-hover dc-data-table dc-chart"></table></div></div></div>', 8, 15, 5, 6);
         append2Grid(mainGrid, '<div class="grid-stack-item"><div class="grid-stack-item-content"><div class="custom-drag-incr"> <span class="aggregateSpatial"> Aggregated Spatial Data </span> <i class="material-icons pull-right">open_with</i> </div><div id="loi-chart"></div></div></div>', 0, 15, 7, 6);
-        $('.grid-stack-item').draggable({cancel: "#bar-chart, #loi-chart, #series-chart, #row-chart, #download-csv, #table-chart" });
+        $('.grid-stack-item').draggable({cancel: "#bar-chart, #loi-chart, #series-chart, #row-chart, #table-chart" });
       }
             
       buildMainGrid();
@@ -404,7 +517,6 @@ export class DeforestationOptionsComponent implements OnInit  {
         // remove all the items from the main grid and add each widgets again
         mainGrid.removeAll();
         buildMainGrid();
-        addEvents();
         self.makeGraphs();
         self.makeTables();
         return false;
@@ -419,16 +531,11 @@ export class DeforestationOptionsComponent implements OnInit  {
           appendTo: 'body'
       });
 
-      function addEvents() {
-        // add on click to handle download CSV feature
-        $("#download-csv").click(function() {
-          self.downloadCSV();
-        });
-      }
-
       function moreOptions() {
         let gsi=$('.grid-stack-item');
         for(let i=0;i<gsi.length;i++){
+          // Disable download button of map until GeoJSON is fixed.
+          if($(gsi[i]).find('#loi-chart').length) continue;
           let d1=document.createElement('div');
           d1.className="more_options";
           gsi[i].append(d1);
@@ -438,10 +545,11 @@ export class DeforestationOptionsComponent implements OnInit  {
             if(event.target.nodeName=='DIV' && event.target.className=='chartdown') {
               self.chartDownloadCSV(event.target.id.split(':')[1]);
             }else {
-              let dcChart=$(event.currentTarget);
-              dcChart=dcChart.parents('.grid-stack-item').find('.dc-chart');
-              if(dcChart && dcChart.length) {
-                let btid=dcChart[0].id;
+              let dcChart=null,leafletMap=null;
+              dcChart=$(event.currentTarget).parents('.grid-stack-item').find('.dc-chart');
+              leafletMap=$(event.currentTarget).parents('.grid-stack-item').find('#loi-chart');
+              let btid=(dcChart && dcChart.length)?(dcChart[0].id):( (leafletMap && leafletMap.length)?(leafletMap[0].id):(null) );
+              if(btid) {
                 if($('#dropdown-'+btid).length && $('#dropdown-'+btid).length==1) {
                   $('#dropdown-'+btid).attr('style','display:block;');
                 }else{
@@ -449,8 +557,9 @@ export class DeforestationOptionsComponent implements OnInit  {
                   m.className='dropdown';
                   m.id='dropdown-'+btid;
                   $(event.currentTarget).append(m);
+                  let type=(btid=='loi-chart')?('GeoJSON'):('CSV');
                   let mHtml='<div class="dropdown-content">'+
-                              '<div class="chartdown" id="chartdown:'+btid+'">Download CSV</div>'+
+                              '<div class="chartdown" id="chartdown:'+btid+'">Download '+type+'</div>'+
                             '</div>';
                   $(m).html(mHtml);
                 }
@@ -473,7 +582,6 @@ export class DeforestationOptionsComponent implements OnInit  {
       // add on click handle loadGrid call for restore view button 
       $('#load_grid').click(this.loadGrid);
 
-      addEvents();
       moreOptions();
     });
 
@@ -557,8 +665,8 @@ export class DeforestationOptionsComponent implements OnInit  {
     //let tableRelative = dc.dataTable('#tb-relative', 'tables');
 
     this.tableYear = 'Year';
-    this.tableRegular = (this.type!='rates')?("Area (km²) > 1.00ha"):("Area (km²)");
-    this.tableLess = "Area (km²) > 6.25ha";
+    this.tableRegular = "Area (km²)";//(this.type!='rates')?("Area (km²) > 1.00ha"):("Area (km²)");
+    //this.tableLess = "Area (km²) > 6.25ha";
     //this.tableTotal = "Total Area (km²)";
 
     this.tableArea
@@ -567,16 +675,16 @@ export class DeforestationOptionsComponent implements OnInit  {
         
         let loiArea:Number=0;
         self.tableTotalAreaByLoiName.all()
-                        .find(function(item:any){
-                          if(item.key==d['loiName']){
-                            loiArea=item.value;
-                            return;
-                          };
-                        });
-        return '<b>' + self.loiNames[d['loiName']] + '</b><span> - ' + DeforestationOptionsUtils.formatNumber(loiArea.valueOf()) + ' km²</span>';
+        .find(function(item:any){
+          if(item.key==d['loiName']){
+            loiArea=item.value;
+            return;
+          };
+        });
+        let formater=DeforestationOptionsUtils.numberFormat(self.lang);
+        return '<b>' + self.loiNames[d['loiName']] + '</b><span> - ' + formater(loiArea.valueOf()) + ' km²</span>';
       })
       .size(this.tableDateDim.top(Infinity).length)
-//    .sortBy(function(d:any) { return d['loiName']; })
       .sortBy(function(d:any) { return [d['loiName'], +d['endDate']].join(); })      
       .showGroups(true)
       .columns([
@@ -590,8 +698,8 @@ export class DeforestationOptionsComponent implements OnInit  {
         {
           label: this.tableRegular,
           format: function(d:any) {
-
-            return  +d["area"].toFixed(1);
+            let formater=DeforestationOptionsUtils.numberFormat(self.lang);
+            return formater(+d["area"]) + " km²";
           }
         }
       ])
@@ -603,7 +711,8 @@ export class DeforestationOptionsComponent implements OnInit  {
       });
 
       // add one graph
-      this.listCharts.set('table-chart', this.tableArea);      
+      // this.listCharts.set('table-chart', this.tableArea);
+      this.listCharts.set('tb-area', this.tableArea);
   }
 
   makeGraphs():void {
@@ -835,12 +944,11 @@ export class DeforestationOptionsComponent implements OnInit  {
             .slice(0, n);
         }
       };
-    }
+    };
 
     this.area
       .clipPadding(0)
       .barPadding(0.3)
-      //.group(snapToZero(this.areaByDate), ">1.00ha")
       .group(snapToZero(this.areaByDate))
       .colors("#ffd76d")
       .valueAccessor(
@@ -849,135 +957,58 @@ export class DeforestationOptionsComponent implements OnInit  {
         }
       )
       .label(function(d:any) {
-        return DeforestationOptionsUtils.formatNumber(d.data.value);
+        return DeforestationOptionsUtils.formatTitle(d.data.value);
       })
       .title(
         function (d:any) {
-          //let a=(self.type=='rates')?(""):(">1.00ha");
-          return d.key + "\n"
-          + d.value.toFixed(2) + " km²";
-          //+ a;
+          let formater=DeforestationOptionsUtils.numberFormat(self.lang);
+          return d.key + "\n"+ formater(d.value) + " km²";
         }
-      )
-      /*.addFilterHandler(function(filters:any, filter:any) {
-				filters.push(filter);
-				if(!self.filteredArea.hasFilter() || self.filteredArea.filters().indexOf(filter)<0){
-				  self.filteredArea.filter(filter);
-				}
-				return filters;
-			})
-			.removeFilterHandler(function(filters:any, filter:any) {
-				var pos=filters.indexOf(filter);
-				filters.splice(pos,1);
-				self.filteredArea.filter(null);
-				filters.forEach((f:any) => {
-					self.filteredArea.filter(f);
-				});
-				return filters;
-			}); */
-
-      /*
-    this.filteredArea
-      .clipPadding(0)
-      .barPadding(0.3)
-      .group(snapToZero(this.filteredAreaByDate), ">6.25ha")
-      .colors("#ffd76d")
-      .valueAccessor(function (d:any) {
-        return d.value;
-      }) 
-      .label(function(d:any) {
-        return DeforestationOptionsUtils.formatNumber(d.data.value);
-      })
-      .title(
-        function (d:any) {
-          var value;
-          isNaN(d["value"])?(value = 0):(value = Math.round(d["value"]));
-          return d.key + "\n" 
-          + d.value.toFixed(2) + " km²\n"
-          + ">6.25ha";
-        }
-      )
-      .addFilterHandler(function(filters:any, filter:any) {
-				filters.push(filter);
-				if(!self.area.hasFilter() || self.area.filters().indexOf(filter)<0){
-					self.area.filter(filter);
-				}
-				return filters;
-			})
-			.removeFilterHandler(function(filters:any, filter:any) {
-				var pos = filters.indexOf(filter);
-				filters.splice(pos,1);
-				self.area.filter(null);
-				filters.forEach((f:any) => {
-					self.area.filter(f);
-				});
-				return filters;
-      });
-      */
+      );
       
     var barChartWidth = $('#bar-chart')[0].offsetWidth;
     var barChartHeight = $('#bar-chart')[0].offsetHeight;
 
     this.barChart.width(barChartWidth+10)
-            .height(barChartHeight)
-            .shareTitle(false)
-            .transitionDuration(transition)
-            .margins({top: 10, right: 10, bottom: 50, left: 50})
-            .dimension(dateDim)
-            .group(snapToZero(this.areaByDate))
-            .elasticY(true)
-            .yAxisPadding('10%')
-            //.xAxisLabel("Brazilian "+ this.biome.charAt(0).toUpperCase() + this.biome.slice(1)+" Monitoring Period: "+this.minDate+" - "+this.maxDate)
-            .yAxisLabel(this.labelArea)
-            .x(d3.scaleBand().rangeRound([0, barChartWidth]))
-            .brushOn(false)
-            .controlsUseVisibility(false)
-            .addFilterHandler(function(filters:any, filter:any) {return [filter];})
-            .xUnits(dc.units.ordinal)
-            .renderHorizontalGridLines(true)
-            .renderVerticalGridLines(true)
-            ._rangeBandPadding(0.2)
-            .compose([this.area])
-            .on("pretransition", (chart:any) => {
-              Terrabrasilis.enableLoading("#bar-chart");
-              var bars = chart.selectAll("rect.bar");
-              //if (self.area.hasFilter() || self.filteredArea.hasFilter()) {
-                if (self.area.hasFilter()) {
-                bars.classed(dc.constants.DESELECTED_CLASS, true);
-                bars._groups[0].forEach( (bar:any) => {
-                  //if(self.area.filters().indexOf(bar.__data__.x) >= 0 || self.filteredArea.filters().indexOf(bar.__data__.x) >= 0){
-                    if(self.area.filters().indexOf(bar.__data__.x) >= 0){
-                    bar.setAttribute('class', 'bar selected');
-                  }
-                });
-              } else {
-                  bars.classed(dc.constants.SELECTED_CLASS, true);
-              }
-              
-            });
-
-    // if(this.type != "rates") {
-    //   this.barChart.legend( dc.legend().x(barChartWidth-barLegend).y(5).itemHeight(13).gap(5).legendText(function(d:any, i:any) { return d.name; }) );
-    // }
-    
-    this.barChart.on('renderlet', function (chart:any) {
-      
-      /*var br:any = d3.selectAll(chart.select('g.sub._1').selectAll('rect.bar'));
-      
-      var y:any=[];
-      
-      br._groups[0]._groups[0].forEach((bar:any) => {         
-          y.push(+bar.y.animVal.value);
+      .height(barChartHeight)
+      .shareTitle(false)
+      .transitionDuration(transition)
+      .margins({top: 10, right: 10, bottom: 50, left: 50})
+      .dimension(dateDim)
+      .group(snapToZero(this.areaByDate))
+      .elasticY(true)
+      .yAxisPadding('10%')
+      //.xAxisLabel("Brazilian "+ this.biome.charAt(0).toUpperCase() + this.biome.slice(1)+" Monitoring Period: "+this.minDate+" - "+this.maxDate)
+      .yAxisLabel(this.labelArea)
+      .x(d3.scaleBand().rangeRound([0, barChartWidth]))
+      .brushOn(false)
+      .controlsUseVisibility(false)
+      .addFilterHandler(function(filters:any, filter:any) {return [filter];})
+      .xUnits(dc.units.ordinal)
+      .renderHorizontalGridLines(true)
+      .renderVerticalGridLines(true)
+      ._rangeBandPadding(0.2)
+      .compose([this.area])
+      .on("pretransition", (chart:any) => {
+        Terrabrasilis.enableLoading("#bar-chart");
+        var bars = chart.selectAll("rect.bar");
+        //if (self.area.hasFilter() || self.filteredArea.hasFilter()) {
+          if (self.area.hasFilter()) {
+          bars.classed(dc.constants.DESELECTED_CLASS, true);
+          bars._groups[0].forEach( (bar:any) => {
+            //if(self.area.filters().indexOf(bar.__data__.x) >= 0 || self.filteredArea.filters().indexOf(bar.__data__.x) >= 0){
+              if(self.area.filters().indexOf(bar.__data__.x) >= 0){
+              bar.setAttribute('class', 'bar selected');
+            }
+          });
+        } else {
+            bars.classed(dc.constants.SELECTED_CLASS, true);
+        }
+        
       });
 
-      var txt:any = d3.selectAll(chart.select('g.sub._1').selectAll('text'));
-      
-      txt._groups[0]._groups[0].forEach((el:any, idx:any) => {
-        el.setAttribute("y", y[idx]+11);
-      });*/
-
+    this.barChart.on('renderlet', function (chart:any) {
       Terrabrasilis.disableLoading("#bar-chart");
-
     });
 
     this.barChart.on("renderlet.a",function (chart:any) {
@@ -1064,9 +1095,10 @@ export class DeforestationOptionsComponent implements OnInit  {
                 })
                 .ordinalColors(seriesColors)
                 .title(function(d:any) {
+                  let formater=DeforestationOptionsUtils.numberFormat(self.lang);
                   return  self.loiNames[d.key[0]] + "\n" +
                           d.key[1] + "\n" +
-                          d.value.toFixed(2) + " km²";
+                          formater(d.value) + " km²";
                 })
                 .yAxisPadding('15%')
                 .elasticY(true)
@@ -1176,24 +1208,31 @@ export class DeforestationOptionsComponent implements OnInit  {
             .group(this.areaByLoiName)            
             .controlsUseVisibility(true)
             .title(function(d:any) {
-              return self.loiNames[d.key] + ' : ' + d.value.toFixed(2) + " km²";
+              let formater=DeforestationOptionsUtils.numberFormat(self.lang);
+              return self.loiNames[d.key] + ' : ' + formater(d.value) + " km²";
             })
             .label(function(d:any) {
               
               // ordered array
               var array = self.areaByLoiName.top(Infinity);
-              var order = array.sort(function(a:any, b:any) {
-                            return b.value - a.value;
-                          });
+              var order = array.sort(
+                function(a:any, b:any) {
+                  return b.value - a.value;
+                }
+              );
 
               // get index 
-            var index = order.findIndex(function(loiname:any) {
+            var index = order.findIndex(
+              function(loiname:any) {
                 return loiname.key == d.key
-              });
+              }
+            );
 
-              var sum:any = array.map((ele:any) => { return ele.value; }).reduce(function(acc:any, ele:any) { return acc + ele; }, 0);
+            let formater=DeforestationOptionsUtils.numberFormat(self.lang);
 
-              return (index+1)+"° - "+self.loiNames[d.key] + ' : ' + DeforestationOptionsUtils.formatNumber(d.value) + " km² - ("+((100*(+d.value/sum)).toFixed(2))+"%)";
+            var sum:any = array.map((ele:any) => { return ele.value; }).reduce(function(acc:any, ele:any) { return acc + ele; }, 0);
+
+            return (index+1)+"° - "+self.loiNames[d.key] + ' : ' + formater(d.value) + " km² - ("+((100*(+d.value/sum)).toFixed(2))+"%)";
               
             })
             .ordering(function(d:any) { return -d.value })
@@ -1354,11 +1393,11 @@ export class DeforestationOptionsComponent implements OnInit  {
   }
 
   changeLanguage(value:string) {
-    
+    this.lang=value;
     this.localStorageService.setValue(this.languageKey, value);
     this._translate.use(value);
     this.updateGridstackLanguage();
-    
+    dc.renderAll();
   }
 
   updateGridstackLanguage():void {

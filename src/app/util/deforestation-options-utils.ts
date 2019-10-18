@@ -148,8 +148,46 @@ export class DeforestationOptionsUtils {
   
   };
 
+  public static numberFormat(lang:string='pt-br') {
+
+    let pt_br:d3.FormatLocaleDefinition={
+      "decimal": ",",
+      "thousands": ".",
+      "grouping": [3],
+      "currency": ["R$", ""]
+    };
+
+    let en:d3.FormatLocaleDefinition={
+      "decimal": ".",
+      "thousands": ",",
+      "grouping": [3],
+      "currency": ["$", ""]
+    };
+
+    let locales={
+      "pt-br":pt_br,
+      'en':en
+    };
+    
+    return d3.formatDefaultLocale(locales[lang]).format(',.2f');
+  };
+
+  public static dateFormat() {
+    let localeDate:d3.TimeLocaleDefinition={
+      "dateTime": "%d/%m/%Y %H:%M:%S",
+      "date": "%d/%m/%Y",
+      "time": "%H:%M:%S",
+      "periods": ["AM", "PM"],
+      "days": ["Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"],
+      "shortDays": ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"],
+      "months": ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"],
+      "shortMonths": ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"]
+    };
+    return d3.timeFormatDefaultLocale(localeDate);
+  }
+
   // format Number
-  public static formatNumber(num:number) {
+  public static formatTitle(num:number) {
     
     if (num >= 1000000000) {
         return (num / 1000000000).toFixed(1).replace(/\.0$/, '') + 'G';
@@ -194,31 +232,31 @@ export class DeforestationOptionsUtils {
 
     } else if (id == "series-chart") {
 
-              var seriesChartLegend = Constants.DASHBOARD_LEGEND_WIDTH_SERIES_CHART.get(loi);
-              
-              result.width(width-seriesChartLegend) // update width
-                    .height(height) // update height
-                    .transitionDuration(transition); // update transitions
-              
-              result.legend(dc.legend().x(width-seriesChartLegend).y(10).itemHeight(13).gap(5).legendText(function(d:any) { 
-                return loiNames[d.name];
-              }));
+      var seriesChartLegend = Constants.DASHBOARD_LEGEND_WIDTH_SERIES_CHART.get(loi);
+      
+      result.width(width-seriesChartLegend) // update width
+            .height(height) // update height
+            .transitionDuration(transition); // update transitions
+      
+      result.legend(dc.legend().x(width-seriesChartLegend).y(10).itemHeight(13).gap(5).legendText(function(d:any) { 
+        return loiNames[d.name];
+      }));
 
-              result.on("renderlet.a",function (chart:any) {
-                // rotate x-axis labels
-                chart.selectAll('g.x text')
-                  .attr('transform', 'translate(-10,10) rotate(315)');
-                $("#series-chart > svg").attr("width", width);
-              });
+      result.on("renderlet.a",function (chart:any) {
+        // rotate x-axis labels
+        chart.selectAll('g.x text')
+          .attr('transform', 'translate(-10,10) rotate(315)');
+        $("#series-chart > svg").attr("width", width);
+      });
 
-            }
-            else if (id == "row-chart") {
-                result.width(width*.95) // update width
-                .height(height*.95) // update height
-                .transitionDuration(transition); // update transitions
+    }
+    else if (id == "row-chart") {
+        result.width(width*.95) // update width
+        .height(height*.95) // update height
+        .transitionDuration(transition); // update transitions
 
-                $('.search-loi').width(0.8*width);
-            }
+        $('.search-loi').width(0.8*width);
+    }
 
     (function(j, result){
       setTimeout(() => {
