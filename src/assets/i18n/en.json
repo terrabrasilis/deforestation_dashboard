@@ -211,6 +211,10 @@
             "close": "Close"
         },
         "on-demand": {
+            "alert":{
+                "title":"Warning!",
+                "msg":"Select at least one state to generate the CSV file."
+            },
             "download": "Download",
             "close": "Close",
             "title": {

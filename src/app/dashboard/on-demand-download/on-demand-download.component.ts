@@ -115,6 +115,13 @@ export class OnDemandDownloadComponent implements OnInit {
       }
     ).get();
 
+    if(!checkedValues.length) {
+      $('#missselect').show();
+      return;
+    }else{
+      $('#missselect').hide();
+    }
+
     var loiNames = new Map<number, string[]>();
     this.loiNamesJson.lois.filter(
       (filteredLoi:any) => {

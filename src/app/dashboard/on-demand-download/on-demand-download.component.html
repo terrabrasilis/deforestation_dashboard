@@ -9,6 +9,15 @@
       </div>
       <div class="modal-body">
           <div class="row boxmodal">
+            <div class="col-md-12">
+              <div id="missselect" class="alert alert-dismissable alert-warning" style="display: none;">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
+                  ×
+                </button>
+                <h4>{{ 'dashboard.on-demand.alert.title' | translate }}</h4>
+                {{ 'dashboard.on-demand.alert.msg' | translate }}
+              </div>
+            </div>
             <div class="col-6">
               <div *ngFor="let state of statesBlk1" class="checkbox">
                 <label><input type="checkbox" [value]="state"> {{ state }} </label>

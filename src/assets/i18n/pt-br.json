@@ -217,6 +217,10 @@
             }
         },
         "on-demand": {
+            "alert":{
+                "title":"Atenção!",
+                "msg":"Selecione ao menos um estado gerar o arquivo CSV."
+            },
             "download": "Download",
             "close": "Fechar",
             "title": {
