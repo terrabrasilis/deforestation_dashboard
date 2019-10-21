@@ -1,3 +1,18 @@
+.bg-verde {background-color: #00a47d !important; color: #fff;} 
+.modal-content {border: 0px !important;}
+.btn-verde, .btn-verde:hover {
+background: #20c997 !important;
+color: #fff !important;
+border-bottom: 3px solid #1aa179;
+border-color: #1aa179;
+}
+.boxmodal {padding:20px 10px;}
+.modal .btn-success {
+color: #fff;
+background-color: #108d6f;
+border-color: #108d6f;
+}
+
 .csv-config{
     border-top: 1px solid #006950;
     margin-top: 10px;

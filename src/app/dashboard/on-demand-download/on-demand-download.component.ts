@@ -33,7 +33,9 @@ import * as FileSaver from 'file-saver';
 })
 export class OnDemandDownloadComponent implements OnInit {
 
-  states: Array<Object> = new Array();  
+  states: Array<Object> = new Array();
+  statesBlk1: Array<Object> = new Array();
+  statesBlk2: Array<Object> = new Array();
   type: string;
   statesObservable: Observable<any>;
   dataObservable: Observable<any>;
@@ -71,6 +73,9 @@ export class OnDemandDownloadComponent implements OnInit {
         if (this.biome == "legal_amazon") 
           this.states = Constants.DASHBOARD_LEGAL_AMAZON_STATES;
 
+    let half=parseInt( ( (this.states.length%2)?( (this.states.length/2)+1 ):( this.states.length/2 ) )+""  );
+    this.statesBlk1=this.states.slice(0,half);
+    this.statesBlk2=this.states.slice(half,this.states.length);
     this.httpOptions = { headers: new  HttpHeaders(
       { 'App-Identifier': 'prodes_'+this.biome}
     )};

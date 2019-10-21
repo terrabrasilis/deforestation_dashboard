@@ -1,16 +1,25 @@
 <div class="modal" tabindex="-1" role="dialog" id="modal-ondemand-download">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
-      <div class="modal-header">
+      <div class="modal-header bg-verde">
         <h5 class="modal-title">{{ 'dashboard.on-demand.title.' + biome | translate }}</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        <div *ngFor="let state of states" class="checkbox">
-          <label><input type="checkbox" [value]="state"> {{ state }} </label>
-        </div>
+          <div class="row boxmodal">
+            <div class="col-6">
+              <div *ngFor="let state of statesBlk1" class="checkbox">
+                <label><input type="checkbox" [value]="state"> {{ state }} </label>
+              </div>
+            </div>
+            <div class="col-6">
+              <div *ngFor="let state of statesBlk2" class="checkbox">
+                <label><input type="checkbox" [value]="state"> {{ state }} </label>
+              </div>
+            </div>
+          </div>
         <div class="csv-config">
           <h5>{{ 'dashboard.on-demand.config.title' | translate }}</h5>
           {{ 'dashboard.on-demand.config.fraction-chooser' | translate }} <input type="radio" name="fraction" value="point" checked> {{ 'dashboard.on-demand.config.point' | translate }} <input type="radio" name="fraction" value="comma"> {{ 'dashboard.on-demand.config.comma' | translate }}
@@ -19,8 +28,8 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" (click)="clickHandler()">{{ 'dashboard.on-demand.download' | translate }}</button>
-        <button type="button" class="btn btn-primary" data-dismiss="modal">{{ 'dashboard.on-demand.close' | translate }}</button>
+        <button type="button" class="btn btngreen" (click)="clickHandler()">{{ 'dashboard.on-demand.download' | translate }}</button>
+        <button type="button" class="btn btngreen" data-dismiss="modal">{{ 'dashboard.on-demand.close' | translate }}</button>
       </div>
     </div>
   </div>
