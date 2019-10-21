@@ -221,7 +221,7 @@ export class DeforestationOptionsComponent implements OnInit  {
     this.getData(this.selectedClass);
 
     // used to call functions ouside Angular (devel)
-    //window["dashboard"]=function(){return self;};
+    window["dashboard"]=function(){return self;};
     
   }
 
@@ -1254,10 +1254,12 @@ export class DeforestationOptionsComponent implements OnInit  {
     });
 
     this.rowChart.on('filtered', function(chart:any) {
-      if (!chart.hasFilter())
+      if (!chart.hasFilter()) {
+        self.applyCountyFilter(null);// to reset the data funcion
         self._translate.get('dashboard.filters.loiname.all').subscribe((text) => {
           self.loiname = text;
         });
+      }
     });
 
     this.rowChart.filterPrinter(function(filters:any) {
@@ -1373,7 +1375,8 @@ export class DeforestationOptionsComponent implements OnInit  {
     if(!context) return;
 
     context.barChart.filterAll();
-    context.rowChart.filterAll();      
+    context.rowChart.filterAll();
+    context.applyCountyFilter();// to reset function data() of the rowChart
     context.seriesChart.filterAll();
     context._translate.get('dashboard.filters.loiname.all').subscribe((text:any) => {
       context.loiname = text;
