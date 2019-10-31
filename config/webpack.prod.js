@@ -3,6 +3,7 @@ const webpackMerge = require('webpack-merge');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const { BaseHrefWebpackPlugin } = require('base-href-webpack-plugin');
 const commonConfig = require('./webpack.common.js');
 const helpers = require('./helpers');
 //const path = require('path');
@@ -18,7 +19,7 @@ module.exports = webpackMerge(commonConfig, {
 
   output: {
     path: helpers.root('dist'),
-    publicPath: '/app/',
+    publicPath: '/app/dashboard/deforestation/',
     filename: '[name].[hash].js',
     chunkFilename: '[id].[hash].chunk.js'
   },
@@ -59,6 +60,9 @@ module.exports = webpackMerge(commonConfig, {
     new HtmlWebpackPlugin({
         filename: 'index.html',
         template: 'src/index-prod.html'
+    }),
+    new BaseHrefWebpackPlugin({
+      baseHref: '/app/dashboard/deforestation/'
     }),
 
     new webpack.LoaderOptionsPlugin({
