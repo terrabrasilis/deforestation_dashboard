@@ -148,8 +148,8 @@
   <!-- Menu top graficos -->
   </div>
 
-  <div class="row">
-    <div id="title-chart" class="col-9 all-charts-title boxtitlepanel"> 
+  <div class="row" id="title-chart">
+    <div class="col-9 all-charts-title boxtitlepanel"> 
       {{ 'dashboard.title.filters' | translate }} {{ 'dashboard.title.'+ biome | translate}} / {{ 'dashboard.loi.' + selectedLoi | translate }} / {{loiname}}
       <br><span id="title-time-row"> {{ 'dashboard.title.filters' | translate }} {{ 'dashboard.title.'+ biome | translate}} </span> / {{ 'dashboard.title.time' | translate }} / {{selectedTime}}
     </div>
@@ -165,7 +165,6 @@
         <div class="col-md-12">
           <div class="grid-stack grid-stack-12" id="main-grid" #mygrid>
           </div>
-          <div style="height: 60px;"></div>
         </div>
       </div> 
     <!-- graficos -->

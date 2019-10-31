@@ -178,7 +178,8 @@ export class DeforestationOptionsComponent implements OnInit  {
   ngOnInit() {
         
     // define the height for div content using the div identifier: "myTabContent"
-    let h = $(document).height() - ($('#sub-bar-options').height() + 64 + 45 + 30 + 30);// (sub-bar + header + footer + padding top + padding bottom)
+    // (sub-bar + filters-bar + header + footer)
+    let h = $(window).height() - ($('#sub-bar-options').height() + $('#title-chart').height() + $('#content').height() + $('.footer').height());
     $('#myTabContent').height( h );
 
     if (!this.checkBiome())
@@ -1338,7 +1339,7 @@ export class DeforestationOptionsComponent implements OnInit  {
           w = nw;
           self.updateSizeCharts(transition);
         }
-      }, 300);
+      }, 500);
       
       self.tagId = $(".ui-resizable-resizing > .grid-stack-item-content > div:nth-child(2)").attr("id");
     });
@@ -1393,6 +1394,12 @@ export class DeforestationOptionsComponent implements OnInit  {
     for (let item of arrKeys) {
       DeforestationOptionsUtils.render(item, self.listCharts, transition, self.loiNames, self.selectedLoi, self.type);
     }
+    setTimeout(() => {
+      // define the height for div content using the div identifier: "myTabContent"
+      // (sub-bar + filters-bar + header + footer)
+      let h = $(window).height() - ($('#sub-bar-options').height() + $('#title-chart').height() + $('#content').height() + $('.footer').height());
+      $('#myTabContent').height( h );
+    }, 500);
   }
 
   changeLanguage(value:string) {
