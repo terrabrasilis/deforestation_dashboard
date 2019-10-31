@@ -52,7 +52,7 @@ export interface State {
 
 export class DeforestationOptionsComponent implements OnInit  {
 
-  imgPath:string=( process.env.ENV === 'production' && process.env.BUILD_TYPE === 'production' )?('/app/'):('');
+  imgPath:string=( process.env.ENV === 'production' && process.env.BUILD_TYPE === 'production' )?('/app/dashboard/deforestation/'):('');
   
   // variables definition
   biome: string;
@@ -554,7 +554,7 @@ export class DeforestationOptionsComponent implements OnInit  {
                   $('#dropdown-'+btid).attr('style','display:block;');
                 }else{
                   let m=document.createElement('div');
-                  m.className='dropdown';
+                  m.className='down-context-menu';
                   m.id='dropdown-'+btid;
                   $(event.currentTarget).append(m);
                   let type=(btid=='loi-chart')?('GeoJSON'):('CSV');
@@ -569,7 +569,7 @@ export class DeforestationOptionsComponent implements OnInit  {
         }
         $('html').on('mouseover',()=>{
           setTimeout(() => {
-            let items=$('.dropdown');
+            let items=$('.down-context-menu');
             for(let i=0;i<items.length;i++){
               $(items[i]).on('mouseout',()=>{
                 $(items[i]).hide();
