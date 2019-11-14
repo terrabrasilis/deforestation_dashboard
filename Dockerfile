@@ -1,5 +1,5 @@
 # Run to test image
-# docker run -d --rm --name terrabrasilis_deforestation_dashboard terrabrasilis/deforestation-dashboard:v2.0.7
+# docker run -d --rm --name terrabrasilis_deforestation_dashboard terrabrasilis/deforestation-dashboard:v2.0.8
 FROM node:12.8.1 as node
 
 WORKDIR /app
