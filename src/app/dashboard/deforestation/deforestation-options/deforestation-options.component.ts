@@ -1,5 +1,5 @@
 import {  Component, 
-          OnInit, 
+          OnInit,
           ChangeDetectorRef } from '@angular/core';
 
 import {  HttpHeaders } from '@angular/common/http';
@@ -10,6 +10,7 @@ import {  forkJoin  } from "rxjs/observable/forkJoin";
 
 import {  DialogComponent } from "../../../dialog/dialog.component";
 import {  MatDialog } from "@angular/material";
+import { DomSanitizer } from '@angular/platform-browser';
 
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -125,8 +126,9 @@ export class DeforestationOptionsComponent implements OnInit  {
   private languageKey: string = "translate";
   private lang: string;
 
-  constructor(private route: ActivatedRoute,    
+  constructor(private route: ActivatedRoute,
               private router: Router,
+              private dom: DomSanitizer,
               public dialog: MatDialog,
               private dashboardApiProviderService: DashboardApiProviderService,
               private _translate: TranslateService,
@@ -159,7 +161,7 @@ export class DeforestationOptionsComponent implements OnInit  {
     this.barPadding = undefined;
 
     if (this.type == "rates")
-      this.selectedClass = this.selectedClass+"_rates";      
+      this.selectedClass = this.selectedClass+"_rates";
       
     // remove loading tag
     $(".loading-overlay, .loading-overlay-content").remove();
@@ -183,14 +185,26 @@ export class DeforestationOptionsComponent implements OnInit  {
     $('#myTabContent').height( h );
 
     if (!this.checkBiome())
-      this.dialog.open(DialogComponent, {
-        data: {message: "This is not a valid URL!"}, width : '450px'
-      });
+      this.dialog.open(DialogComponent, {width : '450px'});
 
     this.localStorageService.getValue(this.languageKey).subscribe(
       (value:any) => {
         let l=JSON.parse(value);
         this.lang=(l===null)?('pt-br'):(l.value);
+        
+        if (this.type == "rates"){
+          this._translate.get('dashboard.modals.warning_rates').subscribe((text) => {
+            let msg=text;
+            let dialogRef = this.dialog.open(DialogComponent, {width : '450px'});
+            dialogRef.componentInstance.content = this.dom.bypassSecurityTrustHtml(msg);
+          });
+        }else if(this.biome == "legal_amazon" || this.biome == "amazon") {
+          this._translate.get('dashboard.modals.warning_increase').subscribe((text) => {
+            let msg=text;
+            let dialogRef = this.dialog.open(DialogComponent, {width : '450px'});
+            dialogRef.componentInstance.content = this.dom.bypassSecurityTrustHtml(msg);
+          });
+        }
       }
     );
     
@@ -222,7 +236,7 @@ export class DeforestationOptionsComponent implements OnInit  {
     this.getData(this.selectedClass);
 
     // used to call functions ouside Angular (devel)
-    window["dashboard"]=function(){return self;};
+    //window["dashboard"]=function(){return self;};
     
   }
 
@@ -993,19 +1007,17 @@ export class DeforestationOptionsComponent implements OnInit  {
       .on("pretransition", (chart:any) => {
         Terrabrasilis.enableLoading("#bar-chart");
         var bars = chart.selectAll("rect.bar");
-        //if (self.area.hasFilter() || self.filteredArea.hasFilter()) {
-          if (self.area.hasFilter()) {
+
+        if (self.area.hasFilter()) {
           bars.classed(dc.constants.DESELECTED_CLASS, true);
           bars._groups[0].forEach( (bar:any) => {
-            //if(self.area.filters().indexOf(bar.__data__.x) >= 0 || self.filteredArea.filters().indexOf(bar.__data__.x) >= 0){
-              if(self.area.filters().indexOf(bar.__data__.x) >= 0){
+            if(self.area.filters().indexOf(bar.__data__.x) >= 0){
               bar.setAttribute('class', 'bar selected');
             }
           });
         } else {
             bars.classed(dc.constants.SELECTED_CLASS, true);
         }
-        
       });
 
     this.barChart.on('renderlet', function (chart:any) {
@@ -1017,6 +1029,15 @@ export class DeforestationOptionsComponent implements OnInit  {
       chart.selectAll('g.x text')
         .attr('transform', 'translate(-10,10) rotate(315)');
       $("#bar-chart > svg").attr("width", barChartWidth);
+
+      var bars = chart.selectAll("rect.bar");
+      // define color to priority result of PRODES
+      bars._groups[0].forEach( (bar:any) => {
+        if(bar.textContent.indexOf("2019") == 0){
+          bar.textContent="*"+bar.textContent;
+          bar.setAttribute('fill', '#ff9100');
+        }
+      });
     });
 
     this.area.on('filtered', function(chart:any) {
