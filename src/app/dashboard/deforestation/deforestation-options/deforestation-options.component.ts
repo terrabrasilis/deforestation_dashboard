@@ -1034,8 +1034,12 @@ export class DeforestationOptionsComponent implements OnInit  {
       // define color to priority result of PRODES
       bars._groups[0].forEach( (bar:any) => {
         if(bar.textContent.indexOf("2019") == 0){
-          bar.textContent="*"+bar.textContent;
-          bar.setAttribute('fill', '#ff9100');
+          bar.innerHTML="<title id='priority_data'>"+bar.textContent+"</title>";
+          bar.setAttribute('fill', '#ffad00');
+          self._translate.get('dashboard.tooltip.priority_data').subscribe((text) => {
+            text=text+" "+$('#priority_data').text();
+            $('#priority_data').text(text);
+          });
         }
       });
     });

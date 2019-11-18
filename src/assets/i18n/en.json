@@ -184,10 +184,11 @@
         "tooltip": {
             "rates": "Deforestation rates are calculated based on deforestation areas greater than 6.25 hectares",
             "incr": "Deforestation increments are calculated based on all deforestation data available",
-            "download": "This download option is only available for deforestation increments"
+            "download": "This download option is only available for deforestation increments",
+            "priority_data":"Preliminary data"
         },
         "modals": {
-            "warning_rates":"New data.<br>Preliminary deforestation rates for 2018/2019 period based on 99 priority scenes.<br><a style='color: blue;' href='#'>Learn more at technical note.</a>",
+            "warning_rates":"New data.<br>Preliminary deforestation rates for 2018/2019 period based on 99 priority scenes.<!-- <br><a style='color: blue;' href='#'>Learn more at technical note.</a> -->",
             "warning_increase":"Preliminary deforestation increment data for the 2018/2019 period is still being processed and will be available soon."
         }
     }

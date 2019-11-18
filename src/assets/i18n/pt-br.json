@@ -190,10 +190,11 @@
         "tooltip": {
             "rates": "As taxas de desmatamento são calculadas baseadas nas áreas de desmatamento maiores que 6.25 hectares",
             "incr": "Os incrementos de desmatamento são calculados baseados em todas as áreas de desmatamento disponíveis",
-            "download": "Esta opção de download está disponível somente para os incrementos de desmatamento"
+            "download": "Esta opção de download está disponível somente para os incrementos de desmatamento",
+            "priority_data":"Dados preliminares"
         },
         "modals": {
-            "warning_rates":"Novos dados.<br>Taxa preliminar de desmatamento para o período 2018/2019 com base em 99 cenas prioritárias.<br><a  style='color: blue;' href='#'>Saiba mais na nota técnica.</a>",
+            "warning_rates":"Novos dados.<br>Taxa preliminar de desmatamento para o período 2018/2019 com base em 99 cenas prioritárias.<!-- <br><a style='color: blue;' href='#'>Saiba mais na nota técnica.</a> -->",
             "warning_increase":"Os dados preliminares de incremento de desmatamento para o período 2018/2019 ainda estão sendo processados e serão disponibilizados em breve."
         }
     }
