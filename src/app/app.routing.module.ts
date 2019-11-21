@@ -7,10 +7,10 @@ import { DeforestationOptionsComponent } from './dashboard/deforestation/defores
 
 
 const routes: Routes = [
-    { path: 'dashboard/deforestation/biomes/:biome/:type', component: DeforestationOptionsComponent },
+    { path: 'biomes/:biome/:type', component: DeforestationOptionsComponent },
     {
         path: "**",
-        redirectTo: "dashboard/deforestation/biomes/legal_amazon/rates",
+        redirectTo: "biomes/legal_amazon/rates",
         pathMatch: "full"
     }
 ];

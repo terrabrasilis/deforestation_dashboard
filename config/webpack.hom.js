@@ -19,7 +19,7 @@ module.exports = webpackMerge(commonConfig, {
 
   output: {
     path: helpers.root('dist'),
-    publicPath: '',
+    publicPath: '/homologation/dashboard/deforestation/',
     filename: '[name].[hash].js',
     chunkFilename: '[id].[hash].chunk.js'
   },
@@ -61,7 +61,7 @@ module.exports = webpackMerge(commonConfig, {
       template: 'src/index-dev.html'
     }),
     new BaseHrefWebpackPlugin({
-      baseHref: '/homolog/'
+      baseHref: '/homologation/dashboard/deforestation/'
     }),
 
     new webpack.LoaderOptionsPlugin({
