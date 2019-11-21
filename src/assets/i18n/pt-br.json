@@ -191,11 +191,12 @@
             "rates": "As taxas de desmatamento são calculadas baseadas nas áreas de desmatamento maiores que 6.25 hectares",
             "incr": "Os incrementos de desmatamento são calculados baseados em todas as áreas de desmatamento disponíveis",
             "download": "Esta opção de download está disponível somente para os incrementos de desmatamento",
-            "priority_data":"Dados preliminares"
+            "rates_bar_pri":"Taxa estimada",
+            "rates_bar":"Taxa consolidada"
         },
         "modals": {
-            "warning_rates":"Novos dados.<br>Taxa preliminar de desmatamento para o período 2018/2019 com base em 99 cenas prioritárias.<!-- <br><a style='color: blue;' href='#'>Saiba mais na nota técnica.</a> -->",
-            "warning_increase":"Os dados preliminares de incremento de desmatamento para o período 2018/2019 ainda estão sendo processados e serão disponibilizados em breve."
+            "warning_rates":"Novos dados.<br>Taxa estimada de desmatamento na Amazônia Legal Brasileira, para o período 2018/2019, com base em 99 cenas prioritárias.<br><a style='color: blue;' target='_blank' href='http://www.obt.inpe.br/OBT/noticias/a-estimativa-da-taxa-de-desmatamento-por-corte-raso-para-a-amazonia-legal-em-2019-e-de-9-762-km2'>Saiba mais na nota técnica.</a>",
+            "warning_increase":"Consulte os novos dados de incremento de desmatamento na Amazônia Legal Brasileira e Bioma Amazônia, para o período 2018/2019, medidos com base em 99 cenas prioritárias."
         }
     }
 }
