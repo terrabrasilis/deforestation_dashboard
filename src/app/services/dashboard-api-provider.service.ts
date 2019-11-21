@@ -79,7 +79,7 @@ export class DashboardApiProviderService {
   }
 
   getDeforestationRates(httpOptions: any) {
-    return this.http.get("http://terrabrasilis.dpi.inpe.br/download/prodes-legal-amz/json/rates.json", httpOptions);
+    return this.http.get("assets/files/rates2019.json", httpOptions);
   }
 
 }

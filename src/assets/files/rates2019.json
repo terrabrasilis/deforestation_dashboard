@@ -1,0 +1,3269 @@
+{
+	"name": "PRODES LEGAL AMAZON",
+	"clazz": "deforestation_rates",
+	"periods": [{
+		"startDate": {
+			"year": 1987,
+			"month": 8,
+			"day": 1
+		},
+		"endDate": {
+			"year": 1988,
+			"month": 7,
+			"day": 31
+		},
+		"features": [{
+			"loi": 1,
+			"loiname": 2975,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 620
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2983,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 1510
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2976,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 60
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2977,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 2450
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2978,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 5140
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2979,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 6990
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2982,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 2340
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2980,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 290
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2981,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 1650
+			}]
+		}]
+	}, {
+		"startDate": {
+			"year": 1988,
+			"month": 8,
+			"day": 1
+		},
+		"endDate": {
+			"year": 1989,
+			"month": 7,
+			"day": 31
+		},
+		"features": [{
+			"loi": 1,
+			"loiname": 2975,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 540
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2983,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 1180
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2976,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 130
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2977,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 1420
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2978,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 5960
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2979,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 5750
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2982,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 1430
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2980,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 630
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2981,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 730
+			}]
+		}]
+	}, {
+		"startDate": {
+			"year": 1989,
+			"month": 8,
+			"day": 1
+		},
+		"endDate": {
+			"year": 1990,
+			"month": 7,
+			"day": 31
+		},
+		"features": [{
+			"loi": 1,
+			"loiname": 2975,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 550
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2983,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 520
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2976,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 250
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2977,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 1100
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2978,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 4020
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2979,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 4890
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2982,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 1670
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2980,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 150
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2981,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 580
+			}]
+		}]
+	}, {
+		"startDate": {
+			"year": 1990,
+			"month": 8,
+			"day": 1
+		},
+		"endDate": {
+			"year": 1991,
+			"month": 7,
+			"day": 31
+		},
+		"features": [{
+			"loi": 1,
+			"loiname": 2975,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 380
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2983,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 980
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2976,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 410
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2977,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 670
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2978,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 2840
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2979,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 3780
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2982,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 1110
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2980,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 420
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2981,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 440
+			}]
+		}]
+	}, {
+		"startDate": {
+			"year": 1991,
+			"month": 8,
+			"day": 1
+		},
+		"endDate": {
+			"year": 1992,
+			"month": 7,
+			"day": 31
+		},
+		"features": [{
+			"loi": 1,
+			"loiname": 2975,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 400
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2983,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 799
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2976,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 36
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2977,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 1135
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2978,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 4674
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2979,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 3787
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2982,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 2265
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2980,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 281
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2981,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 409
+			}]
+		}]
+	}, {
+		"startDate": {
+			"year": 1992,
+			"month": 8,
+			"day": 1
+		},
+		"endDate": {
+			"year": 1993,
+			"month": 7,
+			"day": 31
+		},
+		"features": [{
+			"loi": 1,
+			"loiname": 2975,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 482
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2983,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 370
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2976,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 0
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2977,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 372
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2978,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 6220
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2979,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 4284
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2982,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 2595
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2980,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 240
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2981,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 333
+			}]
+		}]
+	}, {
+		"startDate": {
+			"year": 1993,
+			"month": 8,
+			"day": 1
+		},
+		"endDate": {
+			"year": 1994,
+			"month": 7,
+			"day": 31
+		},
+		"features": [{
+			"loi": 1,
+			"loiname": 2975,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 482
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2983,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 370
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2976,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 0
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2977,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 372
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2978,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 6220
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2979,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 4284
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2982,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 2595
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2980,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 240
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2981,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 333
+			}]
+		}]
+	}, {
+		"startDate": {
+			"year": 1994,
+			"month": 8,
+			"day": 1
+		},
+		"endDate": {
+			"year": 1995,
+			"month": 7,
+			"day": 31
+		},
+		"features": [{
+			"loi": 1,
+			"loiname": 2975,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 1208
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2983,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 2114
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2976,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 9
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2977,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 1745
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2978,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 10391
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2979,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 7845
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2982,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 4730
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2980,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 220
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2981,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 797
+			}]
+		}]
+	}, {
+		"startDate": {
+			"year": 1995,
+			"month": 8,
+			"day": 1
+		},
+		"endDate": {
+			"year": 1996,
+			"month": 7,
+			"day": 31
+		},
+		"features": [{
+			"loi": 1,
+			"loiname": 2975,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 433
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2983,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 1023
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2976,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 0
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2977,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 1061
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2978,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 6543
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2979,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 6135
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2982,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 2432
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2980,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 214
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2981,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 320
+			}]
+		}]
+	}, {
+		"startDate": {
+			"year": 1996,
+			"month": 8,
+			"day": 1
+		},
+		"endDate": {
+			"year": 1997,
+			"month": 7,
+			"day": 31
+		},
+		"features": [{
+			"loi": 1,
+			"loiname": 2975,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 358
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2983,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 589
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2976,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 18
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2977,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 409
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2978,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 5271
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2979,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 4139
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2982,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 1986
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2980,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 184
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2981,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 273
+			}]
+		}]
+	}, {
+		"startDate": {
+			"year": 1997,
+			"month": 8,
+			"day": 1
+		},
+		"endDate": {
+			"year": 1998,
+			"month": 7,
+			"day": 31
+		},
+		"features": [{
+			"loi": 1,
+			"loiname": 2975,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 536
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2983,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 670
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2976,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 30
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2977,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 1012
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2978,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 6466
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2979,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 5829
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2982,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 2041
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2980,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 223
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2981,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 576
+			}]
+		}]
+	}, {
+		"startDate": {
+			"year": 1998,
+			"month": 8,
+			"day": 1
+		},
+		"endDate": {
+			"year": 1999,
+			"month": 7,
+			"day": 31
+		},
+		"features": [{
+			"loi": 1,
+			"loiname": 2975,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 441
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2983,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 720
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2976,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 0
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2977,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 1230
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2978,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 6963
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2979,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 5111
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2982,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 2358
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2980,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 220
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2981,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 216
+			}]
+		}]
+	}, {
+		"startDate": {
+			"year": 1999,
+			"month": 8,
+			"day": 1
+		},
+		"endDate": {
+			"year": 2000,
+			"month": 7,
+			"day": 31
+		},
+		"features": [{
+			"loi": 1,
+			"loiname": 2975,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 547
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2983,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 612
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2976,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 0
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2977,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 1065
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2978,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 6369
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2979,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 6671
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2982,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 2465
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2980,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 253
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2981,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 244
+			}]
+		}]
+	}, {
+		"startDate": {
+			"year": 2000,
+			"month": 8,
+			"day": 1
+		},
+		"endDate": {
+			"year": 2001,
+			"month": 7,
+			"day": 31
+		},
+		"features": [{
+			"loi": 1,
+			"loiname": 2975,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 419
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2983,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 634
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2976,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 7
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2977,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 958
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2978,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 7703
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2979,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 5237
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2982,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 2673
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2980,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 345
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2981,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 189
+			}]
+		}]
+	}, {
+		"startDate": {
+			"year": 2001,
+			"month": 8,
+			"day": 1
+		},
+		"endDate": {
+			"year": 2002,
+			"month": 7,
+			"day": 31
+		},
+		"features": [{
+			"loi": 1,
+			"loiname": 2975,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 883
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2983,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 885
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2976,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 0
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2977,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 1085
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2978,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 7892
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2979,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 7510
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2982,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 3099
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2980,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 84
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2981,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 212
+			}]
+		}]
+	}, {
+		"startDate": {
+			"year": 2002,
+			"month": 8,
+			"day": 1
+		},
+		"endDate": {
+			"year": 2003,
+			"month": 7,
+			"day": 31
+		},
+		"features": [{
+			"loi": 1,
+			"loiname": 2975,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 1078
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2983,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 1558
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2976,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 25
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2977,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 993
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2978,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 10405
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2979,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 7145
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2982,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 3597
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2980,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 439
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2981,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 156
+			}]
+		}]
+	}, {
+		"startDate": {
+			"year": 2003,
+			"month": 8,
+			"day": 1
+		},
+		"endDate": {
+			"year": 2004,
+			"month": 7,
+			"day": 31
+		},
+		"features": [{
+			"loi": 1,
+			"loiname": 2975,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 728
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2983,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 1232
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2976,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 46
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2977,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 755
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2978,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 11814
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2979,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 8870
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2982,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 3858
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2980,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 311
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2981,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 158
+			}]
+		}]
+	}, {
+		"startDate": {
+			"year": 2004,
+			"month": 8,
+			"day": 1
+		},
+		"endDate": {
+			"year": 2005,
+			"month": 7,
+			"day": 31
+		},
+		"features": [{
+			"loi": 1,
+			"loiname": 2975,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 592
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2983,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 775
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2976,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 33
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2977,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 922
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2978,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 7145
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2979,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 5899
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2982,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 3244
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2980,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 133
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2981,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 271
+			}]
+		}]
+	}, {
+		"startDate": {
+			"year": 2005,
+			"month": 8,
+			"day": 1
+		},
+		"endDate": {
+			"year": 2006,
+			"month": 7,
+			"day": 31
+		},
+		"features": [{
+			"loi": 1,
+			"loiname": 2975,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 398
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2983,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 788
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2976,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 30
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2977,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 674
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2978,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 4333
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2979,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 5659
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2982,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 2049
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2980,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 231
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2981,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 124
+			}]
+		}]
+	}, {
+		"startDate": {
+			"year": 2006,
+			"month": 8,
+			"day": 1
+		},
+		"endDate": {
+			"year": 2007,
+			"month": 7,
+			"day": 31
+		},
+		"features": [{
+			"loi": 1,
+			"loiname": 2975,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 184
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2983,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 610
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2976,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 39
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2977,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 631
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2978,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 2678
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2979,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 5526
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2982,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 1611
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2980,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 309
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2981,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 63
+			}]
+		}]
+	}, {
+		"startDate": {
+			"year": 2007,
+			"month": 8,
+			"day": 1
+		},
+		"endDate": {
+			"year": 2008,
+			"month": 7,
+			"day": 31
+		},
+		"features": [{
+			"loi": 1,
+			"loiname": 2975,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 254
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2983,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 604
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2976,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 100
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2977,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 1271
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2978,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 3258
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2979,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 5607
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2982,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 1136
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2980,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 574
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2981,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 107
+			}]
+		}]
+	}, {
+		"startDate": {
+			"year": 2008,
+			"month": 8,
+			"day": 1
+		},
+		"endDate": {
+			"year": 2009,
+			"month": 7,
+			"day": 31
+		},
+		"features": [{
+			"loi": 1,
+			"loiname": 2975,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 167
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2983,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 405
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2976,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 70
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2977,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 828
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2978,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 1049
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2979,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 4281
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2982,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 482
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2980,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 121
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2981,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 61
+			}]
+		}]
+	}, {
+		"startDate": {
+			"year": 2009,
+			"month": 8,
+			"day": 1
+		},
+		"endDate": {
+			"year": 2010,
+			"month": 7,
+			"day": 31
+		},
+		"features": [{
+			"loi": 1,
+			"loiname": 2975,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 259
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2983,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 595
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2976,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 53
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2977,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 712
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2978,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 871
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2979,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 3770
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2982,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 435
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2980,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 256
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2981,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 49
+			}]
+		}]
+	}, {
+		"startDate": {
+			"year": 2010,
+			"month": 8,
+			"day": 1
+		},
+		"endDate": {
+			"year": 2011,
+			"month": 7,
+			"day": 31
+		},
+		"features": [{
+			"loi": 1,
+			"loiname": 2975,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 280
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2983,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 502
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2976,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 66
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2977,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 396
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2978,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 1120
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2979,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 3008
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2982,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 865
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2980,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 141
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2981,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 40
+			}]
+		}]
+	}, {
+		"startDate": {
+			"year": 2011,
+			"month": 8,
+			"day": 1
+		},
+		"endDate": {
+			"year": 2012,
+			"month": 7,
+			"day": 31
+		},
+		"features": [{
+			"loi": 1,
+			"loiname": 2975,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 305
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2983,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 523
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2976,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 27
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2977,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 269
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2978,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 757
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2979,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 1741
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2982,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 773
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2980,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 124
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2981,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 52
+			}]
+		}]
+	}, {
+		"startDate": {
+			"year": 2012,
+			"month": 8,
+			"day": 1
+		},
+		"endDate": {
+			"year": 2013,
+			"month": 7,
+			"day": 31
+		},
+		"features": [{
+			"loi": 1,
+			"loiname": 2975,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 221
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2983,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 583
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2976,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 23
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2977,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 403
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2978,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 1139
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2979,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 2346
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2982,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 932
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2980,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 170
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2981,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 74
+			}]
+		}]
+	}, {
+		"startDate": {
+			"year": 2013,
+			"month": 8,
+			"day": 1
+		},
+		"endDate": {
+			"year": 2014,
+			"month": 7,
+			"day": 31
+		},
+		"features": [{
+			"loi": 1,
+			"loiname": 2975,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 309
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2983,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 500
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2976,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 31
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2977,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 257
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2978,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 1075
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2979,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 1887
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2982,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 684
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2980,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 219
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2981,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 50
+			}]
+		}]
+	}, {
+		"startDate": {
+			"year": 2014,
+			"month": 8,
+			"day": 1
+		},
+		"endDate": {
+			"year": 2015,
+			"month": 7,
+			"day": 31
+		},
+		"features": [{
+			"loi": 1,
+			"loiname": 2975,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 264
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2983,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 712
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2976,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 25
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2977,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 209
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2978,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 1601
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2979,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 2153
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2982,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 1030
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2980,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 156
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2981,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 57
+			}]
+		}]
+	}, {
+		"startDate": {
+			"year": 2015,
+			"month": 8,
+			"day": 1
+		},
+		"endDate": {
+			"year": 2016,
+			"month": 7,
+			"day": 31
+		},
+		"features": [{
+			"loi": 1,
+			"loiname": 2975,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 372
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2983,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 1129
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2976,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 17
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2977,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 258
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2978,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 1489
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2979,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 2992
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2982,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 1376
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2980,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 202
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2981,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 58
+			}]
+		}]
+	}, {
+		"startDate": {
+			"year": 2016,
+			"month": 8,
+			"day": 1
+		},
+		"endDate": {
+			"year": 2017,
+			"month": 7,
+			"day": 31
+		},
+		"features": [{
+			"loi": 1,
+			"loiname": 2975,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 257
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2983,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 1001
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2976,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 24
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2977,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 265
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2978,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 1561
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2979,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 2433
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2982,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 1243
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2980,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 132
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2981,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 31
+			}]
+		}]
+	}, {
+		"startDate": {
+			"year": 2017,
+			"month": 8,
+			"day": 1
+		},
+		"endDate": {
+			"year": 2018,
+			"month": 7,
+			"day": 31
+		},
+		"features": [{
+			"loi": 1,
+			"loiname": 2975,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 444
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2983,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 1045
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2976,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 24
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2977,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 253
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2978,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 1490
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2979,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 2744
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2982,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 1316
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2980,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 195
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2981,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 25
+			}]
+		}]
+	}, {
+		"startDate": {
+			"year": 2018,
+			"month": 8,
+			"day": 1
+		},
+		"endDate": {
+			"year": 2019,
+			"month": 7,
+			"day": 31
+		},
+		"features": [{
+			"loi": 1,
+			"loiname": 2975,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 688
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2983,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 1421
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2976,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 8
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2977,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 215
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2978,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 1685
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2979,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 3862
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2982,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 1245
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2980,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 617
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2981,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 21
+			}]
+		}]
+	}]
+}
