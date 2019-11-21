@@ -186,7 +186,9 @@
             "incr": "Deforestation increments are calculated based on all deforestation data available",
             "download": "This download option is only available for deforestation increments",
             "rates_bar_pri":"Estimated rate",
-            "rates_bar":"Consolidated rate"
+            "rates_bar":"Consolidated rate",
+            "incr_bar_pri":"Partial increment",
+            "incr_bar":"Consolidated increment"
         },
         "modals": {
             "warning_rates":"New data.<br>Estimated deforestation rates in the Brazilian Legal Amazon for 2018/2019 period based on 99 priority scenes.<br><a style='color: blue;' href='http://www.obt.inpe.br/OBT/noticias/a-estimativa-da-taxa-de-desmatamento-por-corte-raso-para-a-amazonia-legal-em-2019-e-de-9-762-km2'>Learn more at technical note.</a>",
