@@ -961,6 +961,11 @@ export class DeforestationOptionsComponent implements OnInit  {
       };
     };
 
+    let text_bar="";
+    self._translate.get( (this.type == "rates")?('dashboard.tooltip.rates_bar'):('dashboard.tooltip.incr_bar') ).subscribe((text) => {
+      text_bar=text;
+    });
+
     this.area
       .clipPadding(0)
       .barPadding(0.3)
@@ -977,7 +982,7 @@ export class DeforestationOptionsComponent implements OnInit  {
       .title(
         function (d:any) {
           let formater=DeforestationOptionsUtils.numberFormat(self.lang);
-          return d.key + "\n"+ formater(d.value) + " km²";
+          return text_bar + " " + d.key + "\n"+ formater(d.value) + " km²";
         }
       );
       
@@ -1033,12 +1038,12 @@ export class DeforestationOptionsComponent implements OnInit  {
       var bars = chart.selectAll("rect.bar");
       // define color to priority result of PRODES
       bars._groups[0].forEach( (bar:any) => {
-        if(bar.textContent.indexOf("2019") == 0){
-          bar.innerHTML="<title id='priority_data'>"+bar.textContent+"</title>";
-          bar.setAttribute('fill', '#ffad00');
-          self._translate.get('dashboard.tooltip.priority_data').subscribe((text) => {
-            text=text+" "+$('#priority_data').text();
-            $('#priority_data').text(text);
+        if(bar.textContent.indexOf("2019") >= 0){
+          bar.innerHTML="<title id='rates_bar_pri'>"+bar.textContent+"</title>";
+          self._translate.get( (self.type == "rates")?('dashboard.tooltip.rates_bar_pri'):('dashboard.tooltip.incr_bar_pri') ).subscribe((text) => {
+            text=text+" 2019\n"+$('#rates_bar_pri').text().split('\n')[1];
+            $('#rates_bar_pri').text(text);
+            bar.setAttribute('fill', '#ed6621');
           });
         }
       });
