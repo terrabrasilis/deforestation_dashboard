@@ -1035,18 +1035,20 @@ export class DeforestationOptionsComponent implements OnInit  {
         .attr('transform', 'translate(-10,10) rotate(315)');
       $("#bar-chart > svg").attr("width", barChartWidth);
 
-      var bars = chart.selectAll("rect.bar");
-      // define color to priority result of PRODES
-      bars._groups[0].forEach( (bar:any) => {
-        if(bar.textContent.indexOf("2019") >= 0){
-          bar.innerHTML="<title id='rates_bar_pri'>"+bar.textContent+"</title>";
-          self._translate.get( (self.type == "rates")?('dashboard.tooltip.rates_bar_pri'):('dashboard.tooltip.incr_bar_pri') ).subscribe((text) => {
-            text=text+" 2019\n"+$('#rates_bar_pri').text().split('\n')[1];
-            $('#rates_bar_pri').text(text);
-            bar.setAttribute('fill', '#ed6621');
-          });
-        }
-      });
+      if(self.biome == "legal_amazon" || self.biome == "amazon") {
+        var bars = chart.selectAll("rect.bar");
+        // define color to priority result of PRODES
+        bars._groups[0].forEach( (bar:any) => {
+          if(bar.textContent.indexOf("2019") >= 0){
+            bar.innerHTML="<title id='rates_bar_pri'>"+bar.textContent+"</title>";
+            self._translate.get( (self.type == "rates")?('dashboard.tooltip.rates_bar_pri'):('dashboard.tooltip.incr_bar_pri') ).subscribe((text) => {
+              text=text+" 2019\n"+$('#rates_bar_pri').text().split('\n')[1];
+              $('#rates_bar_pri').text(text);
+              bar.setAttribute('fill', '#ed6621');
+            });
+          }
+        });
+      }
     });
 
     this.area.on('filtered', function(chart:any) {
