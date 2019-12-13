@@ -9,6 +9,7 @@ const helpers = require('./helpers');
 const path = require('path');
 
 console.log("@@@@@@@@ DEVELOPMENT ENVIRONMENT STARTED @@@@@@@@");
+const BUILD_TYPE = 'development';
 
 //https://github.com/webpack/docs/wiki/webpack-dev-server
 module.exports = webpackMerge(commonConfig, {
@@ -51,7 +52,8 @@ module.exports = webpackMerge(commonConfig, {
 
         new webpack.DefinePlugin({
             'process.env': {
-                API_URL: JSON.stringify('http://localhost:4200/api/')
+                API_URL: JSON.stringify('http://localhost:4200/api/'),
+                'BUILD_TYPE': JSON.stringify(BUILD_TYPE)
             }
         }),
         new HtmlWebpackPlugin({
