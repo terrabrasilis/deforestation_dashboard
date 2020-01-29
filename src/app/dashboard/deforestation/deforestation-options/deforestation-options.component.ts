@@ -114,6 +114,7 @@ export class DeforestationOptionsComponent implements OnInit  {
   private selectedTime: any;
 
   private loiNames: Map<number, string>;
+  private loiGeocodes: Map<number, number>;
   private loiNamesObject: Array<Object>;
 
   public httpOptions: any;
@@ -403,6 +404,7 @@ export class DeforestationOptionsComponent implements OnInit  {
           let  aux={};
           aux[self.selectedLoi]=self.loiNames[d.key];
           aux["area km²"]=formater(d.value);
+          if(self.loiGeocodes && self.loiGeocodes[d.key]) {aux["geocode_ibge"]=self.loiGeocodes[d.key]}
           csv.push(aux);
         }
       });
@@ -422,6 +424,7 @@ export class DeforestationOptionsComponent implements OnInit  {
           "area km²":formater(d.value)
         };
         aux[self.selectedLoi]=self.loiNames[d.key[0]];
+        if(self.loiGeocodes && self.loiGeocodes[d.key[0]]) {aux["geocode_ibge"]=self.loiGeocodes[d.key[0]]}
         csv.push(aux);
       });
     }
@@ -460,6 +463,7 @@ export class DeforestationOptionsComponent implements OnInit  {
         "area km²":formater(d.area)
       }      
       aux[self.selectedLoi] = self.loiNames[d.loiName];
+      if(self.loiGeocodes && self.loiGeocodes[d.loiName]) {aux["geocode_ibge"]=self.loiGeocodes[d.loiName]}
       csv.push(aux);
     });
     return csv;
@@ -744,6 +748,7 @@ export class DeforestationOptionsComponent implements OnInit  {
 
     // get loiNames
     self.loiNames = new Map<number, string>();
+    self.loiGeocodes = new Map<number, number>();
     self.loiNamesObject = new Array();
 
     this.dataLoinamesJson.lois

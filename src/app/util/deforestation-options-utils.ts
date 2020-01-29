@@ -11,10 +11,10 @@ export class DeforestationOptionsUtils {
 
   public static setLoiNamesDownload(loi:any, loinames:any, checkedLoiNames:any) {
         
-    loi.loinames.forEach(function(loiname:any) {  
+    loi.loinames.forEach(function(loiname:any) {
       var [mun, state] = loiname.loiname.split("_");
       if (checkedLoiNames.indexOf(state) > -1)
-        loinames[loiname.gid] = [mun, state];
+        loinames[loiname.gid] = [mun, state, loiname.codibge];
     });
 
     return;
@@ -35,6 +35,7 @@ export class DeforestationOptionsUtils {
     loi.loinames.forEach(function(loiname:any) {  
       var value = loiname.loiname.split("_")[0];
       self.loiNames[loiname.gid] = value;
+      self.loiGeocodes[loiname.gid] = loiname.codibge;
       self.loiNamesObject.push({key:loiname.gid,value:value});
     });
 

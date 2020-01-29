@@ -145,13 +145,15 @@ export class OnDemandDownloadComponent implements OnInit {
       }
     ).filter(
       (filteredFeatures:any) => {     
-        return filteredFeatures.loiName in loiNames; 
+        return filteredFeatures.loiName in loiNames;
       }
     ).map(
       (feature:any) => {
         let mun=loiNames[feature.loiName][0],
         uf=loiNames[feature.loiName][1],
+        geocode=(loiNames[feature.loiName][2])?(loiNames[feature.loiName][2]):('-'),
         a=feature.area;
+
         if(accent) {
           mun=mun.normalize('NFD').replace(/[\u0300-\u036f]/g, "");
           uf=uf.normalize('NFD').replace(/[\u0300-\u036f]/g, "");
@@ -165,6 +167,7 @@ export class OnDemandDownloadComponent implements OnInit {
           //'>1ha': feature.area,
           //'>6.25ha': feature.filteredArea,
           municipality: mun,
+          geocode_ibge: geocode,
           state: uf
         }
       }
