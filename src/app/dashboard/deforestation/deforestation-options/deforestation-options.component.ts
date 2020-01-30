@@ -1031,15 +1031,6 @@ export class DeforestationOptionsComponent implements OnInit  {
       });
 
     this.barChart.on('renderlet', function (chart:any) {
-      Terrabrasilis.disableLoading("#bar-chart");
-    });
-
-    this.barChart.on("renderlet.a",function (chart:any) {
-      // rotate x-axis labels
-      chart.selectAll('g.x text')
-        .attr('transform', 'translate(-10,10) rotate(315)');
-      $("#bar-chart > svg").attr("width", barChartWidth);
-
       if(self.biome == "legal_amazon" || self.biome == "amazon") {
         var bars = chart.selectAll("rect.bar");
         // define color to priority result of PRODES
@@ -1054,6 +1045,14 @@ export class DeforestationOptionsComponent implements OnInit  {
           }
         });
       }
+      Terrabrasilis.disableLoading("#bar-chart");
+    });
+
+    this.barChart.on("renderlet.a",function (chart:any) {
+      // rotate x-axis labels
+      chart.selectAll('g.x text')
+        .attr('transform', 'translate(-10,10) rotate(315)');
+      $("#bar-chart > svg").attr("width", barChartWidth);
     });
 
     this.area.on('filtered', function(chart:any) {
