@@ -33,6 +33,14 @@ export class Constants {
         return maitanableYears;
     };
 
+    /**
+     * Used to change the color of the bar and the tooltip of the reference bar when data for a specific year is preliminary data.
+     * To disable this behavior, simply return a value that is outside the year range.
+     */
+    public static get BARCHART_PRELIMINARY_DATA_YEAR(): String {
+        return '2019';
+    }
+
     public static get MAP_LEGEND_COLORS(): any[] {
         return ['#ffffcc', '#ffeda0', '#fed976', '#feb24c', '#fd8d3c', '#fc4e2a', '#e31a1c', '#bd0026', '#800026'];
     }  

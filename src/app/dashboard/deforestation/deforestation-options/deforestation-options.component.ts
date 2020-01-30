@@ -1035,7 +1035,7 @@ export class DeforestationOptionsComponent implements OnInit  {
         var bars = chart.selectAll("rect.bar");
         // define color to priority result of PRODES
         bars._groups[0].forEach( (bar:any) => {
-          if(bar.textContent.indexOf("2019") >= 0){
+          if(bar.textContent.indexOf(Constants.BARCHART_PRELIMINARY_DATA_YEAR) >= 0){
             bar.innerHTML="<title id='rates_bar_pri'>"+bar.textContent+"</title>";
             self._translate.get( (self.type == "rates")?('dashboard.tooltip.rates_bar_pri'):('dashboard.tooltip.incr_bar_pri') ).subscribe((text) => {
               text=text+" 2019\n"+$('#rates_bar_pri').text().split('\n')[1];
