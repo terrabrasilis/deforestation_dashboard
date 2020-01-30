@@ -21,6 +21,7 @@ export class AppComponent implements OnInit {
   
   imgPath:string=( process.env.ENV === 'production' && process.env.BUILD_TYPE === 'production' )?('/app/dashboard/deforestation/'):('');
 
+  public version: string = process.env.VERSION;// the project version loaded from package.json
   public title:string = '';
   public type:string = '';
   private languageKey: string = "translate";

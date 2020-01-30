@@ -3,6 +3,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const webpack = require('webpack');
 const helpers = require('./helpers');
 const path = require('path');
+const packageJson = require('../package.json');
 
 module.exports = {
     //the entry-point files that define the bundles
@@ -122,7 +123,8 @@ module.exports = {
         new webpack.DefinePlugin({
             NGXSTORE_CONFIG: JSON.stringify({
               prefix: 'TB.V01_',
-            })
+            }),
+            'process.env':{VERSION: JSON.stringify(packageJson.version)}
         }),
 
         new webpack.ContextReplacementPlugin(
