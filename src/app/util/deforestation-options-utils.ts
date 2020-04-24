@@ -67,58 +67,34 @@ export class DeforestationOptionsUtils {
 
     var all:any[] = [];
 
-    if(biome == "cerrado") {
-      dataJson["periods"].forEach(function(period:any) {
-        period.features.forEach(function(feature:any) {       
-          var year = period.endDate.year;          
-          var area = feature.areas.filter((area:any) => area.type == 2).map(function(e:any) { return e.area; })[0];
-          var filteredArea = feature.areas.filter((area:any) => area.type == 1).map(function(e:any) { return e.area; })[0];
-          if(Constants.DASHBOARD_CERRADO_DUPLICATED_YEARS.indexOf(year) > -1) {
-            all.push({ 
-              endDate: year,
-              loi: feature.loi,
-              loiName: feature.loiname,
-              area: area*0.5,
-              filteredArea: filteredArea*0.5
-            });
-            all.push({
-              endDate: year-1,
-              loi: feature.loi,
-              loiName: feature.loiname,
-              area: area*0.5,
-              filteredArea: filteredArea*0.5
-            });
-          } else  if(Constants.DASHBOARD_CERRADO_MAINTAINABLE_YEARS.indexOf(year) > -1) {
-                    all.push({ 
-                              endDate: year, 
-                              loi: feature.loi, 
-                              loiName: feature.loiname, 
-                              area: area,
-                              filteredArea: filteredArea
-                            });
-                  }
-        });
+    var divideAreaByYear=function(startY:any, endY:any, feature:any, aData:any[]){
+      var difYears = parseInt(endY) - parseInt(startY);
+      var area = feature.areas.filter((area:any) => area.type == 2).map(function(e:any) { return e.area; })[0];
+      var filteredArea = feature.areas.filter((area:any) => area.type == 1).map(function(e:any) { return e.area; })[0];
+      var currentYear = startY+1;
+      while(currentYear<=endY) {
+        var d={
+          endDate: currentYear,
+          loi: feature.loi,
+          loiName: feature.loiname,
+          area: area*(1/difYears),
+          filteredArea: filteredArea*(1/difYears)
+        };
+        aData.push(d);
+        currentYear=currentYear+1;
+      }
+      return aData;
+    };
+
+    dataJson["periods"].forEach(function(period:any) {
+      period.features.forEach(function(feature:any) {
+        var startYear = period.startDate.year;
+        var endYear = period.endDate.year;
+        divideAreaByYear(startYear,endYear,feature,all);
       });
-    }
-    else if (biome == "amazon" || biome == "legal_amazon") {
-      dataJson["periods"].forEach(function(period:any) {
-        period.features.forEach(function(feature:any) {       
-          var year = period.endDate.year;          
-          var area = feature.areas.filter((area:any) => area.type == 2).map(function(e:any) { return e.area; })[0];
-          var filteredArea = feature.areas.filter((area:any) => area.type == 1).map(function(e:any) { return e.area; })[0];
-          all.push({
-                      endDate: year, 
-                      loi: feature.loi, 
-                      loiName: feature.loiname, 
-                      area: area,
-                      filteredArea: filteredArea
-                  });
-        });
-      });
-    }
+    });
 
     return all;
-
   }
     
   public static getloiNamesByLoi(arr:any, loi:any):Array<number> {      
