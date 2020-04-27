@@ -233,8 +233,8 @@ export class DeforestationOptionsComponent implements OnInit  {
     else
       $("a."+this.biome).closest('li').addClass("enable_menu");
     
-    // get data 
-    this.getData(this.selectedClass);
+    // // get data 
+    // this.getData(this.selectedClass);
 
     // used to call functions ouside Angular (devel)
     //window["dashboard"]=function(){return self;};
@@ -596,6 +596,9 @@ export class DeforestationOptionsComponent implements OnInit  {
             }
           },2500);
         });
+
+        // get data. Try it here because HTML components was fail inside makeGraphs function when called after load data.
+        self.getData(self.selectedClass);
       }
 
       // add on click handle loadGrid call for restore view button 
