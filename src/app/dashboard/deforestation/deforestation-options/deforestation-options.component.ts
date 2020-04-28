@@ -1017,21 +1017,22 @@ export class DeforestationOptionsComponent implements OnInit  {
       .renderVerticalGridLines(true)
       ._rangeBandPadding(0.2)
       .compose([this.area])
-      .on("pretransition", (chart:any) => {
-        Terrabrasilis.enableLoading("#bar-chart");
-        var bars = chart.selectAll("rect.bar");
+      // This code is needed only if we use two bars for each year to represents the área with more than one filter
+      // .on("pretransition", (chart:any) => {
+      //   Terrabrasilis.enableLoading("#bar-chart");
+      //   var bars = chart.selectAll("rect.bar");
 
-        if (self.area.hasFilter()) {
-          bars.classed(dc.constants.DESELECTED_CLASS, true);
-          bars._groups[0].forEach( (bar:any) => {
-            if(self.area.filters().indexOf(bar.__data__.x) >= 0){
-              bar.setAttribute('class', 'bar selected');
-            }
-          });
-        } else {
-            bars.classed(dc.constants.SELECTED_CLASS, true);
-        }
-      });
+      //   if (self.area.hasFilter()) {
+      //     bars.classed(dc.constants.DESELECTED_CLASS, true);
+      //     bars._groups[0].forEach( (bar:any) => {
+      //       if(self.area.filters().indexOf(bar.__data__.x) >= 0){
+      //         bar.setAttribute('class', 'bar selected');
+      //       }
+      //     });
+      //   } else {
+      //       bars.classed(dc.constants.SELECTED_CLASS, true);
+      //   }
+      // });
 
     this.barChart.on('renderlet', function (chart:any) {
       if(self.biome == "legal_amazon" || self.biome == "amazon") {
