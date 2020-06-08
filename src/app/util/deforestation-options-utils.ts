@@ -69,6 +69,11 @@ export class DeforestationOptionsUtils {
 
     var divideAreaByYear=function(startY:any, endY:any, feature:any, aData:any[]){
       var difYears = parseInt(endY) - parseInt(startY);
+      /* It is used to disable the long aggregate periods called the deforestation mask.
+       * To enable the mask, comment this line.
+       */
+      if(difYears>2) return;
+
       var area = feature.areas.filter((area:any) => area.type == 2).map(function(e:any) { return e.area; })[0];
       var filteredArea = feature.areas.filter((area:any) => area.type == 1).map(function(e:any) { return e.area; })[0];
       var currentYear = startY+1;
@@ -83,7 +88,6 @@ export class DeforestationOptionsUtils {
         aData.push(d);
         currentYear=currentYear+1;
       }
-      return aData;
     };
 
     dataJson["periods"].forEach(function(period:any) {
