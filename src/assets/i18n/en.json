@@ -182,8 +182,8 @@
             "update": "Updated at: 06/08/2020"
         },
         "tooltip": {
-            "rates": "Deforestation rates are calculated based on deforestation areas greater than 6.25 hectares",
-            "incr": "Deforestation increments are calculated based on all deforestation data available",
+            "rates": "Deforestation rates are calculated based on areas of deforestation greater than 6.25 hectares.",
+            "incr": "Deforestation increments are calculated based on all available deforestation data.",
             "download": "This download option is only available for deforestation increments",
             "rates_bar_pri":"Estimated rate",
             "rates_bar":"Consolidated rate",
