@@ -193,14 +193,16 @@ export class DeforestationOptionsComponent implements OnInit  {
         let l=JSON.parse(value);
         this.lang=(l===null)?('pt-br'):(l.value);
         
+        let currentRateNotes=(Constants.BARCHART_PRELIMINARY_DATA_YEAR)?('dashboard.modals.warning_rates'):('dashboard.tooltip.rates');
+        let currentIncreaseNotes=(Constants.BARCHART_PRELIMINARY_DATA_YEAR)?('dashboard.modals.warning_increase'):('dashboard.tooltip.incr');
         if (this.type == "rates"){
-          this._translate.get('dashboard.modals.warning_rates').subscribe((text) => {
+          this._translate.get(currentRateNotes).subscribe((text) => {
             let msg=text;
             let dialogRef = this.dialog.open(DialogComponent, {width : '450px'});
             dialogRef.componentInstance.content = this.dom.bypassSecurityTrustHtml(msg);
           });
         }else if(this.biome == "legal_amazon" || this.biome == "amazon") {
-          this._translate.get('dashboard.modals.warning_increase').subscribe((text) => {
+          this._translate.get(currentIncreaseNotes).subscribe((text) => {
             let msg=text;
             let dialogRef = this.dialog.open(DialogComponent, {width : '450px'});
             dialogRef.componentInstance.content = this.dom.bypassSecurityTrustHtml(msg);
@@ -1035,6 +1037,16 @@ export class DeforestationOptionsComponent implements OnInit  {
       // });
 
     this.barChart.on('renderlet', function (chart:any) {
+      
+      var barLabels = chart.selectAll("text.barLabel");
+      barLabels._groups[0].forEach( (bl:any) => {
+        let y=bl.getAttribute('y');
+        let x=bl.getAttribute('x');
+        //let nx=(parseInt(x)+6);
+        //bl.setAttribute('x',nx);
+        bl.setAttribute('transform','rotate(300 '+x+', '+y+')');
+      });
+
       if(self.biome == "legal_amazon" || self.biome == "amazon") {
         var bars = chart.selectAll("rect.bar");
         // define color to priority result of PRODES
@@ -1042,7 +1054,7 @@ export class DeforestationOptionsComponent implements OnInit  {
           if(bar.textContent.indexOf(Constants.BARCHART_PRELIMINARY_DATA_YEAR) >= 0){
             bar.innerHTML="<title id='rates_bar_pri'>"+bar.textContent+"</title>";
             self._translate.get( (self.type == "rates")?('dashboard.tooltip.rates_bar_pri'):('dashboard.tooltip.incr_bar_pri') ).subscribe((text) => {
-              text=text+" 2019\n"+$('#rates_bar_pri').text().split('\n')[1];
+              text=text+" "+Constants.BARCHART_PRELIMINARY_DATA_YEAR+"\n"+$('#rates_bar_pri').text().split('\n')[1];
               $('#rates_bar_pri').text(text);
               bar.setAttribute('fill', '#ed6621');
             });

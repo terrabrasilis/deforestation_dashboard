@@ -35,10 +35,13 @@ export class Constants {
 
     /**
      * Used to change the color of the bar and the tooltip of the reference bar when data for a specific year is preliminary data.
-     * To disable this behavior, simply return a value that is outside the year range.
+     * To disable this behavior and change the notes about the released data, simply return null value.
      */
     public static get BARCHART_PRELIMINARY_DATA_YEAR(): String {
-        return '2019';
+        // enable preliminary notes
+        // return '2020';
+        // disable preliminary notes
+        return null;
     }
 
     public static get MAP_LEGEND_COLORS(): any[] {
