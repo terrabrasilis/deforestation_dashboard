@@ -668,6 +668,7 @@ th.dc-table-head {
     font-size: x-small;
     fill: #00796b;
     font-weight: bold;
+    text-anchor: start;
 }
 
 #barchart-legend.active, #serieschart-legend.active {
