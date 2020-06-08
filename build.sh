@@ -6,14 +6,22 @@ echo "VERSION parameter allows (ex.: v1.1 or v1.2-beta among others)"
 echo "BUILD_TYPE parameter allows (ex.: homologation or production)"
 echo ""
 
+
 # get version number to build image
 if [[ ! "$1" = "" ]]; then
     VERSION=$1
 else
-    echo "Need one number to versioning this image. Enter one:" ; read VERSION
-    if [[ "$VERSION" = "" ]]; then
-        echo "Read fail! Aborting...."
-        exit
+    
+    PACKAGE_VERSION=$(cat package.json | grep -oP '(?<="version": ")[^"]*')
+    if [[ ! "$PACKAGE_VERSION" = "" ]]; then
+        echo "Auto detect the project version from package.json file and we'll use the version number: v$PACKAGE_VERSION"
+        VERSION="v$PACKAGE_VERSION"
+    else
+        echo "Need one number to versioning this image. Enter one:" ; read VERSION
+        if [[ "$VERSION" = "" ]]; then
+            echo "Read fail! Aborting...."
+            exit
+        fi
     fi
 fi
 
