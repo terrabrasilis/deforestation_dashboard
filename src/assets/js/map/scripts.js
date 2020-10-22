@@ -77,4 +77,11 @@ $(document).ready(function () {
     window.setTimeout(function() {
         $('body').loading('stop');
     }, 5000);
+
 });
+
+function notifyLanguageChanged(language)
+{
+    AuthenticationTranslation.changeLanguage(language);
+}
+

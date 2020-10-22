@@ -862,3 +862,6 @@ footer {
         display: block !important;
     }
 }
+.box-login input {
+    background-color: transparent;
+}

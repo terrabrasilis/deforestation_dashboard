@@ -33,6 +33,10 @@ import { ContactComponent } from '../../../contact/contact.component';
 
 declare var $ : any;
 
+declare var Authentication: any;
+
+declare var notifyLanguageChanged: Function;
+
 export interface Class {
   value: string;
   viewValue: string;
@@ -240,6 +244,8 @@ export class DeforestationOptionsComponent implements OnInit  {
 
     // used to call functions ouside Angular (devel)
     //window["dashboard"]=function(){return self;};
+
+    this.initAuthentication();
     
   }
 
@@ -1460,6 +1466,9 @@ export class DeforestationOptionsComponent implements OnInit  {
     this._translate.use(value);
     this.updateGridstackLanguage();
     dc.renderAll();
+
+    notifyLanguageChanged(value);  
+
   }
 
   updateGridstackLanguage():void {
@@ -1512,5 +1521,35 @@ export class DeforestationOptionsComponent implements OnInit  {
     showContact() {
       this.cdRef.detectChanges();
       this.dialog.open(ContactComponent, { width : '450px' });
+    }
+
+    initAuthentication()
+    {
+
+        this.localStorageService.getValue(this.languageKey)
+        .subscribe((item:any) => {
+            let toUse = JSON.parse(item);
+            var lang='pt-br';
+            if(toUse!=null)
+            {
+                lang = toUse.value;
+            }
+                        
+            /**
+             * Setting up authentication api
+             */
+            Authentication.init(lang, function()
+            {
+                /**
+                 * Notify authentication handler about login changes
+                 */
+            if($('#notifyAuthenticationChanged').length!=0)
+            {
+                $('#notifyAuthenticationChanged').click();
+            }
+            });
+
+        });
+        
     }
 }
