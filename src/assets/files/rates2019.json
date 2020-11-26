@@ -3265,5 +3265,107 @@
 				"area": 23
 			}]
 		}]
+	}, {
+		"startDate": {
+			"year": 2019,
+			"month": 8,
+			"day": 1
+		},
+		"endDate": {
+			"year": 2020,
+			"month": 7,
+			"day": 31
+		},
+		"features": [{
+			"loi": 1,
+			"loiname": 2975,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 652
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2983,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 1521
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2976,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 81
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2977,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 290
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2978,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 1767
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2979,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 5192
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2982,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 1259
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2980,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 300
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 2981,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 26
+			}]
+		}]
 	}]
 }
