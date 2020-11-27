@@ -191,7 +191,7 @@
             "incr_bar":"Consolidated increment"
         },
         "modals": {
-            "warning_rates":"New data.<br>Estimated deforestation rates in the Brazilian Legal Amazon for 2019/2020 period based on 102 priority scenes.<br><a style='color: blue;' href='http://www.obt.inpe.br/OBT/noticias/a-estimativa-da-taxa-de-desmatamento-por-corte-raso-para-a-amazonia-legal-em-2019-e-de-9-762-km2'>Learn more at technical note.</a>",
+            "warning_rates":"New data.<br>Estimated deforestation rates in the Brazilian Legal Amazon for 2019/2020 period based on 102 priority scenes.<br><a style='color: blue;' href='http://www.obt.inpe.br/OBT/noticias/a-estimativa-da-taxa-de-desmatamento-por-corte-raso-para-a-amazonia-legal-em-2020-e-de-11-088-km2'>Learn more at technical note.</a>",
             "warning_increase":"See the new deforestation increment data for the Brazilian Legal Amazon and Amazon Biome for the 2019/2020 period, measured based on 102 priority scenes."
         }
     }
