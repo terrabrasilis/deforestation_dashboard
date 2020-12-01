@@ -197,7 +197,7 @@
             "incr_bar":"Incremento consolidado"
         },
         "modals": {
-            "warning_rates":"Novos dados.<br>Taxa estimada de desmatamento na Amazônia Legal Brasileira, para o período 2019/2020, com base em 102 cenas prioritárias.<br><a style='color: blue;' target='_blank' href='http://www.obt.inpe.br/OBT/noticias/a-estimativa-da-taxa-de-desmatamento-por-corte-raso-para-a-amazonia-legal-em-2020-e-de-11-088-km2'>Saiba mais na nota técnica.</a>",
+            "warning_rates":"Novos dados.<br>Taxa estimada de desmatamento na Amazônia Legal Brasileira, para o período 2019/2020, com base em 102 cenas prioritárias.<br><a style='color: blue;' target='_blank' href='http://terrabrasilis.dpi.inpe.br/download/prodes-legal-amz/NotaTecnica_Estimativa_PRODES_2020.pdf'>Saiba mais na nota técnica.</a>",
             "warning_increase":"Consulte os novos dados de incremento de desmatamento na Amazônia Legal Brasileira e Bioma Amazônia, para o período 2019/2020, medidos com base em 102 cenas prioritárias."
         }
     }
