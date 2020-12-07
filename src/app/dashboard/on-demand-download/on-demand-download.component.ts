@@ -72,7 +72,8 @@ export class OnDemandDownloadComponent implements OnInit {
       else
         if (this.biome == "legal_amazon") 
           this.states = Constants.DASHBOARD_LEGAL_AMAZON_STATES;
-
+    
+    this.states.sort();
     let half=parseInt( ( (this.states.length%2)?( (this.states.length/2)+1 ):( this.states.length/2 ) )+""  );
     this.statesBlk1=this.states.slice(0,half);
     this.statesBlk2=this.states.slice(half,this.states.length);
