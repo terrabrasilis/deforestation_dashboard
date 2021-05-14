@@ -31,50 +31,10 @@
         }
     },
     "tools" : {
-        "resetMap": "Reset Map",
-        "featureInfo": "Feature Info",
-        "showCoordinates": "Coordinates",
-        "fullscreen": "Fullscreen",
-        "download": "Downloads",
-        "addLayer": "Add Others Layers",
-        "undo": "Zoom undo",
-        "redo": "Zoom redo",
-        "notice": "Do not show again",
-        "layerOptions": "Layer Tools",
-        "basicInfo": "Basic Info",
-        "metadata": "Metadata",
-        "dashboard": "Graphics",
-        "transparency": "Transparency",
-        "removeLayer": "Remove Layer",
-        "legend": "Legend",
-        "timeDimension": "Time Dimension"
+        "notice": "Do not show again"
     },
     "contact" : {
         "title":"Send suggestions or questions to"
-    },
-    "about" : {
-        "description": "TerraBrasilis is a platform developed by INPE to organize, access and use spatial data produced by its environmental monitoring programs. Throughout a web portal, it focuses mainly on the Amazon Program, but the concept and software packages produced can be adapted and customized to meet other projects that produce spatial data and aim to be accessible in the internet environment.",
-        "more": "More information about TerraBrasilis",
-        "coordinators": "TEAM OF COORDINATORS", 
-        "team.ti": "IT TEAM",
-        "occupation.male": "Researcher of the Division of Image Processing (DIDPI) at INPE",
-        "occupation.female": "Researcher of the Division of Image Processing (DIDPI) at INPE",
-        "occupation.technologist.male": "Senior Technologist of the Division of Image Processing (DIDPI) at INPE",
-        "ex.contributors": "Contributors and former members",
-        "support": "Support",
-        "support.inpe": "National Institute for Space Research (INPE)",
-        "support.funcate": "Foundation for Space Science, Technology and Applications (FUNCATE)",
-        "support.fundep": "Research Development Foundation (FUNDEP)",
-        "support.worldbank": "World Bank Group",
-        "support.bndes": " Brazilian Development Bank (BNDES)",
-        "developer": "Software Developer",
-        "research.fellow": "Research Fellow",
-        "dba": "Database Administrator",
-        "webdesigner": "Web Designer",
-        "technology": "Technologies ",
-        "technology.languages": "JavaScript (D3, DC, CrossFilter, Leaflet, Angular 5), Python, PHP, Java",
-        "technology.heterogeneous": "Docker Swarm (containers cluster), Redis MongoDB, PostgreSQL, Nginx HTTP Server (load balancer and reverse proxy). ",
-        "technology.services": "Server for sharing geospatial data (Geoserver) and metadata search and catalogue (Geonetwork)."        
     },
     "dashboard": {
         "filters": {

@@ -64,14 +64,6 @@ $(document).ready(function () {
     });
 
     /**
-     * Show the main TerraBrasilis modal
-     */
-    // let cookieFirstNotice = EasyCookie.read("firstNotice");
-    // if (cookieFirstNotice === null) {
-    //     $('#firstNotice').modal('show');
-    // }
-
-    /**
     * Loading effect 
     */
     window.setTimeout(function() {
