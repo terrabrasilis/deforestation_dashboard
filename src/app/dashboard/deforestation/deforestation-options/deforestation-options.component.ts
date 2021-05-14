@@ -114,8 +114,8 @@ export class DeforestationOptionsComponent implements OnInit  {
   private areaByLoiName: any;
 
   // dashboard title
-  private loiname: any;
-  private selectedTime: any;
+  private loiname: any="";
+  private selectedTime: any="";
 
   private loiNames: Map<number, string>;
   private loiGeocodes: Map<number, number>;
