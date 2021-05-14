@@ -174,10 +174,10 @@ export class DeforestationOptionsComponent implements OnInit  {
     this.maxLoi = 13;
 
     this._translate.get('dashboard.filters.loiname.all').subscribe((text) => {
-      this.loiname = text;
+      this.loiname = (text=="dashboard.filters.loiname.all"?"Todos":text);
     });
     this._translate.get('dashboard.filters.time.all').subscribe((text) => {
-      this.selectedTime = text;
+      this.selectedTime = (text=="dashboard.filters.time.all"?"Todos":text);
     });
     
   }

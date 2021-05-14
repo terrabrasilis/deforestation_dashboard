@@ -6,14 +6,14 @@ export class Constants {
     public static get DASHBOARD_API_HOST(): string {
         let url="http://terrabrasilis.dpi.inpe.br/dashboard/api/v1/redis-cli/";
 
-        if(process.env.BUILD_TYPE == 'development') url = "http://localhost:3000/dashboard/api/v1/redis-cli/";// url = "http://terrabrasilis.dpi.inpe.br/homologation/dashboard/api/v1/redis-cli/";
+        if(process.env.BUILD_TYPE == 'development') url = "http://terrabrasilis.dpi.inpe.br/dashboard/api/v1/redis-cli/";
 
         if(process.env.BUILD_TYPE && process.env.ENV == 'production') {
             // confirm the 13111 port in docker-stacks/api/business-api-homologation.yaml
             if(process.env.BUILD_TYPE == 'homologation') url = "http://terrabrasilis.dpi.inpe.br/homologation/dashboard/api/v1/redis-cli/";
             
             // confirm the 2222 port in docker-stacks/demo/docker-compose.yaml
-            if(process.env.BUILD_TYPE == 'compose') url = "http://localhost:3333/api/v1/redis-cli/";
+            if(process.env.BUILD_TYPE == 'compose') url = "http://localhost:2222/api/v1/redis-cli/";
         }
         return url;
     };
