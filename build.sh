@@ -25,30 +25,20 @@ else
     fi
 fi
 
-echo "Building terrabrasilis/deforestation-dashboard:$VERSION"
-echo "...................................................."
-
 # environment to homologation or production build
 # to homologation use homologation
-if [[ "$2" = "" ]]; then
+if [[ "$2" = "homologation" ]]; then
+    ENV="production"
+    BUILD_TYPE="$2"
+else
     ENV="production"
     BUILD_TYPE="production"
     VERSION="prod_$VERSION"
-    read -p "I will build on production mode by default. May i continue? If yes, type yes or Ctrl+C to exit. " -d'y' -d'e' -d's' RESPONSE; echo
-else
-
-    if [[ "$2" = "homologation" ]]; then
-        ENV="production"
-        BUILD_TYPE="$2"
-    else
-        ENV="production"
-        BUILD_TYPE="production"
-        VERSION="prod_$VERSION"
-    fi
 fi
 
 echo "Building $BUILD_TYPE mode..."
-echo "........................"
+echo "Building terrabrasilis/deforestation-dashboard:$VERSION"
+echo "...................................................."
 
 # --no-cache
 docker build --build-arg ENV=$ENV --build-arg BUILD_TYPE=$BUILD_TYPE -t terrabrasilis/deforestation-dashboard:$VERSION -f Dockerfile .
@@ -58,5 +48,5 @@ if [[ ! "$SEND_TO_HUB" = "yes" ]]; then
     echo "Ok, not send the image."
 else
     echo "Nice, sending the image!"
-    ./push.sh "$VERSION"
+    docker push terrabrasilis/deforestation-dashboard:$VERSION
 fi
