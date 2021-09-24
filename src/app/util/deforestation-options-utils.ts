@@ -72,21 +72,33 @@ export class DeforestationOptionsUtils {
       /* It is used to disable the long aggregate periods called the deforestation mask.
        * To enable the mask, comment this line.
        */
-      if(difYears>2) return;
+      //if(difYears>2) return;
 
       var area = feature.areas.filter((area:any) => area.type == 2).map(function(e:any) { return e.area; })[0];
       var filteredArea = feature.areas.filter((area:any) => area.type == 1).map(function(e:any) { return e.area; })[0];
       var currentYear = startY+1;
-      while(currentYear<=endY) {
-        var d={
-          endDate: currentYear,
+
+      if(difYears>2) {
+        let d={
+          endDate: endY,
           loi: feature.loi,
           loiName: feature.loiname,
-          area: area*(1/difYears),
-          filteredArea: filteredArea*(1/difYears)
+          area: area,
+          filteredArea: filteredArea
         };
         aData.push(d);
-        currentYear=currentYear+1;
+      }else{
+        while(currentYear<=endY) {
+          let d={
+            endDate: currentYear,
+            loi: feature.loi,
+            loiName: feature.loiname,
+            area: area*(1/difYears),
+            filteredArea: filteredArea*(1/difYears)
+          };
+          aData.push(d);
+          currentYear=currentYear+1;
+        }
       }
     };
 
