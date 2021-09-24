@@ -987,11 +987,6 @@ export class DeforestationOptionsComponent implements OnInit  {
       .barPadding(0.3)
       .group(snapToZero(this.areaByDate))
       .colors("#ffd76d")
-      .valueAccessor(
-        function (d:any) {
-          return d["value"];
-        }
-      )
       .label(function(d:any) {
         return DeforestationOptionsUtils.formatTitle(d.data.value);
       })
@@ -1001,7 +996,16 @@ export class DeforestationOptionsComponent implements OnInit  {
           return text_bar + " " + d.key + "\n"+ formater(d.value) + " km²";
         }
       );
-      
+
+    if(this.type == "increments") {
+      let minArea=parseInt(this.areaByDate.top(Infinity)[this.areaByDate.size()-1].value);
+      let maxArea=parseInt(this.areaByDate.top(1)[0].value);
+      this.area.y(d3.scaleLinear().domain([minArea,maxArea]));
+      this.area.valueAccessor((d:any) => {return Math.log10(d.value);});
+    }else{
+      this.area.valueAccessor((d:any) => {return d.value;});
+    }
+
     var barChartWidth = $('#bar-chart')[0].offsetWidth;
     var barChartHeight = $('#bar-chart')[0].offsetHeight;
 
@@ -1013,7 +1017,7 @@ export class DeforestationOptionsComponent implements OnInit  {
       .dimension(dateDim)
       .group(snapToZero(this.areaByDate))
       .elasticY(true)
-      .yAxisPadding('10%')
+      .yAxisPadding('15%')
       //.xAxisLabel("Brazilian "+ this.biome.charAt(0).toUpperCase() + this.biome.slice(1)+" Monitoring Period: "+this.minDate+" - "+this.maxDate)
       .yAxisLabel(this.labelArea)
       .x(d3.scaleBand().rangeRound([0, barChartWidth]))
@@ -1041,6 +1045,11 @@ export class DeforestationOptionsComponent implements OnInit  {
       //       bars.classed(dc.constants.SELECTED_CLASS, true);
       //   }
       // });
+
+    if(this.type == "increments") {
+      this.barChart.yAxis().tickFormat(function (d:any) {return '' + 10 ** d;});
+      this.barChart.yAxis().tickValues([10, 100, 1000, 10000, 100000, 1000000].map((e) => { return Math.log10(e); }));
+    }
 
     this.barChart.on('renderlet', function (chart:any) {
       
@@ -1132,6 +1141,8 @@ export class DeforestationOptionsComponent implements OnInit  {
 			.domain([auxYears[0] -1,auxYears[auxYears.length-1]+1])
       .range([auxRates[0],auxRates[auxRates.length-1]]);
 
+    var valueAccessor4Series=( (this.type == "increments")?(function(d:any){return Math.log10(d.value);}):(function(d:any){return d.value;}) );
+
     this.seriesChart.chart(function(c:any) {
                   return dc.lineChart(c)
                     .curve(d3.curveCardinal.tension(0.5))
@@ -1149,9 +1160,7 @@ export class DeforestationOptionsComponent implements OnInit  {
                 .keyAccessor(function(d:any) { 
                   return d.key[1]; // connect with x axis
                 }) 
-                .valueAccessor(function(d:any) {
-                  return d.value; // connect with y axis
-                })
+                .valueAccessor(valueAccessor4Series)
                 .ordinalColors(seriesColors)
                 .title(function(d:any) {
                   let formater=DeforestationOptionsUtils.numberFormat(self.lang);
@@ -1236,10 +1245,12 @@ export class DeforestationOptionsComponent implements OnInit  {
 
     this.seriesChart.xAxis().ticks(auxYears.length);
     
-    this.seriesChart.xAxis().tickFormat(function(d:any) {
-			return d+"";
-    });
-    
+    this.seriesChart.xAxis().tickFormat(function(d:any) {return d+"";});
+
+    if(this.type == "increments"){
+      this.seriesChart.yAxis().tickFormat(function (d:any) {return '' + 10 ** d;});
+      this.seriesChart.yAxis().tickValues([10, 100, 1000, 10000, 100000, 1000000].map((e) => { return Math.log10(e); }));
+    }
 		this.seriesChart.addFilterHandler(function(filters:any, filter:any) {
 			filters.push(filter);
 			return filters;
