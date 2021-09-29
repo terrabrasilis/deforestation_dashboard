@@ -143,14 +143,26 @@
         },
         "tooltip": {
             "rates": "Deforestation rates are calculated based on areas of deforestation greater than 6.25 hectares.",
-            "incr": "Deforestation increments are calculated based on all available deforestation data.",
+            "incr": "The first bar of the graph, in red, is shown in reduced scale because it is the accumulated deforestation for several years and its value is much higher than that of the other bars.\nDeforestation increments are calculated based on all available deforestation data, without filters.",
             "download": "This download option is only available for deforestation increments",
             "rates_bar_pri":"Estimated rate",
             "rates_bar":"Consolidated rate",
             "incr_bar_pri":"Partial increment",
-            "incr_bar":"Consolidated increment"
+            "incr_bar":"Consolidated increment",
+            "mask_bar_1":"Accumulated deforestation mask",
+            "mask_bar_2":"until",
+            "mask_bar_3":"for",
+            "mask_bar_4":"value reduced by",
+            "mask_bar_5":"times",
+            "mask_bar_6":"real value",
+            "mask_bar_7":"Bar scaled down by",
+            "mask_bar_8":"times compared to other bars on the chart",
+            "mask_bar_9":"Point scaled down by",
+            "mask_bar_10":"times compared to other points on the chart"
         },
         "modals": {
+            "rates": "Deforestation rates are calculated based on areas of deforestation greater than 6.25 hectares.",
+            "incr": "<h5 style='color:#ed3333'>The first bar of the graph, in red, is shown in reduced scale because it is the accumulated deforestation for several years and its value is much higher than that of the other bars.</h5><br/>Deforestation increments are calculated based on all available deforestation data, without filters.",
             "warning_rates":"New data.<br>Estimated deforestation rates in the Brazilian Legal Amazon for 2019/2020 period based on 102 priority scenes.<br><a target='_blank' style='color: blue;' href='http://www.obt.inpe.br/OBT/noticias-obt-inpe/estimativa-de-desmatamento-por-corte-raso-na-amazonia-legal-para-2020-e-de-11-088-km2/NotaTecnica_Estimativa_PRODES_2020.pdf'>Learn more at technical note.</a>",
             "warning_increase":"See the new deforestation increment data for the Brazilian Legal Amazon and Amazon Biome for the 2019/2020 period, measured based on 102 priority scenes."
         }

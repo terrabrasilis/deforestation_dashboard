@@ -149,14 +149,26 @@
         },
         "tooltip": {
             "rates": "As taxas de desmatamento calculadas, são baseadas nas áreas de desmatamento maiores que 6.25 hectares",
-            "incr": "Os incrementos de desmatamento calculados, são baseados em todas as áreas de desmatamento disponíveis",
+            "incr": "A primeira barra do gráfico, em cor vermelha, é apresentada em escala reduzida pois trata-se do desmatamento acumulado para vários anos e seu valor é muito superior ao das demais barras.\nOs incrementos de desmatamento calculados, são baseados em todas as áreas de desmatamento disponíveis, sem filtros.",
             "download": "Esta opção de download está disponível somente para os incrementos de desmatamento",
             "rates_bar_pri":"Taxa estimada",
             "rates_bar":"Taxa consolidada",
             "incr_bar_pri":"Incremento parcial",
-            "incr_bar":"Incremento consolidado"
+            "incr_bar":"Incremento consolidado",
+            "mask_bar_1":"Máscara de desmatamento acumulado",
+            "mask_bar_2":"até",
+            "mask_bar_3":"para",
+            "mask_bar_4":"valor reduzido em",
+            "mask_bar_5":"vezes",
+            "mask_bar_6":"valor real",
+            "mask_bar_7":"Barra com redução de escala em",
+            "mask_bar_8":"vezes com relação às demais barras do gráfico",
+            "mask_bar_9":"Ponto com redução de escala em",
+            "mask_bar_10":"vezes com relação aos demais pontos do gráfico"
         },
         "modals": {
+            "rates": "As taxas de desmatamento calculadas, são baseadas nas áreas de desmatamento maiores que 6.25 hectares",
+            "incr": "<h5 style='color:#ed3333'>A primeira barra do gráfico, em cor vermelha, é apresentada em escala reduzida pois trata-se do desmatamento acumulado para vários anos e seu valor é muito superior ao das demais barras.</h5><br/>Os incrementos de desmatamento calculados, são baseados em todas as áreas de desmatamento disponíveis, sem filtros.",
             "warning_rates":"Novos dados.<br>Taxa estimada de desmatamento na Amazônia Legal Brasileira, para o período 2019/2020, com base em 102 cenas prioritárias.<br><a style='color: blue;' target='_blank' href='http://www.obt.inpe.br/OBT/noticias-obt-inpe/estimativa-de-desmatamento-por-corte-raso-na-amazonia-legal-para-2020-e-de-11-088-km2/NotaTecnica_Estimativa_PRODES_2020.pdf'>Saiba mais na nota técnica.</a>",
             "warning_increase":"Consulte os novos dados de incremento de desmatamento na Amazônia Legal Brasileira e Bioma Amazônia, para o período 2019/2020, medidos com base em 102 cenas prioritárias."
         }
