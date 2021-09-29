@@ -37,11 +37,19 @@ export class Constants {
      * Used to change the color of the bar and the tooltip of the reference bar when data for a specific year is preliminary data.
      * To disable this behavior and change the notes about the released data, simply return null value.
      */
-    public static get BARCHART_PRELIMINARY_DATA_YEAR(): String {
-        // enable preliminary notes
-        //return '2020';
-        // disable preliminary notes
-        return null;
+    public static get BARCHART_PRELIMINARY_DATA_YEAR(): any {
+        // disable all notes on preliminary data
+        return {"cerrado":null,"amazon":null,"legal_amazon":null};
+        // to enable a note on the preliminary data, use the year value related to the preliminary data
+        //return {"cerrado":null,"amazon":"2020","legal_amazon":"2020"};
+        
+    }
+
+    /**
+     * Used to apply a different color and tooltip to the mask bar in the bar chart
+     */
+    public static get BARCHART_MASKS_YEAR(): any {
+        return {"cerrado":"2000","amazon":"2007","legal_amazon":"2007"};
     }
 
     public static get MAP_LEGEND_COLORS(): any[] {

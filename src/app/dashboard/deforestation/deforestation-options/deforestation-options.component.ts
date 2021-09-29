@@ -30,6 +30,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { LocalStorageService } from '../../../services/local-storage.service';
 
 import { ContactComponent } from '../../../contact/contact.component';
+import { createElement } from '@angular/core/src/view/element';
 
 declare var $ : any;
 
@@ -130,6 +131,7 @@ export class DeforestationOptionsComponent implements OnInit  {
   private labelRates: string;
   private languageKey: string = "translate";
   private lang: string;
+  private maskBarTranslations: Map<string, string>;
 
   constructor(private route: ActivatedRoute,
               private router: Router,
@@ -197,15 +199,16 @@ export class DeforestationOptionsComponent implements OnInit  {
         let l=JSON.parse(value);
         this.lang=(l===null)?('pt-br'):(l.value);
         
-        let currentRateNotes=(Constants.BARCHART_PRELIMINARY_DATA_YEAR)?('dashboard.modals.warning_rates'):('dashboard.tooltip.rates');
-        let currentIncreaseNotes=(Constants.BARCHART_PRELIMINARY_DATA_YEAR)?('dashboard.modals.warning_increase'):('dashboard.tooltip.incr');
+        let currentRateNotes=(Constants.BARCHART_PRELIMINARY_DATA_YEAR[self.biome])?('dashboard.modals.warning_rates'):('dashboard.modals.rates');
+        let currentIncreaseNotes=(Constants.BARCHART_PRELIMINARY_DATA_YEAR[self.biome])?('dashboard.modals.warning_increase'):('dashboard.modals.incr');
         if (this.type == "rates"){
           this._translate.get(currentRateNotes).subscribe((text) => {
             let msg=text;
             let dialogRef = this.dialog.open(DialogComponent, {width : '450px'});
             dialogRef.componentInstance.content = this.dom.bypassSecurityTrustHtml(msg);
           });
-        }else if(this.biome == "legal_amazon" || this.biome == "amazon") {
+        }else {
+          // if(this.biome == "legal_amazon" || this.biome == "amazon")
           this._translate.get(currentIncreaseNotes).subscribe((text) => {
             let msg=text;
             let dialogRef = this.dialog.open(DialogComponent, {width : '450px'});
@@ -516,7 +519,7 @@ export class DeforestationOptionsComponent implements OnInit  {
       };
       
       // define two grids (main and side)
-      $('#main-grid').gridstack(options);      
+      $('#main-grid').gridstack(options);
       
       // assign main and nav grid to gridstack 
       var mainGrid = $('#main-grid').data('gridstack');
@@ -951,7 +954,7 @@ export class DeforestationOptionsComponent implements OnInit  {
         Terrabrasilis.disableLoading("#loi-chart");
 
       }
-    };
+    };// end redrawMap contextual function
 
     // add one graph
     this.listCharts.set('loi-chart', "terrabrasilis-api");
@@ -959,6 +962,16 @@ export class DeforestationOptionsComponent implements OnInit  {
     this._translate.get('dashboard.graph.label.area').subscribe((text) => {
       this.labelArea = text;
     });
+
+    this.maskBarTranslations=new Map<string, string>();
+    let l=1;
+    while(l<=10){
+      let key='mask_bar_'+l;
+      this._translate.get('dashboard.tooltip.'+key).subscribe((text) => {
+        this.maskBarTranslations[key] = text;
+      });
+      l++;
+    }
 
     function snapToZero(sourceGroup:any) {
       return {
@@ -982,26 +995,42 @@ export class DeforestationOptionsComponent implements OnInit  {
       text_bar=text;
     });
 
+    // Calculate the reduction factor to resize the mask bar each time the graph is redrawn/rendered
+    var reduceFactor=function(){
+      let majorArea=self.areaByDate.top(1)[0].value,
+      secondArea=self.areaByDate.top(2)[1].value;
+      return parseInt(""+((majorArea/secondArea)*0.9));
+    };
+
     this.area
       .clipPadding(0)
       .barPadding(0.3)
       .group(snapToZero(this.areaByDate))
       .colors("#ffd76d")
       .label(function(d:any) {
-        return DeforestationOptionsUtils.formatTitle(d.data.value);
+        if(self.type == "increments" && parseInt(Constants.BARCHART_MASKS_YEAR[self.biome])==d.data.key)
+          return DeforestationOptionsUtils.formatTitle(d.data.value/reduceFactor())+" x "+reduceFactor()+" ";
+        else
+          return DeforestationOptionsUtils.formatTitle(d.data.value);
       })
       .title(
         function (d:any) {
           let formater=DeforestationOptionsUtils.numberFormat(self.lang);
-          return text_bar + " " + d.key + "\n"+ formater(d.value) + " km²";
+          if(self.type == "increments" && parseInt(Constants.BARCHART_MASKS_YEAR[self.biome])==d.key){
+            return self.maskBarTranslations["mask_bar_1"] +" "+ self.maskBarTranslations["mask_bar_2"] +" "+ d.key +
+            "\n" + formater(d.value/reduceFactor()) + " km² ("+self.maskBarTranslations["mask_bar_4"]+" "+reduceFactor()+" "+self.maskBarTranslations["mask_bar_5"]+")" +
+            "\n" + formater(d.value) + " km² ("+self.maskBarTranslations["mask_bar_6"]+")" +
+            "\n*"+self.maskBarTranslations["mask_bar_7"]+" "+reduceFactor()+" "+self.maskBarTranslations["mask_bar_8"]+".";
+          }else{
+            return text_bar + " " + d.key + "\n"+ formater(d.value) + " km²";
+          }
         }
       );
 
     if(this.type == "increments") {
-      let minArea=parseInt(this.areaByDate.top(Infinity)[this.areaByDate.size()-1].value);
-      let maxArea=parseInt(this.areaByDate.top(1)[0].value);
-      this.area.y(d3.scaleLinear().domain([minArea,maxArea]));
-      this.area.valueAccessor((d:any) => {return Math.log10(d.value);});
+      this.area.valueAccessor((d:any) => {
+        return (parseInt(Constants.BARCHART_MASKS_YEAR[self.biome])==d.key?d.value/reduceFactor():d.value);
+      });
     }else{
       this.area.valueAccessor((d:any) => {return d.value;});
     }
@@ -1047,8 +1076,9 @@ export class DeforestationOptionsComponent implements OnInit  {
       // });
 
     if(this.type == "increments") {
-      this.barChart.yAxis().tickFormat(function (d:any) {return '' + 10 ** d;});
-      this.barChart.yAxis().tickValues([10, 100, 1000, 10000, 100000, 1000000].map((e) => { return Math.log10(e); }));
+      this.barChart.yAxis().tickFormat(function (d:any) {
+        return '' + (parseInt(Constants.BARCHART_MASKS_YEAR[self.biome])==d.key?d/reduceFactor():d);
+      });
     }
 
     this.barChart.on('renderlet', function (chart:any) {
@@ -1057,25 +1087,37 @@ export class DeforestationOptionsComponent implements OnInit  {
       barLabels._groups[0].forEach( (bl:any) => {
         let y=bl.getAttribute('y');
         let x=bl.getAttribute('x');
-        //let nx=(parseInt(x)+6);
-        //bl.setAttribute('x',nx);
-        bl.setAttribute('transform','rotate(300 '+x+', '+y+')');
+        let x1=parseInt(x)+(parseInt(x)*0.2);
+
+        if(self.type == "increments" && bl.textContent.indexOf(" x "+reduceFactor())>0){
+          bl.setAttribute("style","font-size:larger;fill:#ffffff;text-anchor:end;");
+          bl.setAttribute('transform','rotate(-90 '+x1+', '+y+')');
+        }else{
+          bl.setAttribute('transform','rotate(300 '+x+', '+y+')');
+        }
       });
 
-      if(self.biome == "legal_amazon" || self.biome == "amazon") {
-        var bars = chart.selectAll("rect.bar");
-        // define color to priority result of PRODES
-        bars._groups[0].forEach( (bar:any) => {
-          if(bar.textContent.indexOf(Constants.BARCHART_PRELIMINARY_DATA_YEAR) >= 0){
-            bar.innerHTML="<title id='rates_bar_pri'>"+bar.textContent+"</title>";
-            self._translate.get( (self.type == "rates")?('dashboard.tooltip.rates_bar_pri'):('dashboard.tooltip.incr_bar_pri') ).subscribe((text) => {
-              text=text+" "+Constants.BARCHART_PRELIMINARY_DATA_YEAR+"\n"+$('#rates_bar_pri').text().split('\n')[1];
-              $('#rates_bar_pri').text(text);
-              bar.setAttribute('fill', '#ed6621');
-            });
-          }
-        });
-      }
+      var bars = chart.selectAll("rect.bar");
+      
+      bars._groups[0].forEach( (bar:any) => {
+
+        // define color and tooltip to priority result of PRODES
+        if(bar.textContent.indexOf(Constants.BARCHART_PRELIMINARY_DATA_YEAR[self.biome]) >= 0){
+          bar.innerHTML="<title id='rates_bar_pri'>"+bar.textContent+"</title>";
+          self._translate.get( (self.type == "rates")?('dashboard.tooltip.rates_bar_pri'):('dashboard.tooltip.incr_bar_pri') )
+          .subscribe((text) => {
+            text=text+" "+Constants.BARCHART_PRELIMINARY_DATA_YEAR[self.biome]+"\n"+$('#rates_bar_pri').text().split('\n')[1];
+            $('#rates_bar_pri').text(text);
+            bar.setAttribute('fill', '#ed6621');
+          });
+        }
+
+        // apply changes on fill color of mask bar
+        if(self.type == "increments" && bar.textContent.indexOf(Constants.BARCHART_MASKS_YEAR[self.biome]) >= 0){
+          bar.setAttribute('fill', '#ed3333');
+        }
+      });
+
       Terrabrasilis.disableLoading("#bar-chart");
     });
 
@@ -1141,8 +1183,6 @@ export class DeforestationOptionsComponent implements OnInit  {
 			.domain([auxYears[0] -1,auxYears[auxYears.length-1]+1])
       .range([auxRates[0],auxRates[auxRates.length-1]]);
 
-    var valueAccessor4Series=( (this.type == "increments")?(function(d:any){return Math.log10(d.value);}):(function(d:any){return d.value;}) );
-
     this.seriesChart.chart(function(c:any) {
                   return dc.lineChart(c)
                     .curve(d3.curveCardinal.tension(0.5))
@@ -1156,17 +1196,22 @@ export class DeforestationOptionsComponent implements OnInit  {
                 .group(snapToZero(areaByloiNameYear))
                 .seriesAccessor(function(d:any) { 
                     return d.key[0]; // connect with legend
-                }) 
+                })
                 .keyAccessor(function(d:any) { 
                   return d.key[1]; // connect with x axis
-                }) 
-                .valueAccessor(valueAccessor4Series)
+                })
+                //.valueAccessor(function(d:any){return d.value;})
                 .ordinalColors(seriesColors)
                 .title(function(d:any) {
                   let formater=DeforestationOptionsUtils.numberFormat(self.lang);
-                  return  self.loiNames[d.key[0]] + "\n" +
-                          d.key[1] + "\n" +
-                          formater(d.value) + " km²";
+                  if(self.type == "increments" && parseInt(Constants.BARCHART_MASKS_YEAR[self.biome])==d.key[1]){
+                    return self.maskBarTranslations["mask_bar_1"]+" "+self.maskBarTranslations["mask_bar_3"]+" "+self.loiNames[d.key[0]]+" "+self.maskBarTranslations["mask_bar_2"]+" " + d.key[1] +
+                    "\n" + formater(d.value/reduceFactor()) + " km² ("+self.maskBarTranslations["mask_bar_4"]+" "+reduceFactor()+" "+self.maskBarTranslations["mask_bar_5"]+")" +
+                    "\n" + formater(d.value) + " km² ("+self.maskBarTranslations["mask_bar_6"]+")" +
+                    "\n*"+self.maskBarTranslations["mask_bar_9"]+" "+reduceFactor()+" "+self.maskBarTranslations["mask_bar_10"]+".";
+                  }else{
+                    return self.loiNames[d.key[0]] + " " + d.key[1] + "\n" + formater(d.value) + " km²";
+                  }
                 })
                 .yAxisPadding('15%')
                 .elasticY(true)
@@ -1180,6 +1225,17 @@ export class DeforestationOptionsComponent implements OnInit  {
                   return self.loiNames[d.name];
                 }))
                 .brushOn(false);
+
+
+    if(this.type == "increments") {
+      this.seriesChart.valueAccessor((d:any) => {
+        return (parseInt(Constants.BARCHART_MASKS_YEAR[self.biome])==d.key[1]?d.value/reduceFactor():d.value);
+      });
+    }else{
+      this.seriesChart.valueAccessor((d:any) => {
+        return d.value;
+      });
+    }
 
     this.seriesChart.data(function (group:any) {
                   Terrabrasilis.enableLoading("#series-chart");
@@ -1248,8 +1304,10 @@ export class DeforestationOptionsComponent implements OnInit  {
     this.seriesChart.xAxis().tickFormat(function(d:any) {return d+"";});
 
     if(this.type == "increments"){
-      this.seriesChart.yAxis().tickFormat(function (d:any) {return '' + 10 ** d;});
-      this.seriesChart.yAxis().tickValues([10, 100, 1000, 10000, 100000, 1000000].map((e) => { return Math.log10(e); }));
+      this.seriesChart.yAxis().tickFormat(function (d:any) {
+        return '' + (parseInt(Constants.BARCHART_MASKS_YEAR[self.biome])==d.key?d/reduceFactor():d);
+      });
+      //this.seriesChart.yAxis().tickValues([10, 100, 1000, 10000, 100000, 1000000].map((e) => { return Math.log10(e); }));
     }
 		this.seriesChart.addFilterHandler(function(filters:any, filter:any) {
 			filters.push(filter);
