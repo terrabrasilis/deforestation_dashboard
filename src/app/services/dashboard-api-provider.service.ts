@@ -79,7 +79,7 @@ export class DashboardApiProviderService {
   }
 
   getDeforestationRates(httpOptions: any) {
-    return this.http.get("assets/files/rates2020.json", httpOptions);
+    return this.http.get(Constants.FILE_RATES, httpOptions);
   }
 
 }
