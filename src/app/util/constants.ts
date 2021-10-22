@@ -6,16 +6,22 @@ export class Constants {
     public static get DASHBOARD_API_HOST(): string {
         let url="http://terrabrasilis.dpi.inpe.br/dashboard/api/v1/redis-cli/";
 
-        if(process.env.BUILD_TYPE == 'development') url = "http://localhost:3000/dashboard/api/v1/redis-cli/";
+        if(process.env.LOCAL_API == 'yes')
+            url = "http://localhost:3000/dashboard/api/v1/redis-cli/";
 
-        if(process.env.BUILD_TYPE && process.env.ENV == 'production') {
-            // confirm the 13111 port in docker-stacks/api/business-api-homologation.yaml
-            if(process.env.BUILD_TYPE == 'homologation') url = "http://terrabrasilis.dpi.inpe.br/homologation/dashboard/api/v1/redis-cli/";
-            
-            // confirm the 2222 port in docker-stacks/demo/docker-compose.yaml
-            if(process.env.BUILD_TYPE == 'compose') url = "http://localhost:2222/api/v1/redis-cli/";
-        }
+        if(process.env.BUILD_TYPE == 'homologation' && process.env.ENV == 'production')
+            url = "http://terrabrasilis.dpi.inpe.br/homologation/dashboard/api/v1/redis-cli/";
+
         return url;
+    };
+
+    public static get FILE_RATES(): string {
+        // return the name of JSON file with rates
+        return "assets/files/rates2021.json";
+    };
+
+    public static get LAST_UPDATE_DATE(): string {
+        return "2021-10-22";
     };
 
     public static get DASHBOARD_BIOMES_NAMES(): string[] {
@@ -39,9 +45,9 @@ export class Constants {
      */
     public static get BARCHART_PRELIMINARY_DATA_YEAR(): String {
         // enable preliminary notes
-        //return '2020';
+        return '2021';
         // disable preliminary notes
-        return null;
+        // return null;
     }
 
     public static get MAP_LEGEND_COLORS(): any[] {
