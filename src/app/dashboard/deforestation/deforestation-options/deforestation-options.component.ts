@@ -131,6 +131,8 @@ export class DeforestationOptionsComponent implements OnInit  {
   private languageKey: string = "translate";
   private lang: string;
 
+  private last_update_date: string;
+
   constructor(private route: ActivatedRoute,
               private router: Router,
               private dom: DomSanitizer,
@@ -180,6 +182,8 @@ export class DeforestationOptionsComponent implements OnInit  {
       this.selectedTime = (text=="dashboard.filters.time.all"?"Todos":text);
     });
     
+    this.last_update_date = Constants.LAST_UPDATE_DATE;
+
   }
 
   ngOnInit() {
@@ -196,6 +200,8 @@ export class DeforestationOptionsComponent implements OnInit  {
       (value:any) => {
         let l=JSON.parse(value);
         this.lang=(l===null)?('pt-br'):(l.value);
+
+        this.last_update_date=(new Date(Constants.LAST_UPDATE_DATE)).toLocaleDateString(this.lang);
         
         let currentRateNotes=(Constants.BARCHART_PRELIMINARY_DATA_YEAR)?('dashboard.modals.warning_rates'):('dashboard.tooltip.rates');
         let currentIncreaseNotes=(Constants.BARCHART_PRELIMINARY_DATA_YEAR)?('dashboard.modals.warning_increase'):('dashboard.tooltip.incr');
@@ -1462,6 +1468,7 @@ export class DeforestationOptionsComponent implements OnInit  {
 
   changeLanguage(value:string) {
     this.lang=value;
+    this.last_update_date=(new Date(Constants.LAST_UPDATE_DATE)).toLocaleDateString(this.lang);
     this.localStorageService.setValue(this.languageKey, value);
     this._translate.use(value);
     this.updateGridstackLanguage();

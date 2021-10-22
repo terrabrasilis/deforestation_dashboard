@@ -139,7 +139,7 @@
             "amazon": "Amazon",
             "cerrado": "Cerrado",
             "time": "Year",
-            "update": "Updated at: 2021/05/21"
+            "update": "Updated at: "
         },
         "tooltip": {
             "rates": "Deforestation rates are calculated based on areas of deforestation greater than 6.25 hectares.",
@@ -151,8 +151,8 @@
             "incr_bar":"Consolidated increment"
         },
         "modals": {
-            "warning_rates":"New data.<br>Estimated deforestation rates in the Brazilian Legal Amazon for 2019/2020 period based on 102 priority scenes.<br><a target='_blank' style='color: blue;' href='http://www.obt.inpe.br/OBT/noticias-obt-inpe/estimativa-de-desmatamento-por-corte-raso-na-amazonia-legal-para-2020-e-de-11-088-km2/NotaTecnica_Estimativa_PRODES_2020.pdf'>Learn more at technical note.</a>",
-            "warning_increase":"See the new deforestation increment data for the Brazilian Legal Amazon and Amazon Biome for the 2019/2020 period, measured based on 102 priority scenes."
+            "warning_rates":"New data.<br>Estimated deforestation rates in the Brazilian Legal Amazon for 2020/2021 period based on 106 priority scenes.<br><a target='_blank' style='color: blue;' href='http://www.obt.inpe.br/OBT/noticias-obt-inpe/estimativa-de-desmatamento-por-corte-raso-na-amazonia-legal-para-2021-e-de-11-088-km2/NotaTecnica_Estimativa_PRODES_2021.pdf'>Learn more at technical note.</a>",
+            "warning_increase":"See the new deforestation increment data for the Brazilian Legal Amazon and Amazon Biome for the 2020/2021 period, measured based on 106 priority scenes."
         }
     }
 }
