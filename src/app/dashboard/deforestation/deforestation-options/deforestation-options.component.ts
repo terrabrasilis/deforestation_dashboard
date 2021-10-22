@@ -1084,13 +1084,15 @@ export class DeforestationOptionsComponent implements OnInit  {
     this.barChart.on('renderlet', function (chart:any) {
       
       var barLabels = chart.selectAll("text.barLabel");
+      var barMask = d3.select("#id_mask_bar");
       barLabels._groups[0].forEach( (bl:any) => {
         let y=bl.getAttribute('y');
-        let x=bl.getAttribute('x');
-        let x1=parseInt(x)+(parseInt(x)*0.2);
+        let x=parseFloat(bl.getAttribute('x'));
+        let b = barMask.node();
+        let x1=(b && b["getBBox"])?(x+(x - b["getBBox"]().x)/2):(x);
 
         if(self.type == "increments" && bl.textContent.indexOf(" x "+reduceFactor())>0){
-          bl.setAttribute("style","font-size:larger;fill:#ffffff;text-anchor:end;");
+          bl.setAttribute("style","font-size:larger;text-shadow:0 0 4px yellow;text-anchor:end;");
           bl.setAttribute('transform','rotate(-90 '+x1+', '+y+')');
         }else{
           bl.setAttribute('transform','rotate(300 '+x+', '+y+')');
@@ -1115,6 +1117,7 @@ export class DeforestationOptionsComponent implements OnInit  {
         // apply changes on fill color of mask bar
         if(self.type == "increments" && bar.textContent.indexOf(Constants.BARCHART_MASKS_YEAR[self.biome]) >= 0){
           bar.setAttribute('fill', '#ed3333');
+          bar.setAttribute('id', 'id_mask_bar');
         }
       });
 
@@ -1200,7 +1203,6 @@ export class DeforestationOptionsComponent implements OnInit  {
                 .keyAccessor(function(d:any) { 
                   return d.key[1]; // connect with x axis
                 })
-                //.valueAccessor(function(d:any){return d.value;})
                 .ordinalColors(seriesColors)
                 .title(function(d:any) {
                   let formater=DeforestationOptionsUtils.numberFormat(self.lang);
