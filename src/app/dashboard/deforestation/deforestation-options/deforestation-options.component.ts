@@ -114,8 +114,10 @@ export class DeforestationOptionsComponent implements OnInit  {
   private areaByLoiName: any;
 
   // dashboard title
-  private loiname: any="";
+  private loiname: String;
+  private translatedLoiname: String;
   private selectedTime: any="";
+  private translatedTime: String;
 
   private loiNames: Map<number, string>;
   private loiGeocodes: Map<number, number>;
@@ -147,6 +149,11 @@ export class DeforestationOptionsComponent implements OnInit  {
     this.biomeSubscription = this.route.params.subscribe(params => this.biome = params["biome"].replace("-", " "));
     this.typeSubscription = this.route.params.subscribe(params => this.type = params["type"].replace("-", " "));
 
+    this._translate.onLangChange.subscribe( (ev:any)=>{
+      this.loiname=this.translatedLoiname=ev.translations.dashboard.filters.loiname.all;
+      this.selectedTime=this.translatedTime=ev.translations.dashboard.filters.time.all;
+    });
+
     this.httpOptions = { headers: new  HttpHeaders(
       { 'App-Identifier': 'prodes_'+this.biome}
     )};
@@ -174,16 +181,8 @@ export class DeforestationOptionsComponent implements OnInit  {
     $(".loading-overlay, .loading-overlay-content").remove();
 
     this.maxLoi = 13;
-
-    this._translate.get('dashboard.filters.loiname.all').subscribe((text) => {
-      this.loiname = (text=="dashboard.filters.loiname.all"?"Todos":text);
-    });
-    this._translate.get('dashboard.filters.time.all').subscribe((text) => {
-      this.selectedTime = (text=="dashboard.filters.time.all"?"Todos":text);
-    });
     
     this.last_update_date = Constants.LAST_UPDATE_DATE;
-
   }
 
   ngOnInit() {
@@ -200,6 +199,8 @@ export class DeforestationOptionsComponent implements OnInit  {
       (value:any) => {
         let l=JSON.parse(value);
         this.lang=(l===null)?('pt-br'):(l.value);
+
+        this._translate.setDefaultLang(this.lang);
 
         this.last_update_date=(new Date(Constants.LAST_UPDATE_DATE)).toLocaleDateString(this.lang);
         
@@ -226,13 +227,14 @@ export class DeforestationOptionsComponent implements OnInit  {
 
     // change tab event
     var self = this;
-    $(".mr-auto a.nav-link").click(function() {      
+    $(".mr-auto a.nav-link").click(function() {
       var idx = self.lois.findIndex(function(el) {
         return el.value == self.selectedLoi;
       });
       // match tab index with loi
-      var id:any = $(this).find("span").attr("id")
-      if (!(idx == Number(id))) {        
+      var id:any = $(this).find("span").attr("id");
+      if (!(idx == Number(id))) {
+        self.resetFilters(self);
         self.selectedLoi = self.lois[Number(id)].value;
         self.getMap();
       }
@@ -252,7 +254,6 @@ export class DeforestationOptionsComponent implements OnInit  {
     //window["dashboard"]=function(){return self;};
 
     this.initAuthentication();
-    
   }
 
   ngOnDestroy() {
@@ -260,7 +261,6 @@ export class DeforestationOptionsComponent implements OnInit  {
     // cancel subscription for biome data
     this.biomeSubscription.unsubscribe();
     this.typeSubscription.unsubscribe();
-    
   }
 
   filterByLoi(key:number) {
@@ -1084,38 +1084,27 @@ export class DeforestationOptionsComponent implements OnInit  {
     });
 
     this.area.on('filtered', function(chart:any) {
-      if (!chart.hasFilter())
-        self._translate.get('dashboard.filters.time.all').subscribe((text) => {
-          self.selectedTime = text;
-        });
+      if (!chart.hasFilter()) {
+        self.selectedTime = self.translatedTime;
+        self.cdRef.detectChanges();
+      }
+        
     });
 
     this.area.filterPrinter(function(filters:any) {
       
-      if (!filters.length)
-        self._translate.get('dashboard.filters.time.all').subscribe((text) => {
-          self.selectedTime = text;
-        });
-      else {
-        self.selectedTime = "[";
-        var first = 1;
-        filters.forEach(function(f:any) {
-          if (first) {
-            self.selectedTime = self.selectedTime.concat(f);
-            first = 0;
-          } else {
-            self.selectedTime = self.selectedTime.concat(", ", f);
-          }
-        });        
-        self.selectedTime = self.selectedTime + "]";
-      }
-
-      //return (filters.length)?(self.selectedTime):(self._translate.get('dashboard.filters.time.all'));
-      return self.selectedTime;
-    });
-
-    self._translate.get('dashboard.filters.time.all').subscribe((text) => {
-      self.selectedTime = text;
+      self.selectedTime = "[";
+      var first = 1;
+      filters.forEach(function(f:any) {
+        if (first) {
+          self.selectedTime = self.selectedTime.concat(f);
+          first = 0;
+        } else {
+          self.selectedTime = self.selectedTime.concat(", ", f);
+        }
+      });        
+      self.selectedTime = self.selectedTime + "]";
+      self.cdRef.detectChanges();
     });
 
     // add one graph
@@ -1321,38 +1310,26 @@ export class DeforestationOptionsComponent implements OnInit  {
     this.rowChart.on('filtered', function(chart:any) {
       if (!chart.hasFilter()) {
         self.applyCountyFilter(null);// to reset the data funcion
-        self._translate.get('dashboard.filters.loiname.all').subscribe((text) => {
-          self.loiname = text;
-        });
       }
+
+      self.loiname = self.translatedLoiname;
+      self.cdRef.detectChanges();
     });
 
     this.rowChart.filterPrinter(function(filters:any) {
-      
-      if (!filters.length)
-        self._translate.get('dashboard.filters.loiname.all').subscribe((text) => {
-          self.loiname = text;
-        });
-      else {
-        self.loiname = "[";
-        var first = 1;
-        filters.forEach(function(f:any) {
-          if (first) {
-            self.loiname = self.loiname.concat(self.loiNames[f]);
-            first = 0;
-          } else {
-            self.loiname = self.loiname.concat(", ", self.loiNames[f]);
-          }
-        });        
-        self.loiname = self.loiname + "]";
-      }
 
-      //return (filters.length)?(self.loiname):(self._translate.get('dashboard.filters.loiname.all'));
-      return self.loiname;
-    });
-
-    self._translate.get('dashboard.filters.loiname.all').subscribe((text) => {
-      self.loiname = text;
+      self.loiname = "[";
+      var first = 1;
+      filters.forEach(function(f:any) {
+        if (first) {
+          self.loiname = self.loiname.concat(self.loiNames[f]);
+          first = 0;
+        } else {
+          self.loiname = self.loiname.concat(", ", self.loiNames[f]);
+        }
+      });
+      self.loiname = self.loiname + "]";
+      self.cdRef.detectChanges();
     });
 
     // render chart   
@@ -1443,12 +1420,7 @@ export class DeforestationOptionsComponent implements OnInit  {
     context.rowChart.filterAll();
     context.applyCountyFilter();// to reset function data() of the rowChart
     context.seriesChart.filterAll();
-    context._translate.get('dashboard.filters.loiname.all').subscribe((text:any) => {
-      context.loiname = text;
-    });
-    context._translate.get('dashboard.filters.time.all').subscribe((text:any) => {
-      context.selectedTime = text;
-    });
+
     dc.redrawAll();
   }
 
@@ -1515,13 +1487,6 @@ export class DeforestationOptionsComponent implements OnInit  {
                 $('#1').text(data[10]);
                 $('#2').text(data[11]);
                 $('#3').text(data[12]);
-              });
-
-              this._translate.get('dashboard.filters.loiname.all').subscribe((text) => {
-                this.loiname = text;
-              });
-              this._translate.get('dashboard.filters.time.all').subscribe((text) => {
-                this.selectedTime = text;
               });
     }
   
