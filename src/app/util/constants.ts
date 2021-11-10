@@ -1,16 +1,25 @@
 /**
  * This class is responsible to store all global variables to use in entire application and not duplicate code
  */
+import { Inject } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+
 export class Constants {
 
+    constructor(@Inject(DOCUMENT) private document: Document) { }
+
+    public static get BASE_URL(): string {
+        return document.location.protocol+'//'+document.location.hostname;
+    };
+
     public static get DASHBOARD_API_HOST(): string {
-        let url="http://terrabrasilis.dpi.inpe.br/dashboard/api/v1/redis-cli/";
+        let url=Constants.BASE_URL+"/dashboard/api/v1/redis-cli/";
 
         if(process.env.LOCAL_API == 'yes')
-            url = "http://localhost:3000/dashboard/api/v1/redis-cli/";
+            url = Constants.BASE_URL+":3000/dashboard/api/v1/redis-cli/";
 
         if(process.env.BUILD_TYPE == 'homologation' && process.env.ENV == 'production')
-            url = "http://terrabrasilis.dpi.inpe.br/homologation/dashboard/api/v1/redis-cli/";
+            url = Constants.BASE_URL+"/homologation/dashboard/api/v1/redis-cli/";
 
         return url;
     };
