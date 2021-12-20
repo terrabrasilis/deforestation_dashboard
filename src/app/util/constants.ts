@@ -38,16 +38,6 @@ export class Constants {
         return listNames;
     };
 
-    public static get DASHBOARD_CERRADO_DUPLICATED_YEARS(): number[] {
-        let duplicatedYears: number[] = [2002, 2004, 2006, 2008, 2010, 2012];
-        return duplicatedYears;
-    };        
-
-    public static get DASHBOARD_CERRADO_MAINTAINABLE_YEARS(): number[] {
-        let maitanableYears: number[] = [2000, 2013, 2014, 2015, 2016, 2017, 2018, 2019];
-        return maitanableYears;
-    };
-
     /**
      * Used to change the color of the bar and the tooltip of the reference bar when data for a specific year is preliminary data.
      * To disable this behavior and change the notes about the released data, simply return null value.
