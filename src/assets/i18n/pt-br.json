@@ -14,9 +14,7 @@
             "name": "Gráficos",
             "option1" : "Desmatamento",
             "option2" : "DETER (Avisos)",
-            "option3" : "Focos (Queimada)",
-            "option4" : "Desmatamento Amazônia",
-            "option5" : "Avisos Amazônia"
+            "option3" : "Focos (Queimada)"
         },
         "about": "Sobre",
         "contact": "Contato",
@@ -25,8 +23,8 @@
         "map": {
             "name": "Mapas",
             "option1" : "Desmatamento",
-            "option2" : "DETER (Avisos)"
-
+            "option2" : "DETER (Avisos)",
+            "option3" : "Vegetação"
         }
     },
     "tools" : {

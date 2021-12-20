@@ -14,9 +14,7 @@
             "name": "Graphs",
             "option1" : "Deforestation",
             "option2" : "DETER (Notices)",
-            "option3" : "Active fires",
-            "option4" : "Amazon Desforestation",
-            "option5" : "Amazon Notices"
+            "option3" : "Active fires"
 
         },
         "about": "About",
@@ -26,8 +24,8 @@
         "map": {
             "name": "Maps",
             "option1" : "Deforestation",
-            "option2" : "DETER (Notices)"
-
+            "option2" : "DETER (Notices)",
+            "option3" : "Vegetation"
         }
     },
     "tools" : {
