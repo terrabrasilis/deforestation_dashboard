@@ -6,10 +6,10 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 To clone this project, execute: 
 
-1. `https://gitlab.dpi.inpe.br/terrabrasilis/terrabrasilis.git`
+1. `https://github.com/Terrabrasilis/deforestation_dashboard.git`
 2. `git fetch --all`
 3. `git pull --all`
-4. `git checkout <branch> (e.g: devel_FM_001)`
+4. `git checkout <branch> (e.g: master)`
 5. `cd webapp`
 6. `npm i`
 
