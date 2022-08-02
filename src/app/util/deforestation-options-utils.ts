@@ -9,11 +9,18 @@ import * as d3 from "d3";
 
 export class DeforestationOptionsUtils {
 
+  /**
+   * Relate the municipality names with the selected states
+   * @param loi The municipality list from redis-api
+   * @param loinames A map to relate the gid of municipalities and all municipalities of selected states (output)
+   * @param checkedLoiNames The list of selected states in UI. The state list gettered from constants.ts
+   * @returns null
+   */
   public static setLoiNamesDownload(loi:any, loinames:any, checkedLoiNames:any) {
         
     loi.loinames.forEach(function(loiname:any) {
       var [mun, state] = loiname.loiname.split("_");
-      if (checkedLoiNames.indexOf(state) > -1)
+      if (checkedLoiNames.indexOf(state.toUpperCase()) > -1)
         loinames[loiname.gid] = [mun, state, loiname.codibge];
     });
 
