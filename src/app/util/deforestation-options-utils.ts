@@ -75,6 +75,12 @@ export class DeforestationOptionsUtils {
     var all:any[] = [];
 
     var divideAreaByYear=function(startY:any, endY:any, feature:any, aData:any[]){
+      /**
+       * Hack to avoid year difference greater than four between initial and final year in the Pampa biome.
+       */
+      if(biome=='pampa' && startY==2000){
+        startY=2002;
+      }
       var difYears = parseInt(endY) - parseInt(startY);
       /* It is used to disable the long aggregate periods called the deforestation mask.
        * To enable the mask, comment this line.
