@@ -47,14 +47,18 @@
             "observation": "(Opcão apenas para incrementos)"
         },
         "graph": {
-            "amazon": "Amazônia",
             "absoluteDataIncrements": "Incrementos de desmatamento acumulado",
             "absoluteDataRates": "Taxas de desmatamento acumulados",
             "aggregateSpatialIncrements": "Mapa de incrementos de desmatamento",
             "aggregateSpatialRates": "Mapa de taxas de desmatamento",
             "aggregateTemporalIncrements": "Incrementos de desmatamento",
             "aggregateTemporalRates": "Taxas de desmatamento",
+            "amazon": "Amazônia",
             "cerrado": "Cerrado",
+            "mata_atlantica":"Mata Atlântica",
+            "pampa":"Pampa",
+            "pantanal":"Pantanal",
+            "caatinga":"Caatinga",
             "label": {
                 "monitoring": "Período de monitoramento : {{minDate}} - {{maxDate}}",
                 "area": "Áreas (km²)",
@@ -86,6 +90,10 @@
             "increLegalAmazon": "Amazônia Legal",
             "increAmazon": "Amazônia",
             "increCerrado": "Cerrado",
+            "increPampa": "Pampa",
+            "increPantanal": "Pantanal",
+            "increMataAtlantica": "Mata Atlântica",
+            "increCaatinga": "Caatinga",
             "ratesProdes": "Taxas de Desmatamento",
             "alertsDeter": "Gráficos - Avisos",
             "dailyCerradoDeter": "Avisos Diários do Cerrado",
@@ -125,7 +133,11 @@
             "title": {
                 "cerrado": "Escolha os estados do Cerrado",
                 "legal_amazon": "Escolha os estados da Amazônia Legal",
-                "amazon": "Escolha os estados da Amazônia"
+                "amazon": "Escolha os estados da Amazônia",
+                "caatinga": "Escolha os estados da Caatinga",
+                "pampa": "Escolha os estados do Pampa",
+                "mata_atlantica": "Escolha os estados da Mata Atlântica",
+                "pantanal": "Escolha os estados do Pantanal"
             },
             "config": {
                 "title": "Configurações para gerar o CSV",
@@ -142,6 +154,10 @@
             "legal_amazon": "Amazônia Legal",
             "amazon": "Amazônia",
             "cerrado": "Cerrado",
+            "mata_atlantica":"Mata Atlântica",
+            "pampa":"Pampa",
+            "pantanal":"Pantanal",
+            "caatinga":"Caatinga",
             "time": "Ano",
             "update": "Atualizado em: "
         },

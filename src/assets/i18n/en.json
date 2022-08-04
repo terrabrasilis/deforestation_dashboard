@@ -48,14 +48,18 @@
             "observation": "(Option only for increments)"
         },
         "graph": {
-            "amazon": "Amazon Biome",
             "absoluteDataIncrements": "Accumulated deforestation increments",
             "absoluteDataRates": "Accumulated deforestation rates",
             "aggregateSpatialIncrements": "Accumulated deforestation increments map",
             "aggregateSpatialRates": "Accumulated deforestation rates map",
             "aggregateTemporalIncrements": "Deforestation increments",
             "aggregateTemporalRates": "Deforestation rates",
+            "amazon": "Amazon Biome",
             "cerrado": "Cerrado Biome",
+            "mata_atlantica":"Atlantic Forest Biome",
+            "pampa":"Pampa Biome",
+            "pantanal":"Pantanal Biome",
+            "caatinga":"Caatinga Biome",
             "label": {
                 "monitoring": "Monitoring Period : {{minDate}} - {{maxDate}}",
                 "area": "Areas (km²)",
@@ -87,6 +91,10 @@
             "increLegalAmazon": "Legal Amazon",
             "increAmazon": "Amazon",
             "increCerrado": "Cerrado",
+            "increPampa": "Pampa",
+            "increPantanal": "Pantanal",
+            "increMataAtlantica": "Mata Atlântica",
+            "increCaatinga": "Caatinga",
             "ratesProdes": "Deforestation Rates",
             "alertsDeter": "Chart - Notices",
             "dailyCerradoDeter": "Cerrado Daily Notices",
@@ -119,7 +127,11 @@
             "title": {
                 "cerrado": "Choose the Cerrado states",
                 "legal_amazon": "Choose the Legal Amazon states",
-                "amazon": "Choose the Amazon states"
+                "amazon": "Choose the Amazon states",
+                "caatinga": "Choose the Caatinga states",
+                "pampa": "Choose the Pampa states",
+                "mata_atlantica": "Choose the Atlantic Forest states",
+                "pantanal": "Choose the Pantanal states"
             },
             "config": {
                 "title": "Configurations to generate the CSV",
@@ -136,6 +148,10 @@
             "legal_amazon": "Legal Amazon",
             "amazon": "Amazon",
             "cerrado": "Cerrado",
+            "mata_atlantica":"Atlantic Forest",
+            "pampa":"Pampa",
+            "pantanal":"Pantanal",
+            "caatinga":"Caatinga",
             "time": "Year",
             "update": "Updated at: "
         },
