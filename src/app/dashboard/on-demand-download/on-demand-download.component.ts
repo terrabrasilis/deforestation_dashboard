@@ -48,7 +48,7 @@ export class OnDemandDownloadComponent implements OnInit {
   private dataJson: any;
   private loiNamesJson: any;
   private biome: any;
-  private DB_NoContain:any;
+  //private DB_NoContain:any;
 
   constructor(private route: ActivatedRoute,    
               private router: Router,
@@ -59,19 +59,21 @@ export class OnDemandDownloadComponent implements OnInit {
     this.biomeSubscription = this.route.params.subscribe(params => this.biome = params["biome"].replace("-", " "));
     this.typeSubscription = this.route.params.subscribe(params => this.type = params["type"].replace("-", " "));
 
-    this.DB_NoContain = true;
+    //this.DB_NoContain = true;
+
+    this.states = Constants.DASHBOARD_STATES.get(this.biome);
     
-    if (this.biome == "cerrado")
-      this.states = Constants.DASHBOARD_CERRADO_STATES;
-    else
-      if (this.biome == "amazon") {
-        this.states = Constants.DASHBOARD_AMAZON_STATES;
-        this.biome = "legal_amazon";
-        this.DB_NoContain = false;
-      }
-      else
-        if (this.biome == "legal_amazon") 
-          this.states = Constants.DASHBOARD_LEGAL_AMAZON_STATES;
+    // if (this.biome == "cerrado")
+    //   this.states = Constants.DASHBOARD_CERRADO_STATES;
+    // else
+    // if (this.biome == "amazon") {
+    //   //this.states = Constants.DASHBOARD_AMAZON_STATES;
+    //   this.biome = "legal_amazon";
+    //   this.DB_NoContain = false;
+    // }
+    // else
+    //   if (this.biome == "legal_amazon") 
+    //     this.states = Constants.DASHBOARD_LEGAL_AMAZON_STATES;
     
     this.states.sort();
     let half=parseInt( ( (this.states.length%2)?( (this.states.length/2)+1 ):( this.states.length/2 ) )+""  );
@@ -81,8 +83,8 @@ export class OnDemandDownloadComponent implements OnInit {
       { 'App-Identifier': 'prodes_'+this.biome}
     )};
 
-    if (this.DB_NoContain == false)
-      this.biome = "amazon";
+    // if (this.DB_NoContain == false)
+    //   this.biome = "amazon";
 
     this.dataObservable = this.dashboardApiProviderService.getDeforestation(this.httpOptions);  
     

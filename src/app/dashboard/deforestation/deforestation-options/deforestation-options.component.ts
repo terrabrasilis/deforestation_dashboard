@@ -158,14 +158,14 @@ export class DeforestationOptionsComponent implements OnInit  {
       { 'App-Identifier': 'prodes_'+this.biome}
     )};
 
-    this.lois = [ 
+    this.lois = [
       {value: "uf", viewValue: 'States'}, 
       {value: "mun", viewValue: 'Municipalities'}, 
       {value: "consunit", viewValue: 'Conservation Units'}, 
       {value: "indi", viewValue: 'Indigeneous Areas'}
     ];
 
-    this.classes = [    
+    this.classes = [
       {value: 'deforestation', viewValue: 'Deforestation'}
     ];
 

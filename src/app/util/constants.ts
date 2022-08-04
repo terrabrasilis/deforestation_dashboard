@@ -30,11 +30,11 @@ export class Constants {
     };
 
     public static get LAST_UPDATE_DATE(): string {
-        return "2022-06-03";
+        return "2022-08-05";
     };
 
     public static get DASHBOARD_BIOMES_NAMES(): string[] {
-        let listNames: string[] = ["amazon", "atlantic", "caatinga", "cerrado", "pampa", "pantanal", "legal_amazon"];
+        let listNames: string[] = ["amazon", "mata_atlantica", "caatinga", "cerrado", "pampa", "pantanal", "legal_amazon"];
         return listNames;
     };
 
@@ -55,19 +55,19 @@ export class Constants {
 
     public static get MAP_LEGEND_GRADES(): number {
         return 8;
-    };  
-    
-    public static get DASHBOARD_CERRADO_STATES(): any[] {
-        return ['MATO GROSSO', 'MARANHÃO', 'PIAUÍ', 'BAHIA', 'RONDÔNIA', 'MATO GROSSO DO SUL', 'GOIÁS', 'MINAS GERAIS', 'SÃO PAULO', 'PARANÁ', 'TOCANTINS', 'DISTRITO FEDERAL'];
-    };  
+    };
 
-    public static get DASHBOARD_AMAZON_STATES(): any[] {
-        return ['PARÁ', 'AMAZONAS', 'RORAIMA', 'ACRE', 'MATO GROSSO', 'RONDÔNIA', 'AMAPÁ', 'MARANHÃO', 'TOCANTINS'];
-    };  
-
-    public static get DASHBOARD_LEGAL_AMAZON_STATES(): any[] {
-        return ['PARÁ', 'AMAZONAS', 'RORAIMA', 'ACRE', 'MATO GROSSO', 'RONDÔNIA', 'AMAPÁ', 'MARANHÃO', 'TOCANTINS'];
-    };  
+    public static get DASHBOARD_STATES(): any {
+        var map = new Map();
+        map.set("cerrado", ['MATO GROSSO', 'MARANHÃO', 'PIAUÍ', 'BAHIA', 'RONDÔNIA', 'MATO GROSSO DO SUL', 'GOIÁS', 'MINAS GERAIS', 'SÃO PAULO', 'PARANÁ', 'TOCANTINS', 'DISTRITO FEDERAL']);
+        map.set("amazon", ['PARÁ', 'AMAZONAS', 'RORAIMA', 'ACRE', 'MATO GROSSO', 'RONDÔNIA', 'AMAPÁ', 'MARANHÃO', 'TOCANTINS']);
+        map.set("legal_amazon", ['PARÁ', 'AMAZONAS', 'RORAIMA', 'ACRE', 'MATO GROSSO', 'RONDÔNIA', 'AMAPÁ', 'MARANHÃO', 'TOCANTINS']);
+        map.set("pampa", ["RIO GRANDE DO SUL"]);
+        map.set("pantanal", ['MATO GROSSO DO SUL', 'MATO GROSSO']);
+        map.set("mata_atlantica", ['ALAGOAS', 'PARANÁ', 'SANTA CATARINA', 'MATO GROSSO DO SUL', 'SERGIPE', 'RIO GRANDE DO SUL', 'RIO DE JANEIRO', 'MINAS GERAIS', 'RIO GRANDE DO NORTE', 'DISTRITO FEDERAL', 'PARAÍBA', 'PERNAMBUCO', 'BAHIA', 'GOIÁS', 'SÃO PAULO', 'ESPÍRITO SANTO']);
+        map.set("caatinga", ['PIAUÍ', 'ALAGOAS', 'SERGIPE', 'MINAS GERAIS', 'RIO GRANDE DO NORTE', 'PARAÍBA', 'PERNAMBUCO', 'BAHIA', 'CEARÁ', 'MARANHÃO']);
+        return map;
+    };
 
     public static get DASHBOARD_LEGEND_WIDTH_SERIES_CHART(): any {
         var map = new Map();
