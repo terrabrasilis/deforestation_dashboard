@@ -1294,10 +1294,14 @@ export class DeforestationOptionsComponent implements OnInit  {
             .labelOffsetY(10)
             .xAxis()
             .ticks(4);
+
+    if(Object.keys(self.loiNames).length==1){
+      this.rowChart.fixedBarHeight(20);
+    }
     
     this.rowChart.xAxis().tickFormat(function(d:any) {return d+"km2";});
     
-    this.rowChart.data(function (group:any) {       
+    this.rowChart.data(function (group:any) {
       Terrabrasilis.enableLoading("#row-chart");
       Terrabrasilis.enableLoading("#loi-chart");
       return group.top(self.maxLoi);
