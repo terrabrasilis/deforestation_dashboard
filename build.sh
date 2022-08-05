@@ -28,10 +28,9 @@ fi
 # environment to homologation or production build
 # to homologation use homologation
 if [[ "$2" = "homologation" ]]; then
-    ENV="production"
     BUILD_TYPE="$2"
 else
-    ENV="production"
+    # adopt production by default
     BUILD_TYPE="production"
     VERSION="prod_$VERSION"
 fi
@@ -39,9 +38,7 @@ fi
 echo "Building $BUILD_TYPE mode..."
 echo "Building terrabrasilis/deforestation-dashboard:$VERSION"
 echo "...................................................."
-
-# --no-cache
-docker build --build-arg ENV=$ENV --build-arg BUILD_TYPE=$BUILD_TYPE -t terrabrasilis/deforestation-dashboard:$VERSION -f Dockerfile .
+docker build -t terrabrasilis/deforestation-dashboard:$VERSION -f Dockerfile.${BUILD_TYPE} .
 
 echo "The building was finished! Do you want sending this new image to Docker HUB? Type yes to continue." ; read SEND_TO_HUB
 if [[ ! "$SEND_TO_HUB" = "yes" ]]; then
