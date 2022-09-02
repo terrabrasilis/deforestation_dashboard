@@ -565,7 +565,7 @@ export class DeforestationOptionsComponent implements OnInit  {
         // remove all the items from the main grid and add each widgets again
         mainGrid.removeAll();
         buildMainGrid();
-        self.includeMask=e.target.checked;
+        self.includeMask=!self.includeMask;
         self.makeGraphs(self.includeMask);
         self.makeTables();
         return false;
