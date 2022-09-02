@@ -70,44 +70,63 @@ export class DeforestationOptionsUtils {
     return all;
   }
 
-  public static dataWranglingIncrements(dataJson:any, biome:any) {
+  public static dataWranglingIncrements(dataJson:any, includeMask:boolean) {
 
     var all:any[] = [];
+    var mask:any[] = [];
 
-    var divideAreaByYear=function(startY:any, endY:any, feature:any, aData:any[]){
-      /**
-       * Hack to avoid year difference greater than four between initial and final year in the Pampa biome.
-       */
-      if(biome=='pampa' && startY==2000){
-        startY=2002;
-      }
+    var divideAreaByYear=function(startY:any, endY:any, feature:any, aData:any[], isMask:boolean){
       var difYears = parseInt(endY) - parseInt(startY);
-      /* It is used to disable the long aggregate periods called the deforestation mask.
-       * To enable the mask, comment this line.
-       */
-      if(difYears>2) return;
-
-      var area = feature.areas.filter((area:any) => area.type == 2).map(function(e:any) { return e.area; })[0];
-      var filteredArea = feature.areas.filter((area:any) => area.type == 1).map(function(e:any) { return e.area; })[0];
+      var area = feature.areas[0].area;
+      var areaTotal=0;
+      if(includeMask){
+        var areaMask=( (isMask)?(0):(mask[feature.loi][feature.loiname]) );
+        areaTotal=(area*(1/difYears))+areaMask;
+        mask[feature.loi][feature.loiname]=areaTotal;
+      }else{
+        areaTotal=(area*(1/difYears));
+      }
       var currentYear = startY+1;
       while(currentYear<=endY) {
         var d={
           endDate: currentYear,
           loi: feature.loi,
           loiName: feature.loiname,
-          area: area*(1/difYears),
-          filteredArea: filteredArea*(1/difYears)
+          area: areaTotal,
+          filteredArea: areaTotal
         };
         aData.push(d);
         currentYear=currentYear+1;
       }
     };
 
+    var storeMask=function(feature:any, aData:any[]){
+      var area = feature.areas[0].area;
+      var d=[];
+      d[feature.loiname]=area;
+      if(typeof aData[feature.loi] == 'undefined'){
+        aData[feature.loi]=[];
+      }
+      aData[feature.loi][feature.loiname]=area;
+    };
+
     dataJson["periods"].forEach(function(period:any) {
       period.features.forEach(function(feature:any) {
         var startYear = period.startDate.year;
         var endYear = period.endDate.year;
-        divideAreaByYear(startYear,endYear,feature,all);
+        var difYears = parseInt(endYear) - parseInt(startYear);
+        /*
+         * If the differency between end and start year is major than 2, the data is long aggregation called mask
+         * The magic number for startY=1500 is a convention to the start year for deforestation mask
+         * In this case, we store the mask to use after prepare areas by lois and years
+         */
+        if(difYears>2 && startYear==1500) {
+          if(includeMask){
+            storeMask(feature,mask);
+            divideAreaByYear(endYear-1,endYear,feature,all,true);
+          }
+        }else
+          divideAreaByYear(startYear,endYear,feature,all,false);
       });
     });
 

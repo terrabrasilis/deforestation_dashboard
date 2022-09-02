@@ -71,7 +71,9 @@ export class DeforestationOptionsComponent implements OnInit  {
 
   trashIcon: string; 
   
-  loadGrid: any; 
+  loadGrid: any;
+  setMaskDisplay: any;
+  includeMask: boolean;
   geojsonLayers:any;
   listCharts:any;
   rowChart:any;
@@ -183,6 +185,8 @@ export class DeforestationOptionsComponent implements OnInit  {
     this.maxLoi = 13;
     
     this.last_update_date = Constants.LAST_UPDATE_DATE;
+
+    this.includeMask=false;
   }
 
   ngOnInit() {
@@ -550,10 +554,21 @@ export class DeforestationOptionsComponent implements OnInit  {
         // remove all the items from the main grid and add each widgets again
         mainGrid.removeAll();
         buildMainGrid();
-        self.makeGraphs();
+        self.includeMask=false;
+        self.makeGraphs(self.includeMask);
         self.makeTables();
         return false;
 
+      }.bind(this);
+
+      this.setMaskDisplay = function(e:any) {
+        // remove all the items from the main grid and add each widgets again
+        mainGrid.removeAll();
+        buildMainGrid();
+        self.includeMask=e.target.checked;
+        self.makeGraphs(self.includeMask);
+        self.makeTables();
+        return false;
       }.bind(this);
       
       // resizable and draggable gridstack
@@ -618,6 +633,9 @@ export class DeforestationOptionsComponent implements OnInit  {
       // add on click handle loadGrid call for restore view button 
       $('#load_grid').click(this.loadGrid);
 
+      // add on click handle viewMask call for display mask button 
+      $('#load_mask').click(this.setMaskDisplay);
+
       moreOptions();
     });
 
@@ -673,7 +691,7 @@ export class DeforestationOptionsComponent implements OnInit  {
 
     this.mapObservable.subscribe(data => {
       this.mapJson = data;
-      this.makeGraphs();
+      this.makeGraphs(this.includeMask);
       this.makeTables();
     });
 
@@ -751,7 +769,7 @@ export class DeforestationOptionsComponent implements OnInit  {
       this.listCharts.set('tb-area', this.tableArea);
   }
 
-  makeGraphs():void {
+  makeGraphs(includeMask:boolean):void {
     
     // call function inside this
     let self=this;
@@ -759,7 +777,7 @@ export class DeforestationOptionsComponent implements OnInit  {
     
     // data wrangling - flatten nested data
     if (this.type == "increments")
-      allFeatures = DeforestationOptionsUtils.dataWranglingIncrements(this.dataJson, this.biome);
+      allFeatures = DeforestationOptionsUtils.dataWranglingIncrements(this.dataJson, includeMask);
     else
       allFeatures = DeforestationOptionsUtils.dataWranglingRates(this.dataJson);
 

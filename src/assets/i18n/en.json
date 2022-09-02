@@ -109,6 +109,7 @@
         "options": {
             "removefilter": "Remove Filter",
             "restoreview": "Restore View",
+            "loadmask": "Include Mask",
             "searchloi": "Search",
             "legend": "Legend"
         },

@@ -108,6 +108,7 @@
         "options": {
             "removefilter": "Remover Filtro",
             "restoreview": "Restaurar Visão",
+            "loadmask": "Incluir Mascara",
             "searchloi": "Procurar",
             "legend": "Legenda"
         },
