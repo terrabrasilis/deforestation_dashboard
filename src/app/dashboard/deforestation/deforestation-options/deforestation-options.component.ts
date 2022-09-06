@@ -1037,7 +1037,7 @@ export class DeforestationOptionsComponent implements OnInit  {
       .dimension(dateDim)
       .group(snapToZero(this.areaByDate))
       .elasticY(true)
-      .yAxisPadding('10%')
+      .yAxisPadding('20%')
       //.xAxisLabel("Brazilian "+ this.biome.charAt(0).toUpperCase() + this.biome.slice(1)+" Monitoring Period: "+this.minDate+" - "+this.maxDate)
       .yAxisLabel(this.labelArea)
       .x(d3.scaleBand().rangeRound([0, barChartWidth]))
@@ -1048,7 +1048,7 @@ export class DeforestationOptionsComponent implements OnInit  {
       .renderHorizontalGridLines(true)
       .renderVerticalGridLines(true)
       ._rangeBandPadding(0.2)
-      .compose([this.area])
+      .compose([this.area]);
       // This code is needed only if we use two bars for each year to represents the área with more than one filter
       // .on("pretransition", (chart:any) => {
       //   Terrabrasilis.enableLoading("#bar-chart");
