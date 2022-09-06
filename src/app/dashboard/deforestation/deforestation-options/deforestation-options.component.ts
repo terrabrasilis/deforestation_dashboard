@@ -568,7 +568,7 @@ export class DeforestationOptionsComponent implements OnInit  {
         self.includeMask=!self.includeMask;
         self.makeGraphs(self.includeMask);
         self.makeTables();
-        return false;
+        return;
       }.bind(this);
       
       // resizable and draggable gridstack
@@ -634,7 +634,7 @@ export class DeforestationOptionsComponent implements OnInit  {
       $('#load_grid').click(this.loadGrid);
 
       // add on click handle viewMask call for display mask button 
-      $('#load_mask').click(this.setMaskDisplay);
+      $('#mask-selector').click(this.setMaskDisplay);
 
       moreOptions();
     });

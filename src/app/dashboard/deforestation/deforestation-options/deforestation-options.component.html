@@ -154,14 +154,13 @@
                 {{ 'dashboard.options.restoreview' | translate }}
               </a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" id="load_mask">
-                <i class="fa fa-globe"></i>
-                {{ 'dashboard.options.loadmask' | translate }}
-              </a>
-            </li>
             <app-loi-search></app-loi-search>
           </ul>
+          <div style="padding-right: 5px;" class="btn-group btn-group-toggle btn-group-sm selecao" data-toggle="buttons">
+            <label class="btn btn-outline-secondary" id="mask-selector">
+              <input type="checkbox" autocomplete="off" checked><span>{{ 'dashboard.options.loadmask' | translate }}</span>
+            </label>
+          </div>
         </div>
       </nav> 
 
