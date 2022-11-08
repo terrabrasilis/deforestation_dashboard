@@ -26,11 +26,11 @@ export class Constants {
 
     public static get FILE_RATES(): string {
         // return the name of JSON file with rates
-        return "assets/files/rates2021.json";
+        return "assets/files/rates2022.json";
     };
 
     public static get LAST_UPDATE_DATE(): string {
-        return "2022-06-03";
+        return "2022-11-15";
     };
 
     public static get DASHBOARD_BIOMES_NAMES(): string[] {
@@ -44,9 +44,9 @@ export class Constants {
      */
     public static get BARCHART_PRELIMINARY_DATA_YEAR(): String {
         // enable preliminary notes
-        //return '2021';
+        return '2022';
         // disable preliminary notes
-        return null;
+        //return null;
     }
 
     public static get MAP_LEGEND_COLORS(): any[] {

@@ -1510,16 +1510,18 @@ export class DeforestationOptionsComponent implements OnInit  {
             /**
              * Setting up authentication api
              */
+            let orig=document.location.origin;
+            let isLocal=( (orig.includes('localhost') || orig.includes('127'))?("http://terrabrasilis.dpi.inpe.br/oauth-api/"):("") );
             Authentication.init(lang, function()
             {
-                /**
-                 * Notify authentication handler about login changes
-                 */
-            if($('#notifyAuthenticationChanged').length!=0)
-            {
-                $('#notifyAuthenticationChanged').click();
-            }
-            });
+              /**
+               * Notify authentication handler about login changes
+               */
+              if($('#notifyAuthenticationChanged').length!=0)
+              {
+                  $('#notifyAuthenticationChanged').click();
+              }
+            }, isLocal);
 
         });
         

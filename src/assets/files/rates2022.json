@@ -3469,5 +3469,107 @@
 				"area": 37
 			}]
 		}]
+	}, {
+		"startDate": {
+			"year": 2021,
+			"month": 8,
+			"day": 1
+		},
+		"endDate": {
+			"year": 2022,
+			"month": 7,
+			"day": 31
+		},
+		"features": [{
+			"loi": 1,
+			"loiname": 9253,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 847
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 9249,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 2607
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 9254,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 6
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 9255,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 282
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 9251,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 1906
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 9252,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 4141
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 9256,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 1512
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 9248,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 240
+			}]
+		}, {
+			"loi": 1,
+			"loiname": 9250,
+			"areas": [{
+				"type": 2,
+				"area": 0
+			}, {
+				"type": 1,
+				"area": 27
+			}]
+		}]
 	}]
 }

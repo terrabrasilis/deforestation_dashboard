@@ -155,8 +155,8 @@
             "incr_bar":"Incremento consolidado"
         },
         "modals": {
-            "warning_rates":"Novos dados.<br>Taxa estimada de desmatamento na Amazônia Legal Brasileira, para o período 2020/2021, com base em 106 cenas prioritárias.<br><a style='color: blue;' target='_blank' href='https://www.gov.br/inpe/pt-br/assuntos/ultimas-noticias/divulgacao-de-dados-prodes.pdf'>Saiba mais na nota técnica.</a>",
-            "warning_increase":"Consulte os novos dados de incremento de desmatamento na Amazônia Legal Brasileira e Bioma Amazônia, para o período 2020/2021, medidos com base em 106 cenas prioritárias."
+            "warning_rates":"Novos dados.<br>Taxa estimada de desmatamento na Amazônia Legal Brasileira, para o período 2021/2022, com base em 108 cenas prioritárias.<br><a style='color: blue;' target='_blank' href='https://www.gov.br/inpe/pt-br/assuntos/ultimas-noticias/divulgacao-de-dados-prodes.pdf'>Saiba mais na nota técnica.</a>",
+            "warning_increase":"Consulte os novos dados de incremento de desmatamento na Amazônia Legal Brasileira e Bioma Amazônia, para o período 2021/2022, medidos com base em 108 cenas prioritárias."
         }
     }
 }
