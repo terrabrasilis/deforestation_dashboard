@@ -13,7 +13,7 @@ export class DeforestationOptionsUtils {
         
     loi.loinames.forEach(function(loiname:any) {
       var [mun, state] = loiname.loiname.split("_");
-      if (checkedLoiNames.indexOf(state) > -1)
+      if (checkedLoiNames.indexOf(state.toUpperCase()) > -1)
         loinames[loiname.gid] = [mun, state, loiname.codibge];
     });
 
