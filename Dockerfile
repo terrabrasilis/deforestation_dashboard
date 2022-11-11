@@ -9,17 +9,18 @@ RUN apt-get update \
 
 WORKDIR /app
 
-ARG BUILD_TYPE
-ARG ENV
-ARG env=$ENV
-
 COPY package.json /app/
+COPY package-lock.json /app/
 RUN npm install
 COPY ./src /app/src/
 COPY ./config /app/config/
 COPY ./ts*.json /app/
 COPY ./.angular-cli.json /app/
 COPY ./nginx-custom.conf /app/nginx-custom.conf
+
+ARG BUILD_TYPE
+ARG ENV
+ARG env=$ENV
 
 RUN npm run build-$BUILD_TYPE && rm -rf /app/node_modules
 
