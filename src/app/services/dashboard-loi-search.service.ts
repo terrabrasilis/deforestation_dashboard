@@ -25,7 +25,7 @@ export class DashboardLoiSearchService {
   searchEntries(term: any) {
     let results:Array<{key:any,value:any}>=new Array();
     function searchInMapElements(element: any) {
-      if(element.value.indexOf(term.toUpperCase())>=0) {
+      if(element.value.toUpperCase().indexOf(term.toUpperCase())>=0) {
         results.push({key:element.key,value:element.value});
         results = results.sort(function(a:any, b:any) {
                     return ('' + a.value).localeCompare(b.value);
