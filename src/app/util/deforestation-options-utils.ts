@@ -54,15 +54,13 @@ export class DeforestationOptionsUtils {
 
     dataJson["periods"].forEach(function(period:any) {
       period.features.forEach(function(feature:any) {       
-        var year = period.endDate.year;          
+        var year = period.endDate.year;
         var area = feature.areas.filter((area:any) => area.type == 1).map(function(e:any) { return e.area; })[0];
-        var filteredArea = feature.areas.filter((area:any) => area.type == 2).map(function(e:any) { return e.area; })[0];
         all.push({ 
           endDate: year,
           loi: feature.loi,
           loiName: feature.loiname,
-          area: area,
-          filteredArea: filteredArea
+          area: area
         });
       });
     });
@@ -92,8 +90,7 @@ export class DeforestationOptionsUtils {
           endDate: currentYear,
           loi: feature.loi,
           loiName: feature.loiname,
-          area: areaTotal,
-          filteredArea: areaTotal
+          area: areaTotal
         };
         aData.push(d);
         currentYear=currentYear+1;
