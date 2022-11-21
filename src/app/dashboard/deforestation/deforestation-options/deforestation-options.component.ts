@@ -1267,7 +1267,7 @@ export class DeforestationOptionsComponent implements OnInit  {
             .margins({top: 10, right: 10, bottom: 20, left: 15})
             .elasticX(true)
             .dimension(this.loiNameDim)
-            .group(this.areaByLoiName)            
+            .group(this.areaByLoiName)
             .controlsUseVisibility(true)
             .title(function(d:any) {
               let formater=DeforestationOptionsUtils.numberFormat(self.lang);
@@ -1303,7 +1303,7 @@ export class DeforestationOptionsComponent implements OnInit  {
             .xAxis()
             .ticks(4);
 
-    if(Object.keys(self.loiNames).length==1){
+    if( ((Object.keys(self.loiNames).length*20)-30) <= rowChartHeight ){
       this.rowChart.fixedBarHeight(20);
     }
     
