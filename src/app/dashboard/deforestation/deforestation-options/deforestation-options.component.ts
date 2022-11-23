@@ -772,10 +772,13 @@ export class DeforestationOptionsComponent implements OnInit  {
     // call function inside this
     let self=this;
     var allFeatures:any[];
+
+    // get selected loi
+    let oSelectedLoi=self.dataLoinamesJson.lois.find((l:any)=>{return l.name==self.selectedLoi;});
     
     // data wrangling - flatten nested data
     if (this.type == "increments")
-      allFeatures = DeforestationOptionsUtils.dataWranglingIncrements(this.dataJson, includeMask);
+      allFeatures = DeforestationOptionsUtils.dataWranglingIncrements(this.dataJson, oSelectedLoi, includeMask);
     else
       allFeatures = DeforestationOptionsUtils.dataWranglingRates(this.dataJson);
 

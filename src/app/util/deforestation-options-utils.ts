@@ -68,32 +68,43 @@ export class DeforestationOptionsUtils {
     return all;
   }
 
-  public static dataWranglingIncrements(dataJson:any, includeMask:boolean) {
+  public static dataWranglingIncrements(dataJson:any, oSelectedLoi:any, includeMask:boolean) {
 
     var all:any[] = [];
     var mask:any[] = [];
 
-    var divideAreaByYear=function(startY:any, endY:any, feature:any, aData:any[], isMask:boolean){
-      var difYears = parseInt(endY) - parseInt(startY);
+    var divideAreaByYear=function(startY:any, endY:any, oSelectedLoi:any, feature:any, aData:any[]){
+      var isMask = startY==1500;
+      // to avoid the area division of mask, force to 1
+      var difYears = (isMask) ? (1) : (parseInt(endY) - parseInt(startY));
       var area = feature.areas[0].area;
-      var areaTotal=0;
-      if(includeMask){
-        var areaMask=( (isMask)?(0):(mask[feature.loi][feature.loiname]) );
-        areaTotal=(area*(1/difYears))+areaMask;
-        mask[feature.loi][feature.loiname]=areaTotal;
-      }else{
-        areaTotal=(area*(1/difYears));
-      }
-      var currentYear = startY+1;
-      while(currentYear<=endY) {
-        var d={
-          endDate: currentYear,
-          loi: feature.loi,
-          loiName: feature.loiname,
-          area: areaTotal
-        };
-        aData.push(d);
-        currentYear=currentYear+1;
+      var maskArea = mask[feature.loi]&&mask[feature.loi][feature.loiname] ? mask[feature.loi][feature.loiname] : 0;
+
+      var areaTotal = includeMask ?  maskArea : 0;
+      var currentYear = isMask ? endY : startY+1;
+
+      if(includeMask || !isMask) {
+        while(currentYear<=endY) {
+          areaTotal = isMask ? areaTotal : ( (area*(1/difYears)) + areaTotal );
+          if(includeMask){
+            if(!mask[feature.loi]) {
+              mask[feature.loi]={};
+            }
+            if(!mask[feature.loi][feature.loiname]) {
+              mask[feature.loi][feature.loiname]={};
+            }
+            mask[feature.loi][feature.loiname] = areaTotal;
+          }
+          var d={
+            endDate: currentYear,
+            loi: feature.loi,
+            loiName: feature.loiname,
+            area: areaTotal
+          };
+          aData.push(d);
+          currentYear=currentYear+1;
+          if(!includeMask) areaTotal=0;
+        }
       }
     };
 
@@ -108,24 +119,48 @@ export class DeforestationOptionsUtils {
     };
 
     dataJson["periods"].forEach(function(period:any) {
+      var startYear = period.startDate.year;
+      var endYear = period.endDate.year;
+
+      // insert lois from default list if not exists in period loi list
+      let oDefault={areas:[{type: 1, area: 0}],loiname:'',loi:oSelectedLoi.gid};
+      oSelectedLoi.loinames.forEach( (e:any)=>{
+        let oFind=period.features.filter((a:any)=>{
+          return a.loi==oSelectedLoi.gid && e.gid==a.loiname;
+        }).map((i:any)=>{
+          return i;
+        });
+        if(!oFind){
+          oDefault.loiname=e.gid;
+          period.features.push(oDefault);
+        }
+      });
+
       period.features.forEach(function(feature:any) {
-        var startYear = period.startDate.year;
-        var endYear = period.endDate.year;
-        var difYears = parseInt(endYear) - parseInt(startYear);
+        if(feature.loi!=oSelectedLoi.gid) return;
         /*
-         * If the differency between end and start year is major than 2, the data is long aggregation called mask
          * The magic number for startY=1500 is a convention to the start year for deforestation mask
          * In this case, we store the mask to use after prepare areas by lois and years
          */
-        if(difYears>2 && startYear==1500) {
-          if(includeMask){
-            storeMask(feature,mask);
-            divideAreaByYear(endYear-1,endYear,feature,all,true);
-          }
-        }else
-          divideAreaByYear(startYear,endYear,feature,all,false);
+        if(includeMask && startYear==1500) {
+          storeMask(feature,mask);
+        }
+        divideAreaByYear(startYear,endYear,oSelectedLoi,feature,all);
       });
     });
+
+    /*
+    // ids de lois que não aparecem em 2001 pantanal (10887, 10888, 10889, 10893)
+    var areall=0; var ids=[];
+    allf.forEach(
+      (f)=>{
+        if(!ids[f.endDate]) {ids[f.endDate]=[];}
+        if(!ids[f.endDate].includes(f.loiName)) {
+          ids[f.endDate].push(f.loiName);
+        }
+        if(f.endDate==2021) areall+=f.area;
+      });
+    */
 
     return all;
   }
