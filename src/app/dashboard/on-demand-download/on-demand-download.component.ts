@@ -140,7 +140,7 @@ export class OnDemandDownloadComponent implements OnInit {
 
     var allFeatures:any[];
     if (this.type == "increments")
-      allFeatures = DeforestationOptionsUtils.dataWranglingIncrements(this.dataJson, oSelectedLoi, this.biome);
+      allFeatures = (DeforestationOptionsUtils.dataWranglingIncrements(this.dataJson, oSelectedLoi, this.biome)).accumulatedSerie;
     else
       allFeatures = DeforestationOptionsUtils.dataWranglingRates(this.dataJson);
     

@@ -771,16 +771,21 @@ export class DeforestationOptionsComponent implements OnInit  {
     
     // call function inside this
     let self=this;
-    var allFeatures:any[];
+    var accumulatedSerie:any[];
+    var serie:any[];
+    let allIncrements={accumulatedSerie:accumulatedSerie,serie:serie};
 
     // get selected loi
     let oSelectedLoi=self.dataLoinamesJson.lois.find((l:any)=>{return l.name==self.selectedLoi;});
     
     // data wrangling - flatten nested data
-    if (this.type == "increments")
-      allFeatures = DeforestationOptionsUtils.dataWranglingIncrements(this.dataJson, oSelectedLoi, includeMask);
-    else
-      allFeatures = DeforestationOptionsUtils.dataWranglingRates(this.dataJson);
+    if (this.type == "increments"){
+      allIncrements = DeforestationOptionsUtils.dataWranglingIncrements(this.dataJson, oSelectedLoi, includeMask);
+      accumulatedSerie=allIncrements.accumulatedSerie;
+      serie=allIncrements.serie;
+    }else{
+      accumulatedSerie = DeforestationOptionsUtils.dataWranglingRates(this.dataJson);
+    }
 
     // get loiNames
     self.loiNames = new Map<number, string>();
@@ -801,7 +806,7 @@ export class DeforestationOptionsComponent implements OnInit  {
                           });
     
     // filter and change loinames
-    var filteredFeatures = allFeatures.filter(
+    var collection = accumulatedSerie.filter(
       (filteredData:any) => {
         return filteredData.loiName in self.loiNames;
       }
@@ -814,57 +819,70 @@ export class DeforestationOptionsComponent implements OnInit  {
         };
       }
     );
+
+    if (this.type == "increments"){
+      var collection1 = serie.filter(
+        (filteredData:any) => {
+          return filteredData.loiName in self.loiNames;
+        }
+      ).map(
+        function(e:any) {
+          return {
+            endDate: e.endDate,
+            loiName: e.loiName,
+            area: e.area
+          };
+        }
+      );
+    }else{
+      collection1=collection;
+    }
     
-    // create a crossfilter instance [endDate, loiName, area, filteredArea]
-    var ndx = crossfilter(filteredFeatures);
+    // create a crossfilter instance [endDate, loiName, area]
+    var ndx = crossfilter(collection);
+    var ndx1 = crossfilter(collection1);
     
-    // define dimensions
+    // to bar chart
     var dateDim = ndx.dimension(
       function(d:any) { 
         return +d["endDate"];
       }
     );
-
-    this.loiNameDim = ndx.dimension(
-      function(d:any) { 
-        return d["loiName"];
-      }
-    );
-
-    var areaDim = ndx.dimension(
-      function(d:any) { 
-        return +d["area"]; 
-      }
-    );
-
-    this.tableDateDim = ndx.dimension(
-      function(d:any) { 
-        return +d['endDate'];
-      }
-    );
-    
-    var loiNameYearDim = ndx.dimension( function(d:any):any {
-      return [d["loiName"], +d["endDate"]];
-    });
-
-    // calculate metrics
     this.areaByDate = dateDim.group().reduceSum(
       function(d:any) {
         return +d["area"];
       }
     );
-    
+
+    // to row chart
+    this.loiNameDim = ndx1.dimension(
+      function(d:any) { 
+        return d["loiName"];
+      }
+    );
     this.areaByLoiName = this.loiNameDim.group().reduceSum(
       function(d:any) {
         return +d["area"];
       }
     );
 
+
+    // to table for loiname x area
+    this.tableDateDim = ndx1.dimension(
+      function(d:any) { 
+        return +d['endDate'];
+      }
+    );
     this.tableTotalAreaByLoiName = this.loiNameDim.group().reduceSum(
       function(d:any) {
         return (+d["area"]);
       }
     );
+    
+
+    var loiNameYearDim = ndx.dimension( function(d:any):any {
+      return [d["loiName"], +d["endDate"]];
+    });
 
     var areaByloiNameYear = loiNameYearDim.group().reduceSum(function(d:any) {
 			return +d["area"];

@@ -70,10 +70,11 @@ export class DeforestationOptionsUtils {
 
   public static dataWranglingIncrements(dataJson:any, oSelectedLoi:any, includeMask:boolean) {
 
-    var all:any[] = [];
-    var mask:any[] = [];
+    var serie:any[] = [];// mask + increments - time series without cumulative
+    var accumulatedSerie:any[] = [];// Accumulated time serie with mask + increments
+    var mask:any[] = [];// used to store mask data locally
 
-    var divideAreaByYear=function(startY:any, endY:any, oSelectedLoi:any, feature:any, aData:any[]){
+    var divideAreaByYear=function(startY:any, endY:any, feature:any, aData:any[], data:any[]){
       var isMask = startY==1500;
       // to avoid the area division of mask, force to 1
       var difYears = (isMask) ? (1) : (parseInt(endY) - parseInt(startY));
@@ -102,6 +103,13 @@ export class DeforestationOptionsUtils {
             area: areaTotal
           };
           aData.push(d);
+          d={
+            endDate: currentYear,
+            loi: feature.loi,
+            loiName: feature.loiname,
+            area: area*(1/difYears)
+          };
+          data.push(d);
           currentYear=currentYear+1;
           if(!includeMask) areaTotal=0;
         }
@@ -121,17 +129,16 @@ export class DeforestationOptionsUtils {
     dataJson["periods"].forEach(function(period:any) {
       var startYear = period.startDate.year;
       var endYear = period.endDate.year;
+      let loinamesForPeriod:any[] = [];
 
       // insert lois from default list if not exists in period loi list
-      let oDefault={areas:[{type: 1, area: 0}],loiname:'',loi:oSelectedLoi.gid};
+      period.features.forEach( (pf:any)=>{
+        if(pf.loi!=oSelectedLoi.gid) return;
+        loinamesForPeriod.push(pf.loiname);
+      } );
       oSelectedLoi.loinames.forEach( (e:any)=>{
-        let oFind=period.features.filter((a:any)=>{
-          return a.loi==oSelectedLoi.gid && e.gid==a.loiname;
-        }).map((i:any)=>{
-          return i;
-        });
-        if(!oFind){
-          oDefault.loiname=e.gid;
+        if(!loinamesForPeriod.includes(e.gid)){
+          let oDefault={areas:[{type: 1, area: 0}],loiname:e.gid,loi:oSelectedLoi.gid};
           period.features.push(oDefault);
         }
       });
@@ -145,24 +152,11 @@ export class DeforestationOptionsUtils {
         if(includeMask && startYear==1500) {
           storeMask(feature,mask);
         }
-        divideAreaByYear(startYear,endYear,oSelectedLoi,feature,all);
+        divideAreaByYear(startYear,endYear,feature,accumulatedSerie,serie);
       });
     });
 
-    /*
-    // ids de lois que não aparecem em 2001 pantanal (10887, 10888, 10889, 10893)
-    var areall=0; var ids=[];
-    allf.forEach(
-      (f)=>{
-        if(!ids[f.endDate]) {ids[f.endDate]=[];}
-        if(!ids[f.endDate].includes(f.loiName)) {
-          ids[f.endDate].push(f.loiName);
-        }
-        if(f.endDate==2021) areall+=f.area;
-      });
-    */
-
-    return all;
+    return {accumulatedSerie:accumulatedSerie,serie:serie};
   }
     
   public static getloiNamesByLoi(arr:any, loi:any):Array<number> {      
