@@ -31,7 +31,7 @@ export class Constants {
     };
 
     public static get LAST_UPDATE_DATE(): string {
-        return "2022-11-15";
+        return "2022-11-30";
     };
 
     public static get DASHBOARD_BIOMES_NAMES(): string[] {
