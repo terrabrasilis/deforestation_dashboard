@@ -257,6 +257,14 @@ a[data-toggle="collapse"] {
     /* color: #fff !important; */
 }
 
+.addmask{
+    display: inline-flex;
+    padding-left: inherit;
+    position: unset;
+    top: unset;
+    right: unset;
+}
+
 #navbarSupportedContent {
     align-items: flex-end;
     min-width: 200px;

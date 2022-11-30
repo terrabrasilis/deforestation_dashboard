@@ -265,6 +265,12 @@ export class DeforestationOptionsComponent implements OnInit  {
     this.typeSubscription.unsubscribe();
   }
 
+  maskOnOff(input: HTMLInputElement) {
+    this.includeMask = input.checked;
+    var self=this;
+    self.setMaskDisplay();
+  }
+
   filterByLoi(key:number) {
     this.applyCountyFilter(key);
     dc.redrawAll();
@@ -559,15 +565,14 @@ export class DeforestationOptionsComponent implements OnInit  {
 
       }.bind(this);
 
-      this.setMaskDisplay = function(e:any) {
+      self.setMaskDisplay = function() {
         // remove all the items from the main grid and add each widgets again
         mainGrid.removeAll();
         buildMainGrid();
-        self.includeMask=!self.includeMask;
         self.makeGraphs(self.includeMask);
         self.makeTables();
         return;
-      }.bind(this);
+      }
       
       // resizable and draggable gridstack
       $('#side-grid .grid-stack-item').resizable().draggable({
@@ -630,9 +635,6 @@ export class DeforestationOptionsComponent implements OnInit  {
 
       // add on click handle loadGrid call for restore view button 
       $('#load_grid').click(this.loadGrid);
-
-      // add on click handle viewMask call for display mask button 
-      $('#mask-selector').click(this.setMaskDisplay);
 
       moreOptions();
     });

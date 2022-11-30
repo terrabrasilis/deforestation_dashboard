@@ -87,15 +87,25 @@
       </li>
     </ul>     
     <ul class="list-unstyled components" id="tools-menu">
-        <li class="active"><!-- manter active no primeiro -->
-          <a class="title-sidebar" href="#ferramentas" data-toggle="collapse" aria-expanded="true"><span id="tools">{{ 'dashboard.openOptions.tools' | translate }}</span></a>
-        </li>
-        <li>
-          <a href="#modal-ondemand-download" id="downloadBtn" data-toggle="modal" data-target="#modal-ondemand-download">
-            <i class="material-icons">cloud_download</i><span id="txt4"> {{ 'dashboard.download.munBystate' | translate }} </span> <i class="material-icons infoicon" title="{{ 'dashboard.tooltip.download' | translate}}">info_outline</i>
-          </a>
-        </li>
-      </ul>
+      <li class="active"><!-- manter active no primeiro -->
+        <a class="title-sidebar" href="#ferramentas" data-toggle="collapse" aria-expanded="true"><span id="tools">{{ 'dashboard.openOptions.tools' | translate }}</span></a>
+      </li>
+      <li>
+        <a href="#modal-ondemand-download" id="downloadBtn" data-toggle="modal" data-target="#modal-ondemand-download">
+          <i class="material-icons">cloud_download</i><span id="txt4"> {{ 'dashboard.download.munBystate' | translate }} </span> <i class="material-icons infoicon" title="{{ 'dashboard.tooltip.download' | translate}}">info_outline</i>
+        </a>
+      </li>
+      <li>
+        <a href="#" aria-expanded="false">
+          <i class="material-icons">select_all</i><span> {{ 'dashboard.tool.addmask' | translate }} </span>
+          <div class="material-switch addmask">
+            <input id="mask-selector" name="addMask01" type="checkbox" (change)="maskOnOff($event.srcElement)" checked="{{ (includeMask) ? 'checked' : null }}"/>
+            <label for="mask-selector" class="bg-white"></label>
+          </div>
+          <i class="material-icons infoicon" title="{{ 'dashboard.tooltip.tool.addmask' | translate}}">info_outline</i>
+        </a>
+      </li>
+    </ul>
   </nav>
 </div>  
 
@@ -156,11 +166,6 @@
             </li>
             <app-loi-search></app-loi-search>
           </ul>
-          <div style="padding-right: 5px;" class="btn-group btn-group-toggle btn-group-sm selecao" data-toggle="buttons">
-            <label class="btn btn-outline-secondary" id="mask-selector">
-              <input type="checkbox" autocomplete="off" checked><span>{{ 'dashboard.options.loadmask' | translate }}</span>
-            </label>
-          </div>
         </div>
       </nav> 
 

@@ -35,6 +35,9 @@
         "title":"Send suggestions or questions to"
     },
     "dashboard": {
+        "tool":{
+            "addmask":"Add aggregate"
+        },
         "filters": {
             "loiname":{"all":"All"},
             "time":{"all":"All"}
@@ -163,7 +166,8 @@
             "rates_bar_pri":"Estimated rate",
             "rates_bar":"Consolidated rate",
             "incr_bar_pri":"Partial increment",
-            "incr_bar":"Consolidated increment"
+            "incr_bar":"Consolidated increment",
+            "tool":{"addmask":"Add the aggregated deforestation to the deforestation increment."}
         },
         "modals": {
             "warning_rates":"New data.<br>Estimated deforestation rates in the Brazilian Legal Amazon for 2021/2022 period based on 108 priority scenes.<br><a target='_blank' style='color: blue;' href='https://www.gov.br/inpe/pt-br/assuntos/ultimas-noticias/divulgacao-de-dados-prodes.pdf'>Learn more at technical note.</a>",
