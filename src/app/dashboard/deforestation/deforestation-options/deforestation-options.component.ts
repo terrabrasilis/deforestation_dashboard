@@ -77,7 +77,6 @@ export class DeforestationOptionsComponent implements OnInit  {
   rowChart:any;
   barChart:any;
   area:any;
-  filteredArea:any;
   seriesChart:any;
   legendSize: any;
   tagId:any;
@@ -110,7 +109,6 @@ export class DeforestationOptionsComponent implements OnInit  {
   private loiNameDim: any;
   private tableTotalAreaByLoiName: any;
   private areaByDate: any;
-  private filteredAreaByDate: any;
   private areaByLoiName: any;
 
   // dashboard title
@@ -791,8 +789,7 @@ export class DeforestationOptionsComponent implements OnInit  {
         return {
           endDate: e.endDate,
           loiName: e.loiName,
-          area: e.area,
-          filteredArea: e.filteredArea
+          area: e.area
         };
       }
     );
@@ -835,12 +832,6 @@ export class DeforestationOptionsComponent implements OnInit  {
         return +d["area"];
       }
     );
-
-    this.filteredAreaByDate = dateDim.group().reduceSum(
-      function(d:any) {
-        return +d["filteredArea"];
-      }
-    );
     
     this.areaByLoiName = this.loiNameDim.group().reduceSum(
       function(d:any) {
@@ -873,7 +864,6 @@ export class DeforestationOptionsComponent implements OnInit  {
     // define dc charts
     this.barChart = dc.compositeChart("#bar-chart");
 		this.area = dc.barChart(this.barChart);
-		// this.filteredArea = dc.barChart(this.barChart);
 
     this.seriesChart = dc.seriesChart("#series-chart");
     
@@ -1444,7 +1434,7 @@ export class DeforestationOptionsComponent implements OnInit  {
 
   changeLanguage(value:string) {
     this.lang=value;
-    this.last_update_date=(new Date(Constants.LAST_UPDATE_DATE)).toLocaleDateString(this.lang);
+    this.last_update_date=(new Date(Constants.LAST_UPDATE_DATE+'T12:00:00.000Z')).toLocaleDateString(this.lang);
     this.localStorageService.setValue(this.languageKey, value);
     this._translate.use(value);
     this.updateGridstackLanguage();
@@ -1514,16 +1504,18 @@ export class DeforestationOptionsComponent implements OnInit  {
             /**
              * Setting up authentication api
              */
+            let orig=document.location.origin;
+            let isLocal=( (orig.includes('localhost') || orig.includes('127'))?("http://terrabrasilis.dpi.inpe.br/oauth-api/"):("") );
             Authentication.init(lang, function()
             {
-                /**
-                 * Notify authentication handler about login changes
-                 */
-            if($('#notifyAuthenticationChanged').length!=0)
-            {
-                $('#notifyAuthenticationChanged').click();
-            }
-            });
+              /**
+               * Notify authentication handler about login changes
+               */
+              if($('#notifyAuthenticationChanged').length!=0)
+              {
+                  $('#notifyAuthenticationChanged').click();
+              }
+            }, isLocal);
 
         });
         

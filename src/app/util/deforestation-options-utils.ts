@@ -54,15 +54,13 @@ export class DeforestationOptionsUtils {
 
     dataJson["periods"].forEach(function(period:any) {
       period.features.forEach(function(feature:any) {       
-        var year = period.endDate.year;          
+        var year = period.endDate.year;
         var area = feature.areas.filter((area:any) => area.type == 1).map(function(e:any) { return e.area; })[0];
-        var filteredArea = feature.areas.filter((area:any) => area.type == 2).map(function(e:any) { return e.area; })[0];
         all.push({ 
           endDate: year,
           loi: feature.loi,
           loiName: feature.loiname,
-          area: area,
-          filteredArea: filteredArea
+          area: area
         });
       });
     });
@@ -87,16 +85,14 @@ export class DeforestationOptionsUtils {
        */
       if(difYears>2) return;
 
-      var area = feature.areas.filter((area:any) => area.type == 2).map(function(e:any) { return e.area; })[0];
-      var filteredArea = feature.areas.filter((area:any) => area.type == 1).map(function(e:any) { return e.area; })[0];
+      var area = feature.areas.filter((area:any) => area.type == 1).map(function(e:any) { return e.area; })[0];
       var currentYear = startY+1;
       while(currentYear<=endY) {
         var d={
           endDate: currentYear,
           loi: feature.loi,
           loiName: feature.loiname,
-          area: area*(1/difYears),
-          filteredArea: filteredArea*(1/difYears)
+          area: area*(1/difYears)
         };
         aData.push(d);
         currentYear=currentYear+1;

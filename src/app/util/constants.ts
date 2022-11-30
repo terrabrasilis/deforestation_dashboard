@@ -25,12 +25,13 @@ export class Constants {
     };
 
     public static get FILE_RATES(): string {
-        // return the name of JSON file with rates
-        return "assets/files/rates2021.json";
+        let url = (process.env.LOCAL_API == 'yes')?("assets/files/"):("http://terrabrasilis.dpi.inpe.br/download/dataset/legal-amz-prodes/json/");
+        // return the URL and name of JSON file with rates
+        return url+"rates2022.json";
     };
 
     public static get LAST_UPDATE_DATE(): string {
-        return "2022-08-05";
+        return "2022-11-30";
     };
 
     public static get DASHBOARD_BIOMES_NAMES(): string[] {
@@ -44,9 +45,9 @@ export class Constants {
      */
     public static get BARCHART_PRELIMINARY_DATA_YEAR(): String {
         // enable preliminary notes
-        //return '2021';
+        return '2022';
         // disable preliminary notes
-        return null;
+        //return null;
     }
 
     public static get MAP_LEGEND_COLORS(): any[] {

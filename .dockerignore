@@ -7,3 +7,4 @@ README.md
 LICENSE
 .vscode
 *.sh
+src/assets/files/rates*.json
