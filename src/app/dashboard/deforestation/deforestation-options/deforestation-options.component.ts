@@ -73,6 +73,7 @@ export class DeforestationOptionsComponent implements OnInit  {
   
   loadGrid: any;
   setMaskDisplay: any;
+  moreOptionsBtn: any;
   includeMask: boolean;
   geojsonLayers:any;
   listCharts:any;
@@ -575,6 +576,7 @@ export class DeforestationOptionsComponent implements OnInit  {
         buildMainGrid();
         self.makeGraphs(self.includeMask);
         self.makeTables();
+        self.moreOptionsBtn();
         return;
       }
       
@@ -586,7 +588,7 @@ export class DeforestationOptionsComponent implements OnInit  {
           appendTo: 'body'
       });
 
-      function moreOptions() {
+      self.moreOptionsBtn=function () {
         let gsi=$('.grid-stack-item');
         for(let i=0;i<gsi.length;i++){
           // Disable download button of map until GeoJSON is fixed.
@@ -640,7 +642,7 @@ export class DeforestationOptionsComponent implements OnInit  {
       // add on click handle loadGrid call for restore view button 
       $('#load_grid').click(this.loadGrid);
 
-      moreOptions();
+      self.moreOptionsBtn();
     });
 
   } 
