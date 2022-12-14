@@ -1528,7 +1528,7 @@ export class DeforestationOptionsComponent implements OnInit  {
 
   changeLanguage(value:string) {
     this.lang=value;
-    this.last_update_date=(new Date(Constants.LAST_UPDATE_DATE)).toLocaleDateString(this.lang);
+    this.last_update_date=(new Date(Constants.LAST_UPDATE_DATE+'T12:00:00.000Z')).toLocaleDateString(this.lang);
     this.localStorageService.setValue(this.languageKey, value);
     this._translate.use(value);
     this.updateGridstackLanguage();
