@@ -71,7 +71,10 @@ export class DeforestationOptionsComponent implements OnInit  {
 
   trashIcon: string; 
   
-  loadGrid: any; 
+  loadGrid: any;
+  setMaskDisplay: any;
+  moreOptionsBtn: any;
+  includeMask: boolean;
   geojsonLayers:any;
   listCharts:any;
   rowChart:any;
@@ -90,6 +93,7 @@ export class DeforestationOptionsComponent implements OnInit  {
   tableTotal: any;
   initTab: any;
   ctrlSto: any;
+  resetOn: boolean=false;
 
   private biomeSubscription: ISubscription;
   private typeSubscription: ISubscription;
@@ -106,7 +110,9 @@ export class DeforestationOptionsComponent implements OnInit  {
   private tableArea: any;
   private tableDateDim: any;
   private ctrlTableTimeOut: any;
-  private loiNameDim: any;
+  private loiNameDim1: any;
+  private dateDim1: any;
+  private loiNameDim0: any;
   private tableTotalAreaByLoiName: any;
   private areaByDate: any;
   private areaByLoiName: any;
@@ -181,6 +187,8 @@ export class DeforestationOptionsComponent implements OnInit  {
     this.maxLoi = 13;
     
     this.last_update_date = Constants.LAST_UPDATE_DATE;
+
+    this.includeMask=false;
   }
 
   ngOnInit() {
@@ -261,9 +269,15 @@ export class DeforestationOptionsComponent implements OnInit  {
     this.typeSubscription.unsubscribe();
   }
 
+  maskOnOff(input: HTMLInputElement) {
+    this.includeMask = input.checked;
+    var self=this;
+    self.setMaskDisplay();
+  }
+
   filterByLoi(key:number) {
     this.applyCountyFilter(key);
-    dc.redrawAll();
+    dc.redrawAll("filtra");
   }
 
   applyCountyFilter(key:number){
@@ -322,7 +336,8 @@ export class DeforestationOptionsComponent implements OnInit  {
 			//this.rowChart.filterAll();
 			// -----------------------------------------------------------------
 			this.rowChart.filter(key);
-			dc.redrawAll();
+			dc.redrawAll("agrega");
+      dc.redrawAll("filtra");
 		}
 	}
 
@@ -548,11 +563,22 @@ export class DeforestationOptionsComponent implements OnInit  {
         // remove all the items from the main grid and add each widgets again
         mainGrid.removeAll();
         buildMainGrid();
-        self.makeGraphs();
+        self.includeMask=false;
+        self.makeGraphs(self.includeMask);
         self.makeTables();
         return false;
 
       }.bind(this);
+
+      self.setMaskDisplay = function() {
+        // remove all the items from the main grid and add each widgets again
+        mainGrid.removeAll();
+        buildMainGrid();
+        self.makeGraphs(self.includeMask);
+        self.makeTables();
+        self.moreOptionsBtn();
+        return;
+      }
       
       // resizable and draggable gridstack
       $('#side-grid .grid-stack-item').resizable().draggable({
@@ -562,7 +588,7 @@ export class DeforestationOptionsComponent implements OnInit  {
           appendTo: 'body'
       });
 
-      function moreOptions() {
+      self.moreOptionsBtn=function () {
         let gsi=$('.grid-stack-item');
         for(let i=0;i<gsi.length;i++){
           // Disable download button of map until GeoJSON is fixed.
@@ -616,7 +642,7 @@ export class DeforestationOptionsComponent implements OnInit  {
       // add on click handle loadGrid call for restore view button 
       $('#load_grid').click(this.loadGrid);
 
-      moreOptions();
+      self.moreOptionsBtn();
     });
 
   } 
@@ -671,7 +697,7 @@ export class DeforestationOptionsComponent implements OnInit  {
 
     this.mapObservable.subscribe(data => {
       this.mapJson = data;
-      this.makeGraphs();
+      this.makeGraphs(this.includeMask);
       this.makeTables();
     });
 
@@ -749,17 +775,25 @@ export class DeforestationOptionsComponent implements OnInit  {
       this.listCharts.set('tb-area', this.tableArea);
   }
 
-  makeGraphs():void {
+  makeGraphs(includeMask:boolean):void {
     
     // call function inside this
     let self=this;
-    var allFeatures:any[];
+    var accumulatedSerie:any[];
+    var serie:any[];
+    let allIncrements={accumulatedSerie:accumulatedSerie,serie:serie};
+
+    // get selected loi
+    let oSelectedLoi=self.dataLoinamesJson.lois.find((l:any)=>{return l.name==self.selectedLoi;});
     
     // data wrangling - flatten nested data
-    if (this.type == "increments")
-      allFeatures = DeforestationOptionsUtils.dataWranglingIncrements(this.dataJson, this.biome);
-    else
-      allFeatures = DeforestationOptionsUtils.dataWranglingRates(this.dataJson);
+    if (this.type == "increments"){
+      allIncrements = DeforestationOptionsUtils.dataWranglingIncrements(this.dataJson, oSelectedLoi, includeMask);
+      accumulatedSerie=allIncrements.accumulatedSerie;
+      serie=allIncrements.serie;
+    }else{
+      accumulatedSerie = DeforestationOptionsUtils.dataWranglingRates(this.dataJson);
+    }
 
     // get loiNames
     self.loiNames = new Map<number, string>();
@@ -780,7 +814,7 @@ export class DeforestationOptionsComponent implements OnInit  {
                           });
     
     // filter and change loinames
-    var filteredFeatures = allFeatures.filter(
+    var collection = accumulatedSerie.filter(
       (filteredData:any) => {
         return filteredData.loiName in self.loiNames;
       }
@@ -793,57 +827,81 @@ export class DeforestationOptionsComponent implements OnInit  {
         };
       }
     );
+
+    if (this.type == "increments"){
+      var collection1 = serie.filter(
+        (filteredData:any) => {
+          return filteredData.loiName in self.loiNames;
+        }
+      ).map(
+        function(e:any) {
+          return {
+            endDate: e.endDate,
+            loiName: e.loiName,
+            area: e.area
+          };
+        }
+      );
+    }else{
+      collection1=collection;
+    }
     
-    // create a crossfilter instance [endDate, loiName, area, filteredArea]
-    var ndx = crossfilter(filteredFeatures);
+    // create a crossfilter instance [endDate, loiName, area]
+    var ndx = crossfilter(collection);
+    var ndx1 = crossfilter(collection1);
     
-    // define dimensions
+    // to bar chart
     var dateDim = ndx.dimension(
       function(d:any) { 
         return +d["endDate"];
       }
     );
-
-    this.loiNameDim = ndx.dimension(
-      function(d:any) { 
-        return d["loiName"];
-      }
-    );
-
-    var areaDim = ndx.dimension(
-      function(d:any) { 
-        return +d["area"]; 
-      }
-    );
-
-    this.tableDateDim = ndx.dimension(
-      function(d:any) { 
-        return +d['endDate'];
-      }
-    );
-    
-    var loiNameYearDim = ndx.dimension( function(d:any):any {
-      return [d["loiName"], +d["endDate"]];
-    });
-
-    // calculate metrics
     this.areaByDate = dateDim.group().reduceSum(
       function(d:any) {
         return +d["area"];
       }
     );
-    
-    this.areaByLoiName = this.loiNameDim.group().reduceSum(
+    // used to apply filter from rowChart
+    this.loiNameDim0 = ndx.dimension(
+      function(d:any) { 
+        return d["loiName"];
+      }
+    );
+
+    // to row chart
+    this.loiNameDim1 = ndx1.dimension(
+      function(d:any) { 
+        return d["loiName"];
+      }
+    );
+    this.areaByLoiName = this.loiNameDim1.group().reduceSum(
       function(d:any) {
         return +d["area"];
       }
     );
+    this.dateDim1 = ndx1.dimension(
+      function(d:any) { 
+        return +d['endDate'];
+      }
+    );
 
-    this.tableTotalAreaByLoiName = this.loiNameDim.group().reduceSum(
+
+    // to table for loiname x area
+    this.tableDateDim = ndx1.dimension(
+      function(d:any) { 
+        return +d['endDate'];
+      }
+    );
+    this.tableTotalAreaByLoiName = this.loiNameDim1.group().reduceSum(
       function(d:any) {
         return (+d["area"]);
       }
     );
+    
+
+    var loiNameYearDim = ndx.dimension( function(d:any):any {
+      return [d["loiName"], +d["endDate"]];
+    });
 
     var areaByloiNameYear = loiNameYearDim.group().reduceSum(function(d:any) {
 			return +d["area"];
@@ -862,12 +920,12 @@ export class DeforestationOptionsComponent implements OnInit  {
     var transition = 150;
     
     // define dc charts
-    this.barChart = dc.compositeChart("#bar-chart");
-		this.area = dc.barChart(this.barChart);
+    this.barChart = dc.compositeChart("#bar-chart", "filtra");
+		this.area = dc.barChart(this.barChart, "filtra");
 
-    this.seriesChart = dc.seriesChart("#series-chart");
+    this.seriesChart = dc.seriesChart("#series-chart", "agrega");
     
-    this.rowChart = dc.rowChart("#row-chart");
+    this.rowChart = dc.rowChart("#row-chart", "filtra");
 
     let redrawMap:any={
       ctrlTimeout:0,
@@ -1009,7 +1067,7 @@ export class DeforestationOptionsComponent implements OnInit  {
       .dimension(dateDim)
       .group(snapToZero(this.areaByDate))
       .elasticY(true)
-      .yAxisPadding('10%')
+      .yAxisPadding('20%')
       //.xAxisLabel("Brazilian "+ this.biome.charAt(0).toUpperCase() + this.biome.slice(1)+" Monitoring Period: "+this.minDate+" - "+this.maxDate)
       .yAxisLabel(this.labelArea)
       .x(d3.scaleBand().rangeRound([0, barChartWidth]))
@@ -1020,7 +1078,7 @@ export class DeforestationOptionsComponent implements OnInit  {
       .renderHorizontalGridLines(true)
       .renderVerticalGridLines(true)
       ._rangeBandPadding(0.2)
-      .compose([this.area])
+      .compose([this.area]);
       // This code is needed only if we use two bars for each year to represents the área with more than one filter
       // .on("pretransition", (chart:any) => {
       //   Terrabrasilis.enableLoading("#bar-chart");
@@ -1074,11 +1132,26 @@ export class DeforestationOptionsComponent implements OnInit  {
     });
 
     this.area.on('filtered', function(chart:any) {
+      let filters = chart.filters();
+      let commonFilterFunction = function (d:any) {
+        for (var i = 0; i < filters.length; i++) {
+          var f = filters[i];
+          if (f.isFiltered && f.isFiltered(d)) {
+            return true;
+          } else if (f == d) {
+            return true;
+          }
+        }
+        return false;
+      };
       if (!chart.hasFilter()) {
         self.selectedTime = self.translatedTime;
         self.cdRef.detectChanges();
+        self.dateDim1.filterAll();
+      }else {
+        self.dateDim1.filterFunction(commonFilterFunction);
       }
-        
+      dc.redrawAll("agrega");
     });
 
     this.area.filterPrinter(function(filters:any) {
@@ -1248,8 +1321,8 @@ export class DeforestationOptionsComponent implements OnInit  {
             .height(rowChartHeight)
             .margins({top: 10, right: 10, bottom: 20, left: 15})
             .elasticX(true)
-            .dimension(this.loiNameDim)
-            .group(this.areaByLoiName)            
+            .dimension(this.loiNameDim1)
+            .group(this.areaByLoiName)
             .controlsUseVisibility(true)
             .title(function(d:any) {
               let formater=DeforestationOptionsUtils.numberFormat(self.lang);
@@ -1284,8 +1357,8 @@ export class DeforestationOptionsComponent implements OnInit  {
             .labelOffsetY(10)
             .xAxis()
             .ticks(4);
-
-    if(Object.keys(self.loiNames).length==1){
+    
+    if( ((Object.keys(self.loiNames).length*20)-30) <= rowChartHeight ){
       this.rowChart.fixedBarHeight(20);
     }
     
@@ -1302,12 +1375,28 @@ export class DeforestationOptionsComponent implements OnInit  {
     });
 
     this.rowChart.on('filtered', function(chart:any) {
-      if (!chart.hasFilter()) {
+      let filters = chart.filters();
+      let commonFilterFunction = function (d:any) {
+        for (var i = 0; i < filters.length; i++) {
+          var f = filters[i];
+          if (f.isFiltered && f.isFiltered(d)) {
+            return true;
+          } else if (f == d) {
+            return true;
+          }
+        }
+        return false;
+      };
+      if(!filters.length) {
         self.applyCountyFilter(null);// to reset the data funcion
+        self.loiNameDim0.filterAll();
+      }else {
+        self.loiNameDim0.filterFunction(commonFilterFunction);
       }
 
       self.loiname = self.translatedLoiname;
       self.cdRef.detectChanges();
+      dc.redrawAll("agrega");
     });
 
     this.rowChart.filterPrinter(function(filters:any) {
@@ -1333,7 +1422,8 @@ export class DeforestationOptionsComponent implements OnInit  {
 
     (function(j, dc){
       setTimeout(() => {
-        dc.renderAll();
+        dc.renderAll("agrega");
+        dc.renderAll("filtra");
       },100 * j);
     })(1, dc);
 
@@ -1404,18 +1494,22 @@ export class DeforestationOptionsComponent implements OnInit  {
       $('[id="tools-menu"]').show();
     }
       
-  }
+  }// makeGraphs end function
 
   resetFilters(context:any) {
 
     if(!context) return;
+    if(context.resetOn) return;
+    context.resetOn=true;// to lock calls during execution
 
     context.barChart.filterAll();
     context.rowChart.filterAll();
     context.applyCountyFilter();// to reset function data() of the rowChart
     context.seriesChart.filterAll();
 
-    dc.redrawAll();
+    dc.redrawAll("agrega");
+    dc.redrawAll("filtra");
+    context.resetOn=false;
   }
 
   updateSizeCharts(transition:any) {
@@ -1438,7 +1532,8 @@ export class DeforestationOptionsComponent implements OnInit  {
     this.localStorageService.setValue(this.languageKey, value);
     this._translate.use(value);
     this.updateGridstackLanguage();
-    dc.renderAll();
+    dc.renderAll("agrega");
+    dc.renderAll("filtra");
 
     notifyLanguageChanged(value);  
 

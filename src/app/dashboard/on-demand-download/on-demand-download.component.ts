@@ -126,19 +126,21 @@ export class OnDemandDownloadComponent implements OnInit {
     }
 
     var loiNames = new Map<number, string[]>();
+    var oSelectedLoi:any;
     this.loiNamesJson.lois.filter(
       (filteredLoi:any) => {
         return filteredLoi.gid === 2;
       }
     ).map(
       (loi:any) => {
+        oSelectedLoi = loi;
         DeforestationOptionsUtils.setLoiNamesDownload(loi, loiNames, checkedValues);
       }
     );
 
     var allFeatures:any[];
     if (this.type == "increments")
-      allFeatures = DeforestationOptionsUtils.dataWranglingIncrements(this.dataJson, this.biome);
+      allFeatures = (DeforestationOptionsUtils.dataWranglingIncrements(this.dataJson, oSelectedLoi, this.biome)).accumulatedSerie;
     else
       allFeatures = DeforestationOptionsUtils.dataWranglingRates(this.dataJson);
     

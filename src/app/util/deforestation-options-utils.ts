@@ -68,46 +68,95 @@ export class DeforestationOptionsUtils {
     return all;
   }
 
-  public static dataWranglingIncrements(dataJson:any, biome:any) {
+  public static dataWranglingIncrements(dataJson:any, oSelectedLoi:any, includeMask:boolean) {
 
-    var all:any[] = [];
+    var serie:any[] = [];// mask + increments - time series without cumulative
+    var accumulatedSerie:any[] = [];// Accumulated time serie with mask + increments
+    var mask:any[] = [];// used to store mask data locally
 
-    var divideAreaByYear=function(startY:any, endY:any, feature:any, aData:any[]){
-      /**
-       * Hack to avoid year difference greater than four between initial and final year in the Pampa biome.
-       */
-      if(biome=='pampa' && startY==2000){
-        startY=2002;
-      }
-      var difYears = parseInt(endY) - parseInt(startY);
-      /* It is used to disable the long aggregate periods called the deforestation mask.
-       * To enable the mask, comment this line.
-       */
-      if(difYears>2) return;
+    var divideAreaByYear=function(startY:any, endY:any, feature:any, aData:any[], data:any[]){
+      var isMask = startY==1500;
+      // to avoid the area division of mask, force to 1
+      var difYears = (isMask) ? (1) : (parseInt(endY) - parseInt(startY));
+      var area = feature.areas[0].area;
+      var maskArea = mask[feature.loi]&&mask[feature.loi][feature.loiname] ? mask[feature.loi][feature.loiname] : 0;
 
-      var area = feature.areas.filter((area:any) => area.type == 1).map(function(e:any) { return e.area; })[0];
-      var currentYear = startY+1;
-      while(currentYear<=endY) {
-        var d={
-          endDate: currentYear,
-          loi: feature.loi,
-          loiName: feature.loiname,
-          area: area*(1/difYears)
-        };
-        aData.push(d);
-        currentYear=currentYear+1;
+      var areaTotal = includeMask ?  maskArea : 0;
+      var currentYear = isMask ? endY : startY+1;
+
+      if(includeMask || !isMask) {
+        while(currentYear<=endY) {
+          areaTotal = isMask ? areaTotal : ( (area*(1/difYears)) + areaTotal );
+          if(includeMask){
+            if(!mask[feature.loi]) {
+              mask[feature.loi]={};
+            }
+            if(!mask[feature.loi][feature.loiname]) {
+              mask[feature.loi][feature.loiname]={};
+            }
+            mask[feature.loi][feature.loiname] = areaTotal;
+          }
+          var d={
+            endDate: currentYear,
+            loi: feature.loi,
+            loiName: feature.loiname,
+            area: areaTotal
+          };
+          aData.push(d);
+          d={
+            endDate: currentYear,
+            loi: feature.loi,
+            loiName: feature.loiname,
+            area: area*(1/difYears)
+          };
+          data.push(d);
+          currentYear=currentYear+1;
+          if(!includeMask) areaTotal=0;
+        }
       }
     };
 
+    var storeMask=function(feature:any, aData:any[]){
+      var area = feature.areas[0].area;
+      var d=[];
+      d[feature.loiname]=area;
+      if(typeof aData[feature.loi] == 'undefined'){
+        aData[feature.loi]=[];
+      }
+      aData[feature.loi][feature.loiname]=area;
+    };
+
     dataJson["periods"].forEach(function(period:any) {
+      var startYear = period.startDate.year;
+      var endYear = period.endDate.year;
+      let loinamesForPeriod:any[] = [];
+
+      // insert lois from default list if not exists in period loi list
+      period.features.forEach( (pf:any)=>{
+        if(pf.loi!=oSelectedLoi.gid) return;
+        loinamesForPeriod.push(pf.loiname);
+      } );
+      oSelectedLoi.loinames.forEach( (e:any)=>{
+        if(!loinamesForPeriod.includes(e.gid)){
+          let oDefault={areas:[{type: 1, area: 0}],loiname:e.gid,loi:oSelectedLoi.gid};
+          period.features.push(oDefault);
+        }
+      });
+
       period.features.forEach(function(feature:any) {
-        var startYear = period.startDate.year;
-        var endYear = period.endDate.year;
-        divideAreaByYear(startYear,endYear,feature,all);
+        if(feature.loi!=oSelectedLoi.gid) return;
+        /*
+         * The magic number for startY=1500 is a convention to the start year for deforestation mask
+         * In this case, we store the mask to use after prepare areas by lois and years
+         */
+        if(includeMask && startYear==1500) {
+          storeMask(feature,mask);
+        }
+        divideAreaByYear(startYear,endYear,feature,accumulatedSerie,serie);
       });
     });
 
-    return all;
+    return {accumulatedSerie:accumulatedSerie,serie:serie};
   }
     
   public static getloiNamesByLoi(arr:any, loi:any):Array<number> {      
