@@ -1357,7 +1357,7 @@ export class DeforestationOptionsComponent implements OnInit  {
             .labelOffsetY(10)
             .xAxis()
             .ticks(4);
-
+    
     if( ((Object.keys(self.loiNames).length*20)-30) <= rowChartHeight ){
       this.rowChart.fixedBarHeight(20);
     }

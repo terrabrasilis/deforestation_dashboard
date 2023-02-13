@@ -176,7 +176,7 @@
             "tool":{"addmask":"Somar o desmatamento agregado ao incremento de desmatamento."}
         },
         "modals": {
-            "warning_rates":"Novos dados.<br>Taxa estimada de desmatamento na Amazônia Legal Brasileira, para o período 2021/2022, com base em 108 cenas prioritárias.<br><a style='color: blue;' target='_blank' href='https://www.gov.br/inpe/pt-br/assuntos/ultimas-noticias/divulgacao-de-dados-prodes.pdf'>Saiba mais na nota técnica.</a>",
+            "warning_rates":"Novos dados.<br>Taxa estimada de desmatamento na Amazônia Legal Brasileira, para o período 2021/2022, com base em 108 cenas prioritárias.<br><a style='color: blue;' target='_blank' href='https://www.gov.br/inpe/pt-br/assuntos/ultimas-noticias/estimativa-de-desmatamento-na-amazonia-legal-para-2022-e-de-11-568-km2'>Saiba mais na nota técnica.</a>",
             "warning_increase":"Consulte os novos dados de incremento de desmatamento na Amazônia Legal Brasileira e Bioma Amazônia, para o período 2021/2022, medidos com base em 108 cenas prioritárias."
         }
     }
