@@ -31,7 +31,7 @@ export class Constants {
     };
 
     public static get LAST_UPDATE_DATE(): string {
-        return "2023-04-11";
+        return "2023-04-13";
     };
 
     public static get DASHBOARD_BIOMES_NAMES(): string[] {
