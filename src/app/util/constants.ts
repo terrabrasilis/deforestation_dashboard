@@ -25,13 +25,14 @@ export class Constants {
     };
 
     public static get FILE_RATES(): string {
+        let filename=(process.env.BUILD_TYPE == 'homologation' && process.env.ENV == 'production')?("rates2022_homol.json"):("rates2022.json");
         let url = (process.env.LOCAL_API == 'yes')?("assets/files/"):("http://terrabrasilis.dpi.inpe.br/download/dataset/legal-amz-prodes/json/");
         // return the URL and name of JSON file with rates
-        return url+"rates2022.json";
+        return url+filename;
     };
 
     public static get LAST_UPDATE_DATE(): string {
-        return "2023-04-19";
+        return "2023-04-25";
     };
 
     public static get DASHBOARD_BIOMES_NAMES(): string[] {
