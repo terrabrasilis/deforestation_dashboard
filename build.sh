@@ -1,15 +1,15 @@
 #!/bin/bash
 
 echo "Help"
-echo "Call with parameters to customize the build: ./build.sh <VERSION> <BUILD_TYPE>"
-echo "VERSION parameter allows (ex.: v1.1 or v1.2-beta among others)"
-echo "BUILD_TYPE parameter allows (ex.: homologation or production)"
+echo "Call with parameters to customize the build: ./build.sh <BUILD_TYPE> <VERSION>"
+echo "BUILD_TYPE optional parameter allows (ex.: homologation or production)"
+echo "VERSION optional parameter allows (ex.: v1.1 or v1.2-beta among others)"
 echo ""
 
 
 # get version number to build image
-if [[ ! "$1" = "" ]]; then
-    VERSION=$1
+if [[ ! "$2" = "" ]]; then
+    VERSION=$2
 else
     
     PACKAGE_VERSION=$(cat package.json | grep -oP '(?<="version": ")[^"]*')
@@ -27,8 +27,9 @@ fi
 
 # environment to homologation or production build
 # to homologation use homologation
-if [[ "$2" = "homologation" ]]; then
-    BUILD_TYPE="$2"
+if [[ "$1" = "homologation" ]]; then
+    BUILD_TYPE="$1"
+    VERSION="hom_$VERSION"
 else
     # adopt production by default
     BUILD_TYPE="production"
@@ -46,4 +47,4 @@ if [[ ! "$SEND_TO_HUB" = "yes" ]]; then
 else
     echo "Nice, sending the image!"
     docker push terrabrasilis/deforestation-dashboard:$VERSION
-fi
+fi;
