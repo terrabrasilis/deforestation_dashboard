@@ -124,7 +124,7 @@ export class DeforestationOptionsComponent implements OnInit  {
   private translatedTime: String;
 
   private loiNames: Map<number, string>;
-  private loiGeocodes: Map<number, number>;
+  private loiGeocodes: Map<number, Object>;
   private loiNamesObject: Array<Object>;
 
   public httpOptions: any;
@@ -360,6 +360,8 @@ export class DeforestationOptionsComponent implements OnInit  {
   }
 
   chartDownloadCSV(chartId:any):void {
+    // call function inside this
+    let self = this;
     let targetChart = this.listCharts.get(chartId);
     let filters=(targetChart.hasFilter())?(targetChart.filters()):([]);
     let csv=[],content=null,fileType="text/csv;charset=utf-8",fileExtension='csv';
@@ -396,7 +398,8 @@ export class DeforestationOptionsComponent implements OnInit  {
     if(csv && csv.length) {
       let blob = new Blob([content], {type: fileType}),
       dt = new Date(),
-      fileName=dt.getDate() + "_" + dt.getMonth() + "_" + dt.getFullYear() + "_" + dt.getTime();
+      fdt = dt.toLocaleDateString(self.lang).replace('/','_'),
+      fileName = fdt + "_" + dt.getTime();
       FileSaver.saveAs(blob, 'terrabrasilis_'+this.biome+'_'+fileName+'.'+fileExtension);
     }else{
       alert('Não há dados para exportar.');
@@ -431,7 +434,7 @@ export class DeforestationOptionsComponent implements OnInit  {
           let  aux={};
           aux[self.selectedLoi]=self.loiNames[d.key];
           aux["area km²"]=formater(d.value);
-          if(self.loiGeocodes && self.loiGeocodes[d.key]) {aux["geocode_ibge"]=self.loiGeocodes[d.key]}
+          if(self.loiGeocodes && self.loiGeocodes[d.key]) {aux["geocode_ibge"]=self.loiGeocodes[d.key].codibge;aux["uf"]=self.loiGeocodes[d.key].uf;}
           csv.push(aux);
         }
       });
@@ -451,7 +454,7 @@ export class DeforestationOptionsComponent implements OnInit  {
           "area km²":formater(d.value)
         };
         aux[self.selectedLoi]=self.loiNames[d.key[0]];
-        if(self.loiGeocodes && self.loiGeocodes[d.key[0]]) {aux["geocode_ibge"]=self.loiGeocodes[d.key[0]]}
+        if(self.loiGeocodes && self.loiGeocodes[d.key[0]]) {aux["geocode_ibge"]=self.loiGeocodes[d.key[0]].codibge;aux["uf"]=self.loiGeocodes[d.key[0]].uf;}
         csv.push(aux);
       });
     }
@@ -490,7 +493,7 @@ export class DeforestationOptionsComponent implements OnInit  {
         "area km²":formater(d.area)
       }      
       aux[self.selectedLoi] = self.loiNames[d.loiName];
-      if(self.loiGeocodes && self.loiGeocodes[d.loiName]) {aux["geocode_ibge"]=self.loiGeocodes[d.loiName]}
+      if(self.loiGeocodes && self.loiGeocodes[d.loiName]) {aux["geocode_ibge"]=self.loiGeocodes[d.loiName].codibge;aux["uf"]=self.loiGeocodes[d.loiName].uf;}
       csv.push(aux);
     });
     return csv;
@@ -797,7 +800,7 @@ export class DeforestationOptionsComponent implements OnInit  {
 
     // get loiNames
     self.loiNames = new Map<number, string>();
-    self.loiGeocodes = new Map<number, number>();
+    self.loiGeocodes = new Map<number, Object>();
     self.loiNamesObject = new Array();
 
     this.dataLoinamesJson.lois

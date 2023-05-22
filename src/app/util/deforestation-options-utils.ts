@@ -40,10 +40,11 @@ export class DeforestationOptionsUtils {
   public static setLoiNamesSplit(loi:any, self:any) {
     
     loi.loinames.forEach(function(loiname:any) {  
-      var value = loiname.loiname.split("_")[0];
-      self.loiNames[loiname.gid] = value;
-      self.loiGeocodes[loiname.gid] = loiname.codibge;
-      self.loiNamesObject.push({key:loiname.gid,value:value});
+      let value = loiname.loiname.split("_"),
+      l0 = value[0], l1 = value[1];
+      self.loiNames[loiname.gid] = l0;
+      self.loiGeocodes[loiname.gid] = {codibge:loiname.codibge,uf:l1};
+      self.loiNamesObject.push({key:loiname.gid,value:l0});
     });
 
   }
