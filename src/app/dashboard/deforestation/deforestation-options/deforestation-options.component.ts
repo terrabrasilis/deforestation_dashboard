@@ -360,6 +360,8 @@ export class DeforestationOptionsComponent implements OnInit  {
   }
 
   chartDownloadCSV(chartId:any):void {
+    // call function inside this
+    let self = this;
     let targetChart = this.listCharts.get(chartId);
     let filters=(targetChart.hasFilter())?(targetChart.filters()):([]);
     let csv=[],content=null,fileType="text/csv;charset=utf-8",fileExtension='csv';
@@ -396,7 +398,8 @@ export class DeforestationOptionsComponent implements OnInit  {
     if(csv && csv.length) {
       let blob = new Blob([content], {type: fileType}),
       dt = new Date(),
-      fileName=dt.getDate() + "_" + dt.getMonth() + "_" + dt.getFullYear() + "_" + dt.getTime();
+      fdt = dt.toLocaleDateString(self.lang).replace('/','_'),
+      fileName = fdt + "_" + dt.getTime();
       FileSaver.saveAs(blob, 'terrabrasilis_'+this.biome+'_'+fileName+'.'+fileExtension);
     }else{
       alert('Não há dados para exportar.');
