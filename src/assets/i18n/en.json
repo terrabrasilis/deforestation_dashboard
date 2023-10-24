@@ -170,8 +170,8 @@
             "tool":{"addmask":"Add the aggregated deforestation to the deforestation increment."}
         },
         "modals": {
-            "warning_rates":"New data.<br>Estimated deforestation rates in the Brazilian Legal Amazon for 2021/2022 period based on 108 priority scenes.<br><a target='_blank' style='color: blue;' href='https://www.gov.br/inpe/pt-br/assuntos/ultimas-noticias/estimativa-de-desmatamento-na-amazonia-legal-para-2022-e-de-11-568-km2'>Learn more at technical note.</a>",
-            "warning_increase":"See the new deforestation increment data for the Brazilian Legal Amazon and Amazon Biome for the 2021/2022 period, measured based on 108 priority scenes."
+            "warning_rates":"New data.<br>Estimated deforestation rates in the Brazilian Legal Amazon for 2022/2023 period based on 111 priority scenes.<br><a target='_blank' style='color: blue;' href='https://www.gov.br/inpe/pt-br/assuntos/ultimas-noticias/estimativa-de-desmatamento-na-amazonia-legal-para-2022-e-de-11-568-km2'>Learn more at technical note.</a>",
+            "warning_increase":"See the new deforestation increment data for the Brazilian Legal Amazon and Amazon Biome for the 2022/2023 period, measured based on 111 priority scenes."
         }
     }
 }
