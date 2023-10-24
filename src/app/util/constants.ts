@@ -25,7 +25,7 @@ export class Constants {
     };
 
     public static get FILE_RATES(): string {
-        let filename=(process.env.BUILD_TYPE == 'homologation' && process.env.ENV == 'production')?("rates2022_homol.json"):("rates2022.json");
+        let filename=(process.env.BUILD_TYPE == 'homologation' && process.env.ENV == 'production')?("rates2023_homol.json"):("rates2023.json");
         let url = (process.env.LOCAL_API == 'yes')?("assets/files/"):("http://terrabrasilis.dpi.inpe.br/download/dataset/legal-amz-prodes/json/");
         // return the URL and name of JSON file with rates
         return url+filename;
@@ -46,9 +46,9 @@ export class Constants {
      */
     public static get BARCHART_PRELIMINARY_DATA_YEAR(): String {
         // enable preliminary notes
-        // return '2022';
+        return '2023';
         // disable preliminary notes
-        return null;
+        //return null;
     }
 
     public static get MAP_LEGEND_COLORS(): any[] {
