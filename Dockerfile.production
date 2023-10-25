@@ -2,11 +2,6 @@
 # docker run -d --rm --name terrabrasilis_deforestation_dashboard terrabrasilis/deforestation-dashboard:<tag_version>
 FROM node:12.8.1 as node
 
-# to monitor the health of the running service based on this container
-RUN apt-get update \
-  && apt-get install -y curl \
-  && rm -rf /var/lib/apt/lists/*
-
 WORKDIR /app
 
 COPY package.json /app/
@@ -20,7 +15,12 @@ COPY ./nginx-custom.conf /app/nginx-custom.conf
 
 RUN npm run build-production && rm -rf /app/node_modules
 
-FROM nginx:1.13
+FROM nginx:1.25
+
+# to monitor the health of the running service based on this container
+RUN apt-get update \
+  && apt-get install -y curl \
+  && rm -rf /var/lib/apt/lists/*
 
 RUN rm -rf /usr/share/nginx/html/*
 
