@@ -232,20 +232,11 @@ export class DeforestationOptionsComponent implements OnInit  {
     this.drawGrid();
 
     // change tab event
-    var self = this;
-    $(".mr-auto a.nav-link").click(function() {
-      var idx = self.lois.findIndex(function(el) {
-        return el.value == self.selectedLoi;
-      });
-      // match tab index with loi
-      var id:any = $(this).find("span").attr("id");
-      if (!(idx == Number(id))) {
-        self.resetFilters(self);
-        self.selectedLoi = self.lois[Number(id)].value;
-        self.getMap();
-      }
-      $('li.nav-item.active').removeClass('active');      
-      $(this).closest('li').addClass('active');      
+    var self : DeforestationOptionsComponent = this;    
+
+    $(".mr-auto a.nav-link").click(function(ev: Event)
+    {
+       self.changeTab(self, ev.currentTarget) 
     });
 
     if (this.type == "rates") 
@@ -273,6 +264,29 @@ export class DeforestationOptionsComponent implements OnInit  {
     this.includeMask = input.checked;
     var self=this;
     self.setMaskDisplay();
+  }
+
+  changeTab(self: DeforestationOptionsComponent, element: EventTarget)
+  {
+    var idx = self.lois.findIndex(function(el) {
+      return el.value == self.selectedLoi;
+    });
+    // match tab index with loi
+    var id:any = $(element).find("span").attr("id");
+    if (!(idx == Number(id))) {
+      self.resetFilters(self);
+      self.selectedLoi = self.lois[Number(id)].value;
+      self.getMap();
+    }
+    $('li.nav-item.active').removeClass('active');      
+    $(element).closest('li').addClass('active');
+
+  }
+
+  filterPriorityCities() 
+  {
+    let munElementTab = $('#nav-link-mun');
+    this.changeTab(this, munElementTab);    
   }
 
   filterByLoi(key:number) {
@@ -1604,6 +1618,7 @@ export class DeforestationOptionsComponent implements OnInit  {
              */
             let orig=document.location.origin;
             let isLocal=( (orig.includes('localhost') || orig.includes('127'))?("http://terrabrasilis.dpi.inpe.br/oauth-api/"):("") );
+            isLocal = "";
             Authentication.init(lang, function()
             {
               /**

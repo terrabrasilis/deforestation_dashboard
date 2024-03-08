@@ -35,7 +35,8 @@
     },
     "dashboard": {
         "tool":{
-            "addmask":"Incluir agregado"
+            "addmask":"Incluir agregado",
+            "filterprioritycities":"Municipios prioritários"
         },
         "filters": {
             "loiname":{"all":"Todos"},
@@ -173,7 +174,10 @@
             "rates_bar":"Taxa consolidada",
             "incr_bar_pri":"Incremento parcial",
             "incr_bar":"Incremento consolidado",
-            "tool":{"addmask":"Somar o desmatamento agregado ao incremento de desmatamento."}
+            "tool":{
+                "addmask":"Somar o desmatamento agregado ao incremento de desmatamento.", 
+                "filterprioritycities":"Selecionar somente por municipios prioritários."
+            }
         },
         "modals": {
             "warning_rates":"Novos dados.<br>Taxa estimada de desmatamento na Amazônia Legal Brasileira, para o período 2022/2023, com base em 117 cenas prioritárias.<br><a style='color: blue;' target='_blank' href='https://www.gov.br/mcti/pt-br/acompanhe-o-mcti/noticias/2023/11/taxa-de-desmatamento-na-amazonia-legal-teve-reducao-de-22-3-entre-agosto-de-2022-e-julho-de-2023'>Saiba mais na nota técnica.</a>",
