@@ -33,7 +33,8 @@ export class LoiSearchComponent implements OnInit {
     private localStorageService: LocalStorageService) {
 
     this.panelReference=deforestationOptionsComponent;
-    
+
+    deforestationOptionsComponent.loiSearchComponent = this;    
   }
 
   

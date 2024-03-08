@@ -30,6 +30,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { LocalStorageService } from '../../../services/local-storage.service';
 
 import { ContactComponent } from '../../../contact/contact.component';
+import { LoiSearchComponent } from '../../loi-search/loi-search.component';
 
 declare var $ : any;
 
@@ -138,6 +139,8 @@ export class DeforestationOptionsComponent implements OnInit  {
   private lang: string;
 
   private last_update_date: string;
+
+  public loiSearchComponent: LoiSearchComponent;
 
   constructor(private route: ActivatedRoute,
               private router: Router,
@@ -286,7 +289,13 @@ export class DeforestationOptionsComponent implements OnInit  {
   filterPriorityCities() 
   {
     let munElementTab = $('#nav-link-mun');
-    this.changeTab(this, munElementTab);    
+    this.changeTab(this, munElementTab);   
+    
+    if(this.loiSearchComponent)
+    {
+      this.loiSearchComponent.updateLoi();
+      $('#search_lois').click();
+    }    
   }
 
   filterByLoi(key:number) {
