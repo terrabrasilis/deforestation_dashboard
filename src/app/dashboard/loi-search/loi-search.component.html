@@ -13,24 +13,42 @@
               <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="material-icons">clear</i></button>
           </div>
           <div class="modal-body">
+              <div class="priority-cities-switch-div" *ngIf="this.panelReference.selectedLoi=='mun' && this.panelReference.biome == 'legal_amazon'">
+                <div class="sub-title">
+                  {{ 'dashboard.search.priorityCitiesSwitch' | translate }}               
+                  <div class="material-switch priority-cities-switch">
+                    <input id="priority-cities-selector" type="checkbox" (click)="switchPrioritiesCities()" [checked]="prioritiesCities"/>
+                    <label for="priority-cities-selector" class="bg-white"></label>
+                  </div>
+                </div>
+              </div>              
               <div class="sub-title">{{ 'dashboard.search.searchDescription' | translate }}</div>
-              <div class="input-group input-group-sm" style="margin-bottom: 15px;">
-                  <input autofocus id="search-county" (keyup)="handleFilterChange($event.target.value)" type="text" class="form-control">
+              <div class="input-group input-group-sm" >
+                  <input autofocus id="search-county" [value]="searchTerm" (keyup)="handleFilterChange($event.target.value)" type="text" class="form-control">
                   <i class="material-icons search-pos">search</i>
               </div>
+              <div class="selectall-div">
+                <button type="button" class="btn btngreen" (click)="toogleSelectAll()"><i class="material-icons">done_all</i>{{ 'dashboard.search.selectall' | translate }}</button>
+              </div>
               <div class="counties-list">
+
                 <ul *ngIf="results" class="list-group">
-                  <li *ngFor="let result of results" class="list-group-item loi-list" id="{{ result.key + '_item'}}">
-                    <span (click)="filterByLoi(result.key);">
+                  <li *ngFor="let result of results" (click)="selectLoi(result.key);" [class.active]="isSelected(result.key)" class="list-group-item loi-list" id="{{ result.key + '_item'}}">
+                    <span >
                       {{ result.value }}
                     </span>
                   </li>
                 </ul>
               </div>
+              <div class="button-div">                
+                <button type="button" class="btn btngreen" data-dismiss="modal"><i class="material-icons">clear</i>{{ 'dashboard.search.close' | translate }}</button>
+                <button type="button" class="btn btngreen" (click)="apply()"><i class="material-icons">done</i>{{ 'dashboard.search.apply' | translate }}</button>
+              </div>
           </div>
           <div class="modal-footer">
               <div class="checkbox pull-right">
                   <label>
+                    <!-- Quantidade de Locais: {{results.length}} -->
                     <!--<button type="button" class="btn btngreen" data-dismiss="modal">
                       <span>{{ 'dashboard.search.close' | translate }}</span>
                     </button>-->

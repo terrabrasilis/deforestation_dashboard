@@ -104,7 +104,7 @@ export class DeforestationOptionsComponent implements OnInit  {
   private dataLoinamesObservable: Observable<any>;
   
   private dataJson: any;
-  private dataLoinamesJson: any;
+   dataLoinamesJson: any;
   private mapJson: any;
   
   // use for make tables
@@ -246,12 +246,6 @@ export class DeforestationOptionsComponent implements OnInit  {
       $("a.rates").closest('li').addClass("enable_menu");      
     else
       $("a."+this.biome).closest('li').addClass("enable_menu");
-    
-    // // get data 
-    // this.getData(this.selectedClass);
-
-    // used to call functions ouside Angular (devel)
-    //window["dashboard"]=function(){return self;};
 
     this.initAuthentication();
   }
@@ -287,40 +281,61 @@ export class DeforestationOptionsComponent implements OnInit  {
   }
 
   filterPriorityCities() 
-  {
-    let munElementTab = $('#nav-link-mun');
-    this.changeTab(this, munElementTab);   
-    
-    if(this.loiSearchComponent)
-    {
+  {    
+    //let munElementTab = $('#nav-link-mun');
+    //this.changeTab(this, munElementTab);    
+    if(this.loiSearchComponent)    
+    { 
+      this.loiSearchComponent.prioritiesCities = true;
       this.loiSearchComponent.updateLoi();
       $('#search_lois').click();
+
+
+    // let warningMsgPriorityCtitiesKey='dashboard.modals.warning_priority_cities'
+    // this._translate.get(warningMsgPriorityCtitiesKey).subscribe((text) => {
+    //   let msg=text;
+    //   let dialogRef = this.dialog.open(DialogComponent, {width : '450px'});
+    //   dialogRef.componentInstance.content = this.dom.bypassSecurityTrustHtml(msg);
+    // });
+
+      //setTimeout( () => {
+    //this.loiSearchComponent.selectPrioritiesCities();
+      //}, 5000 );      
     }    
   }
 
   filterByLoi(key:number) {
-    this.applyCountyFilter(key);
+    this.filterByLois([key]);    
+  }
+  filterByLois(keys:number[]) {
+    keys.forEach((key=>{
+      this.applyCountyFilter([key]);
+    }))
+    
     dc.redrawAll("filtra");
   }
 
-  applyCountyFilter(key:number){
+  applyCountyFilter(keys:number[]){
     let self=this;
-    if(!key) {
+    if(!keys || !keys.length || keys.length==0) {
 			this.rowChart.data(function (group:any) {
 				let fakeGroup:any=[];
 				fakeGroup.push({key:'no value',value:0});
 				return (group.all().length>0)?(group.top(self.maxLoi)):(fakeGroup);
 			});
-		}else{
-			
+		}else
+    {			
       this.rowChart.data(function (group:any) {
         let filteredGroup:any=[], index:number=-1, allItems:any=group.top(Infinity);
         
 				allItems.findIndex(function(item:any,i:number){
-					if(item.key==key){
-						index=i;
-						filteredGroup.push({key:item.key,value:item.value});
-          }          
+          keys.forEach((key:Number)=>{
+            if(item.key==key)
+            {
+              index=i;
+              filteredGroup.push({key:item.key,value:item.value});
+            }          
+          });					
         });
 
         if (index == -1) {
@@ -358,7 +373,10 @@ export class DeforestationOptionsComponent implements OnInit  {
 			// enable this line if you want to clean municipalities of the previous selections.
 			//this.rowChart.filterAll();
 			// -----------------------------------------------------------------
-			this.rowChart.filter(key);
+      keys.forEach((key:Number)=>{
+        this.rowChart.filter(key);
+      });
+			
 			dc.redrawAll("agrega");
       dc.redrawAll("filtra");
 		}
