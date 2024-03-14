@@ -308,14 +308,17 @@ export class DeforestationOptionsComponent implements OnInit  {
     this.filterByLois([key]);    
   }
   filterByLois(keys:number[]) {
-    keys.forEach((key=>{
-      this.applyCountyFilter([key]);
-    }))
+    // keys.forEach((key=>{
+    //   this.applyCountyFilter([key]);
+    // }))
     
+    this.applyCountyFilter(keys);
     dc.redrawAll("filtra");
   }
 
-  applyCountyFilter(keys:number[]){
+  applyCountyFilter(keys:number[])
+  {
+    let groupKeys = [keys];
     let self=this;
     if(!keys || !keys.length || keys.length==0) {
 			this.rowChart.data(function (group:any) {
@@ -329,13 +332,17 @@ export class DeforestationOptionsComponent implements OnInit  {
         let filteredGroup:any=[], index:number=-1, allItems:any=group.top(Infinity);
         
 				allItems.findIndex(function(item:any,i:number){
-          keys.forEach((key:Number)=>{
-            if(item.key==key)
-            {
-              index=i;
-              filteredGroup.push({key:item.key,value:item.value});
-            }          
-          });					
+          // keys.forEach((key:Number)=>{
+          //   if(item.key==key)
+          //   {
+          //     index=i;
+          //     filteredGroup.push({key:item.key,value:item.value});
+          //   }          
+          // });					
+          if(item.key==keys[0]){
+						index=i;
+						filteredGroup.push({key:item.key,value:item.value});
+					}
         });
 
         if (index == -1) {
@@ -373,9 +380,10 @@ export class DeforestationOptionsComponent implements OnInit  {
 			// enable this line if you want to clean municipalities of the previous selections.
 			//this.rowChart.filterAll();
 			// -----------------------------------------------------------------
-      keys.forEach((key:Number)=>{
-        this.rowChart.filter(key);
-      });
+      //keys.forEach((key:Number)=>{
+        this.rowChart.filter([keys]);
+        
+      //});
 			
 			dc.redrawAll("agrega");
       dc.redrawAll("filtra");
@@ -1418,17 +1426,23 @@ export class DeforestationOptionsComponent implements OnInit  {
       Terrabrasilis.disableLoading("#row-chart");
     });
 
+    let loiSearchComponent = this.loiSearchComponent;
     this.rowChart.on('filtered', function(chart:any) {
       let filters = chart.filters();
       let commonFilterFunction = function (d:any) {
         for (var i = 0; i < filters.length; i++) {
           var f = filters[i];
-          if (f.isFiltered && f.isFiltered(d)) {
+          if (f.isFiltered && f.isFiltered(d)) 
+          {
+            loiSearchComponent.selectedKeys.add(d);
             return true;
-          } else if (f == d) {
+          } else if (f == d) 
+          {
+            loiSearchComponent.selectedKeys.add(d);
             return true;
           }
         }
+        loiSearchComponent.selectedKeys.delete(d);
         return false;
       };
       if(!filters.length) {

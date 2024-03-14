@@ -27,12 +27,20 @@ export class DashboardLoiSearchService {
   searchEntries(term: any) : Array<{key:any,value:any}>
   {
     let results:Array<{key:any,value:any}>=new Array();
-    function searchInMapElements(element: any) {
-      if(term=="" || element.value.toUpperCase().includes(term.toUpperCase())) {
+    function searchInMapElements(element: any) 
+    {
+      let text1 = term.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "");
+      let text2 = element.value.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "");
+      if(text1=="" || text2.toLowerCase().includes(text1.toLowerCase())) 
+      {       
+        
         results.push({key:element.key,value:element.value});
-        results = results.sort(function(a:any, b:any) {
-                    return ('' + a.value).localeCompare(b.value);
-                  });
+        results = results.sort(function(a:any, b:any) 
+        {
+          let text1=a.value.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "");
+          let text2=b.value.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "");
+                    return ('' + text1).localeCompare(text2);
+               });
       }
     }
     this.lois = this.panelReference.getLoiNames();
@@ -53,8 +61,8 @@ export class DashboardLoiSearchService {
   }
   getPrioritiesCities() {
     
-    //let getFeatureURL = "/geoserver/prodes-brasil-nb/ows?OUTPUTFORMAT=application/json&SERVICE=WFS&REQUEST=GetFeature&VERSION=2.0.0&exceptions=text/xml&srsName=EPSG:4326&TYPENAME=prodes-brasil-nb:priority_municipalities";
-    let getFeatureURL = "http://localhost/priority-cities";
+    let getFeatureURL = "/geoserver/prodes-brasil-nb/ows?OUTPUTFORMAT=application/json&SERVICE=WFS&REQUEST=GetFeature&VERSION=2.0.0&exceptions=text/xml&srsName=EPSG:4326&TYPENAME=prodes-brasil-nb:priority_municipalities";
+    //let getFeatureURL = "http://localhost/priority-cities";
     let httpOptions = {
       headers: new HttpHeaders({}),
     };
