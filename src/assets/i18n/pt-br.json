@@ -128,7 +128,7 @@
                 "Pathrow": "Órbita/Ponto"
             },
             "priorityCitiesSwitch" : "Filtrar por Municípios Prioritários",
-            "selectall":"Selecionar/Deselecionar Todos",
+            "selectall":"Marcar/desmarcar todos ou selecione item a item na lista.",
             "apply":"Aplicar"
         },
         "on-demand": {
