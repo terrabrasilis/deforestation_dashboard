@@ -108,6 +108,13 @@
           <i class="material-icons infoicon" title="{{ 'dashboard.tooltip.tool.addmask' | translate}}">info_outline</i>
         </a>
       </li>
+      <li>
+
+        <a *ngIf="this.selectedLoi=='mun' && this.biome == 'legal_amazon'" (click)="filterPriorityCities()" id="filter-priority-cities-button" data-toggle="modal">
+          <i class="fa fa-map-marked-alt priority-cities-icon"></i><span id="txt4"> {{ 'dashboard.tool.filterprioritycities' | translate }} </span> <i class="material-icons infoicon" title="{{ 'dashboard.tooltip.filterprioritycities' | translate}}">info_outline</i>
+        </a>
+
+      </li>
     </ul>
   </nav>
 </div>  
@@ -131,7 +138,7 @@
                 </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link">
+              <a class="nav-link" id="nav-link-mun">
                <i class="fa fa-map-marked-alt">
                 </i>
                 {{ 'dashboard.loi.mun' | translate }}

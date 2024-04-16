@@ -30,6 +30,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { LocalStorageService } from '../../../services/local-storage.service';
 
 import { ContactComponent } from '../../../contact/contact.component';
+import { LoiSearchComponent } from '../../loi-search/loi-search.component';
 
 declare var $ : any;
 
@@ -103,7 +104,7 @@ export class DeforestationOptionsComponent implements OnInit  {
   private dataLoinamesObservable: Observable<any>;
   
   private dataJson: any;
-  private dataLoinamesJson: any;
+   dataLoinamesJson: any;
   private mapJson: any;
   
   // use for make tables
@@ -138,6 +139,8 @@ export class DeforestationOptionsComponent implements OnInit  {
   private lang: string;
 
   private last_update_date: string;
+
+  public loiSearchComponent: LoiSearchComponent;
 
   constructor(private route: ActivatedRoute,
               private router: Router,
@@ -232,32 +235,17 @@ export class DeforestationOptionsComponent implements OnInit  {
     this.drawGrid();
 
     // change tab event
-    var self = this;
-    $(".mr-auto a.nav-link").click(function() {
-      var idx = self.lois.findIndex(function(el) {
-        return el.value == self.selectedLoi;
-      });
-      // match tab index with loi
-      var id:any = $(this).find("span").attr("id");
-      if (!(idx == Number(id))) {
-        self.resetFilters(self);
-        self.selectedLoi = self.lois[Number(id)].value;
-        self.getMap();
-      }
-      $('li.nav-item.active').removeClass('active');      
-      $(this).closest('li').addClass('active');      
+    var self : DeforestationOptionsComponent = this;    
+
+    $(".mr-auto a.nav-link").click(function(ev: Event)
+    {
+       self.changeTab(self, ev.currentTarget) 
     });
 
     if (this.type == "rates") 
       $("a.rates").closest('li').addClass("enable_menu");      
     else
       $("a."+this.biome).closest('li').addClass("enable_menu");
-    
-    // // get data 
-    // this.getData(this.selectedClass);
-
-    // used to call functions ouside Angular (devel)
-    //window["dashboard"]=function(){return self;};
 
     this.initAuthentication();
   }
@@ -275,29 +263,86 @@ export class DeforestationOptionsComponent implements OnInit  {
     self.setMaskDisplay();
   }
 
+  changeTab(self: DeforestationOptionsComponent, element: EventTarget)
+  {
+    var idx = self.lois.findIndex(function(el) {
+      return el.value == self.selectedLoi;
+    });
+    // match tab index with loi
+    var id:any = $(element).find("span").attr("id");
+    if (!(idx == Number(id))) {
+      self.resetFilters(self);
+      self.selectedLoi = self.lois[Number(id)].value;
+      self.getMap();
+    }
+    $('li.nav-item.active').removeClass('active');      
+    $(element).closest('li').addClass('active');
+
+  }
+
+  filterPriorityCities() 
+  {    
+    //let munElementTab = $('#nav-link-mun');
+    //this.changeTab(this, munElementTab);    
+    if(this.loiSearchComponent)    
+    { 
+      this.loiSearchComponent.prioritiesCities = true;
+      this.loiSearchComponent.updateLoi();
+      $('#search_lois').click();
+
+
+    // let warningMsgPriorityCtitiesKey='dashboard.modals.warning_priority_cities'
+    // this._translate.get(warningMsgPriorityCtitiesKey).subscribe((text) => {
+    //   let msg=text;
+    //   let dialogRef = this.dialog.open(DialogComponent, {width : '450px'});
+    //   dialogRef.componentInstance.content = this.dom.bypassSecurityTrustHtml(msg);
+    // });
+
+      //setTimeout( () => {
+    //this.loiSearchComponent.selectPrioritiesCities();
+      //}, 5000 );      
+    }    
+  }
+
   filterByLoi(key:number) {
-    this.applyCountyFilter(key);
+    this.filterByLois([key]);    
+  }
+  filterByLois(keys:number[]) {
+    // keys.forEach((key=>{
+    //   this.applyCountyFilter([key]);
+    // }))
+    
+    this.applyCountyFilter(keys);
     dc.redrawAll("filtra");
   }
 
-  applyCountyFilter(key:number){
+  applyCountyFilter(keys:number[])
+  {
+    let groupKeys = [keys];
     let self=this;
-    if(!key) {
+    if(!keys || !keys.length || keys.length==0) {
 			this.rowChart.data(function (group:any) {
 				let fakeGroup:any=[];
 				fakeGroup.push({key:'no value',value:0});
 				return (group.all().length>0)?(group.top(self.maxLoi)):(fakeGroup);
 			});
-		}else{
-			
+		}else
+    {			
       this.rowChart.data(function (group:any) {
         let filteredGroup:any=[], index:number=-1, allItems:any=group.top(Infinity);
         
 				allItems.findIndex(function(item:any,i:number){
-					if(item.key==key){
+          // keys.forEach((key:Number)=>{
+          //   if(item.key==key)
+          //   {
+          //     index=i;
+          //     filteredGroup.push({key:item.key,value:item.value});
+          //   }          
+          // });					
+          if(item.key==keys[0]){
 						index=i;
 						filteredGroup.push({key:item.key,value:item.value});
-          }          
+					}
         });
 
         if (index == -1) {
@@ -335,7 +380,11 @@ export class DeforestationOptionsComponent implements OnInit  {
 			// enable this line if you want to clean municipalities of the previous selections.
 			//this.rowChart.filterAll();
 			// -----------------------------------------------------------------
-			this.rowChart.filter(key);
+      //keys.forEach((key:Number)=>{
+        this.rowChart.filter([keys]);
+        
+      //});
+			
 			dc.redrawAll("agrega");
       dc.redrawAll("filtra");
 		}
@@ -1377,17 +1426,23 @@ export class DeforestationOptionsComponent implements OnInit  {
       Terrabrasilis.disableLoading("#row-chart");
     });
 
+    let loiSearchComponent = this.loiSearchComponent;
     this.rowChart.on('filtered', function(chart:any) {
       let filters = chart.filters();
       let commonFilterFunction = function (d:any) {
         for (var i = 0; i < filters.length; i++) {
           var f = filters[i];
-          if (f.isFiltered && f.isFiltered(d)) {
+          if (f.isFiltered && f.isFiltered(d)) 
+          {
+            loiSearchComponent.selectedKeys.add(d);
             return true;
-          } else if (f == d) {
+          } else if (f == d) 
+          {
+            loiSearchComponent.selectedKeys.add(d);
             return true;
           }
         }
+        loiSearchComponent.selectedKeys.delete(d);
         return false;
       };
       if(!filters.length) {
@@ -1604,6 +1659,7 @@ export class DeforestationOptionsComponent implements OnInit  {
              */
             let orig=document.location.origin;
             let isLocal=( (orig.includes('localhost') || orig.includes('127'))?("http://terrabrasilis.dpi.inpe.br/oauth-api/"):("") );
+            isLocal = "";
             Authentication.init(lang, function()
             {
               /**

@@ -873,3 +873,11 @@ footer {
 .box-login input {
     background-color: transparent;
 }
+.priority-cities-icon
+{
+    font-size: 24px !important;
+}
+#filter-priority-cities-button
+{
+    cursor: pointer;   
+}

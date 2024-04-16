@@ -35,7 +35,8 @@
     },
     "dashboard": {
         "tool":{
-            "addmask":"Incluir agregado"
+            "addmask":"Incluir agregado",
+            "filterprioritycities":"Municipios prioritários"
         },
         "filters": {
             "loiname":{"all":"Todos"},
@@ -127,7 +128,10 @@
                 "ConsUnit": "Unidades de Conservação",
                 "Indi": "Áreas Indígenas",
                 "Pathrow": "Órbita/Ponto"
-            }
+            },
+            "priorityCitiesSwitch" : "Filtrar por Municípios Prioritários",
+            "selectall":"Marcar/desmarcar todos ou selecione item a item na lista.",
+            "apply":"Aplicar"
         },
         "on-demand": {
             "alert":{
@@ -177,11 +181,15 @@
             "rates_bar":"Taxa consolidada",
             "incr_bar_pri":"Incremento parcial",
             "incr_bar":"Incremento consolidado",
-            "tool":{"addmask":"Somar o desmatamento agregado ao incremento de desmatamento."}
+            "tool":{
+                "addmask":"Somar o desmatamento agregado ao incremento de desmatamento.", 
+                "filterprioritycities":"Selecionar somente por municipios prioritários."
+            }
         },
         "modals": {
             "warning_rates":"Novos dados.<br>Taxa estimada de desmatamento na Amazônia Legal Brasileira, para o período 2022/2023, com base em 117 cenas prioritárias.<br><a style='color: blue;' target='_blank' href='https://www.gov.br/mcti/pt-br/acompanhe-o-mcti/noticias/2023/11/taxa-de-desmatamento-na-amazonia-legal-teve-reducao-de-22-3-entre-agosto-de-2022-e-julho-de-2023'>Saiba mais na nota técnica.</a>",
-            "warning_increase":"Consulte os novos dados de incremento de desmatamento na Amazônia Legal Brasileira e Bioma Amazônia, para o período 2022/2023, medidos com base em 117 cenas prioritárias."
+            "warning_increase":"Consulte os novos dados de incremento de desmatamento na Amazônia Legal Brasileira e Bioma Amazônia, para o período 2022/2023, medidos com base em 117 cenas prioritárias.",
+            "warning_priority_cities":"Texto de Municípios Prioritários."
         }
     }
 }
