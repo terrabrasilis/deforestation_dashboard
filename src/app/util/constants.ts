@@ -36,7 +36,7 @@ export class Constants {
     };
 
     public static get DASHBOARD_BIOMES_NAMES(): string[] {
-        let listNames: string[] = ["amazon", "mata_atlantica", "caatinga", "cerrado", "pampa", "pantanal", "legal_amazon"];
+        let listNames: string[] = ["amazon", "amazon_nf", "mata_atlantica", "caatinga", "cerrado", "pampa", "pantanal", "legal_amazon"];
         return listNames;
     };
 
@@ -63,6 +63,7 @@ export class Constants {
         var map = new Map();
         map.set("cerrado", ['MATO GROSSO', 'MARANHÃO', 'PIAUÍ', 'BAHIA', 'RONDÔNIA', 'MATO GROSSO DO SUL', 'GOIÁS', 'MINAS GERAIS', 'SÃO PAULO', 'PARANÁ', 'TOCANTINS', 'DISTRITO FEDERAL']);
         map.set("amazon", ['PARÁ', 'AMAZONAS', 'RORAIMA', 'ACRE', 'MATO GROSSO', 'RONDÔNIA', 'AMAPÁ', 'MARANHÃO', 'TOCANTINS']);
+        map.set("amazon_nf", ['PARÁ', 'AMAZONAS', 'RORAIMA', 'ACRE', 'MATO GROSSO', 'RONDÔNIA', 'AMAPÁ', 'MARANHÃO', 'TOCANTINS']);
         map.set("legal_amazon", ['PARÁ', 'AMAZONAS', 'RORAIMA', 'ACRE', 'MATO GROSSO', 'RONDÔNIA', 'AMAPÁ', 'MARANHÃO', 'TOCANTINS']);
         map.set("pampa", ["RIO GRANDE DO SUL"]);
         map.set("pantanal", ['MATO GROSSO DO SUL', 'MATO GROSSO']);
