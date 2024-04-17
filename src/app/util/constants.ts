@@ -32,7 +32,7 @@ export class Constants {
     };
 
     public static get LAST_UPDATE_DATE(): string {
-        return "2023-11-09";
+        return "2024-05-06";
     };
 
     public static get DASHBOARD_BIOMES_NAMES(): string[] {
@@ -46,9 +46,9 @@ export class Constants {
      */
     public static get BARCHART_PRELIMINARY_DATA_YEAR(): String {
         // enable preliminary notes
-        return '2023';
+        //return '2023';
         // disable preliminary notes
-        //return null;
+        return null;
     }
 
     public static get MAP_LEGEND_COLORS(): any[] {
