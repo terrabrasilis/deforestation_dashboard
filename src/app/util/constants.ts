@@ -25,7 +25,7 @@ export class Constants {
     };
 
     public static get FILE_RATES(): string {
-        let filename=(process.env.BUILD_TYPE == 'homologation' && process.env.ENV == 'production')?("rates2023_homol.json"):("rates2023.json");
+        let filename=(process.env.BUILD_TYPE == 'homologation' && process.env.ENV == 'production')?("/homologation/rates2023_homol.json"):("rates2023.json");
         let url = (process.env.LOCAL_API == 'yes')?("assets/files/"):(Constants.BASE_URL+"/download/dataset/legal-amz-prodes/json/");
         // return the URL and name of JSON file with rates
         return url+filename;
