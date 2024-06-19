@@ -187,7 +187,7 @@ export class DeforestationOptionsComponent implements OnInit  {
     // remove loading tag
     $(".loading-overlay, .loading-overlay-content").remove();
 
-    this.maxLoi = 13;
+    this.maxLoi = 15;
     
     this.last_update_date = Constants.LAST_UPDATE_DATE;
 
@@ -599,8 +599,8 @@ export class DeforestationOptionsComponent implements OnInit  {
       
       // build main grid
       function buildMainGrid() {
-        append2Grid(mainGrid, '<div class="grid-stack-item"><div class="grid-stack-item-content"><div class="custom-drag-incr"> <span class="aggregateTemporal">Aggregated Temporal Data </span> <i class="material-icons pull-right">open_with</i> </div><div id="bar-chart"></div></div></div>', 0, 0, 7, 6);
-        append2Grid(mainGrid, '<div class="grid-stack-item"><div class="grid-stack-item-content"><div class="custom-drag-incr"> <span class="absoluteData"> Absolute Data </span> <i class="material-icons pull-right">open_with</i> </div><div id="row-chart"></div></div></div>', 8, 0, 5, 6);
+        append2Grid(mainGrid, '<div class="grid-stack-item"><div class="grid-stack-item-content"><div class="custom-drag-incr"> <span class="aggregateTemporal">Aggregated Temporal Data </span> <i class="material-icons pull-right">open_with</i> </div><div id="bar-chart"></div></div></div>', 0, 0, 7, 7);
+        append2Grid(mainGrid, '<div class="grid-stack-item"><div class="grid-stack-item-content"><div class="custom-drag-incr"> <span class="absoluteData"> Absolute Data </span> <i class="material-icons pull-right">open_with</i> </div><div id="row-chart"></div></div></div>', 8, 0, 5, 7);
         append2Grid(mainGrid, '<div class="grid-stack-item"><div class="grid-stack-item-content"><div class="custom-drag-incr"> <span class="timeSeries"> Time Series </span> <i class="material-icons pull-right">open_with</i> </div><div id="series-chart"></div></div></div>', 0, 7, 12, 6);
         append2Grid(mainGrid, '<div class="grid-stack-item"><div class="grid-stack-item-content"><div class="custom-drag-incr"> <span class="tableLois"> Area per years and Local of Interests </span> <i class="material-icons pull-right">open_with</i></div><div id="table-chart"><table id="tb-area" class="table table-hover dc-data-table dc-chart"></table></div></div></div>', 8, 15, 5, 6);
         append2Grid(mainGrid, '<div class="grid-stack-item"><div class="grid-stack-item-content"><div class="custom-drag-incr"> <span class="aggregateSpatial"> Aggregated Spatial Data </span> <i class="material-icons pull-right">open_with</i> </div><div id="loi-chart"></div></div></div>', 0, 15, 7, 6);
