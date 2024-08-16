@@ -13,20 +13,17 @@ export class Constants {
     };
 
     public static get DASHBOARD_API_HOST(): string {
-        let url=Constants.BASE_URL+"/dashboard/api/v1/redis-cli/";
-
-        if(process.env.LOCAL_API == 'yes')
-            url = Constants.BASE_URL+":3000/dashboard/api/v1/redis-cli/";
+        let url = Constants.BASE_URL+"/app/dashboard/deforestation/";
 
         if(process.env.BUILD_TYPE == 'homologation' && process.env.ENV == 'production')
-            url = Constants.BASE_URL+"/homologation/dashboard/api/v1/redis-cli/";
+            url = Constants.BASE_URL+"/homologation/dashboard/deforestation/";
 
         return url;
     };
 
     public static get FILE_RATES(): string {
-        let filename=(process.env.BUILD_TYPE == 'homologation' && process.env.ENV == 'production')?("/homologation/rates2023_homol.json"):("rates2023.json");
-        let url = (process.env.LOCAL_API == 'yes')?("assets/files/"):(Constants.BASE_URL+"/download/dataset/legal-amz-prodes/json/");
+        let filename=(process.env.BUILD_TYPE == 'homologation' && process.env.ENV == 'production')?("rates2023_homol.json"):("rates2023.json");
+        let url = Constants.DASHBOARD_API_HOST;
         // return the URL and name of JSON file with rates
         return url+filename;
     };

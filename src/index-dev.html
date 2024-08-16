@@ -53,7 +53,7 @@
     <script type="text/javascript">
         let randomNumber = Math.floor((Math.random() * 1000000) + 1);
         let base_url=document.location.protocol+'//'+document.location.hostname;
-        base_url=(document.location.hostname=="localhost")?("http://terrabrasilis.dpi.inpe.br"):(base_url);
+        base_url=(document.location.hostname!="terrabrasilis.dpi.inpe.br")?("https://terrabrasilis.dpi.inpe.br"):(base_url);
         let oauthURL = base_url+"/oauth-api/getoauthjs?"+randomNumber;
         document.writeln("<script type='text/javascript' src='"+oauthURL+"'><\/script>");
     </script>

@@ -8,78 +8,72 @@ export class DashboardApiProviderService {
   private dashboardAPIHost: string;
   
   /* main resources json */
-  private loisResource = "config/lois";
-  private loinamesResource = "config/loinames";
-  private queryableLoinamesResource = "config/query/loinames";
-  private classesResource = "config/classes";
-  private periodsResource = "config/periods";
+  private loisResource = "config/lois/";
+  private loinamesResource = "config/loinames/";
+  private classesResource = "config/classes/";
+  private periodsResource = "config/periods/";
 
   /* local of interests json */
-  private biomesResource = "config/bioma";
-  private ufResource = "config/uf";
-  private munResource = "config/mun";
-  private consunitResource = "config/consunit";
-  private indiResource = "config/indi";
-  private pathrowResource = "config/pathrow";
+  private ufResource = "config/uf/";
+  private munResource = "config/mun/";
+  private consunitResource = "config/consunit/";
+  private indiResource = "config/indi/";
+  //private biomesResource = "config/bioma/";
+  //private pathrowResource = "config/pathrow/";
   
   /* deforestation all */
-  private deforestation = "data/deforestation/all";
-  private deforestation_rates = "data/deforestation_rates/all";
-  
+  private deforestation = "data/";
+    
   constructor(private http: HttpClient) {
     this.dashboardAPIHost = Constants.DASHBOARD_API_HOST;
   }
 
-  getLois(httpOptions: any) {
-    return this.http.get(this.dashboardAPIHost+this.loisResource, httpOptions);
+  getLois(fileName: any) {
+    return this.http.get(this.dashboardAPIHost+this.loisResource+fileName+'.json');
   }
 
-  getLoinames(httpOptions: any) {
-    return this.http.get(this.dashboardAPIHost+this.loinamesResource, httpOptions);
+  getLoinames(fileName: any) {
+    return this.http.get(this.dashboardAPIHost+this.loinamesResource+fileName+'.json');
   }
 
-  getLoinamesbyLoi(params: any, headers: any) {
-    return this.http.get(this.dashboardAPIHost+this.queryableLoinamesResource, { headers: headers, params: params });
+  getClasses(fileName: any) {
+    return this.http.get(this.dashboardAPIHost+this.classesResource+fileName+'.json');
   }
 
-  getClasses(httpOptions: any) {
-    return this.http.get(this.dashboardAPIHost+this.classesResource, httpOptions);
+  getPeriods(fileName: any) {
+    return this.http.get(this.dashboardAPIHost+this.periodsResource+fileName+'.json');
   }
 
-  getPeriods(httpOptions: any) {
-    return this.http.get(this.dashboardAPIHost+this.periodsResource, httpOptions);
+  getUF(fileName: any) {
+    return this.http.get(this.dashboardAPIHost+this.ufResource+fileName+'.json');
   }
 
-  getBiomes(httpOptions: any) {
-    return this.http.get(this.dashboardAPIHost+this.biomesResource, httpOptions);
+  getMun(fileName: any) {
+    return this.http.get(this.dashboardAPIHost+this.munResource+fileName+'.json');
   }
   
-  getUF(httpOptions: any) {
-    return this.http.get(this.dashboardAPIHost+this.ufResource, httpOptions);
+  getConsUnit(fileName: any) {
+    return this.http.get(this.dashboardAPIHost+this.consunitResource+fileName+'.json');
   }
 
-  getMun(httpOptions: any) {
-    return this.http.get(this.dashboardAPIHost+this.munResource, httpOptions);
-  }
-  
-  getConsUnit(httpOptions: any) {
-    return this.http.get(this.dashboardAPIHost+this.consunitResource, httpOptions);
+  getIndi(fileName: any) {
+    return this.http.get(this.dashboardAPIHost+this.indiResource+fileName+'.json');
   }
 
-  getIndi(httpOptions: any) {
-    return this.http.get(this.dashboardAPIHost+this.indiResource, httpOptions);
+  // getBiomes(fileName: any) {
+  //   return this.http.get(this.dashboardAPIHost+this.biomesResource+fileName+'.json');
+  // }
+
+  // getPathRow(fileName: any) {
+  //   return this.http.get(this.dashboardAPIHost+this.pathrowResource+fileName+'.json');
+  // }
+
+  getDeforestation(fileName: any) {
+    return this.http.get(this.dashboardAPIHost+this.deforestation+fileName+'.json');
   }
 
-  getPathRow(httpOptions: any) {
-    return this.http.get(this.dashboardAPIHost+this.pathrowResource, httpOptions);
-  }
-
-  getDeforestation(httpOptions: any) {
-    return this.http.get(this.dashboardAPIHost+this.deforestation, httpOptions);
-  }
-
-  getDeforestationRates(httpOptions: any) {
-    return this.http.get(Constants.FILE_RATES, httpOptions);
+  getDeforestationRates() {
+    return this.http.get(Constants.FILE_RATES);
   }
 
 }

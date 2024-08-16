@@ -2,8 +2,6 @@ import {  Component,
           OnInit,
           ChangeDetectorRef } from '@angular/core';
 
-import {  HttpHeaders } from '@angular/common/http';
-
 import {  ISubscription } from "rxjs/Subscription";
 import {  Observable  } from 'rxjs/Observable';
 import {  forkJoin  } from "rxjs/observable/forkJoin";
@@ -128,7 +126,7 @@ export class DeforestationOptionsComponent implements OnInit  {
   private loiGeocodes: Map<number, Object>;
   private loiNamesObject: Array<Object>;
 
-  public httpOptions: any;
+  public fileName: any;
 
   public barPadding: any;
   public BAR_PADDING: any;
@@ -161,9 +159,7 @@ export class DeforestationOptionsComponent implements OnInit  {
       this.selectedTime=this.translatedTime=ev.translations.dashboard.filters.time.all;
     });
 
-    this.httpOptions = { headers: new  HttpHeaders(
-      { 'App-Identifier': 'prodes_'+this.biome}
-    )};
+    this.fileName = 'prodes_'+this.biome;
 
     this.lois = [
       {value: "uf", viewValue: 'States'}, 
@@ -704,17 +700,17 @@ export class DeforestationOptionsComponent implements OnInit  {
     // call of the required json for specific class
     switch(selectedClass) {
       case 'deforestation': {
-        this.dataObservable = this.dashboardApiProviderService.getDeforestation(this.httpOptions);  
+        this.dataObservable = this.dashboardApiProviderService.getDeforestation(this.fileName);  
         break;         
       }
       case "deforestation_rates": {
-        this.dataObservable = this.dashboardApiProviderService.getDeforestationRates(this.httpOptions);
+        this.dataObservable = this.dashboardApiProviderService.getDeforestationRates();
         break; 
       }
     }
     
     // get all loinames
-    this.dataLoinamesObservable = this.dashboardApiProviderService.getLoinames(this.httpOptions);
+    this.dataLoinamesObservable = this.dashboardApiProviderService.getLoinames(this.fileName);
     
     // call function for map parameters    
     forkJoin([this.dataObservable, this.dataLoinamesObservable]).subscribe(data => {      
@@ -730,19 +726,19 @@ export class DeforestationOptionsComponent implements OnInit  {
     // call of the required json for specific loi
     switch(this.selectedLoi) {
       case "uf": {
-        this.mapObservable = this.dashboardApiProviderService.getUF(this.httpOptions);
+        this.mapObservable = this.dashboardApiProviderService.getUF(this.fileName);
         break; 
       }  
       case "mun": {
-        this.mapObservable = this.dashboardApiProviderService.getMun(this.httpOptions);
+        this.mapObservable = this.dashboardApiProviderService.getMun(this.fileName);
         break; 
       }
       case "consunit": {
-        this.mapObservable = this.dashboardApiProviderService.getConsUnit(this.httpOptions);
+        this.mapObservable = this.dashboardApiProviderService.getConsUnit(this.fileName);
         break; 
       }
       case "indi": {
-        this.mapObservable = this.dashboardApiProviderService.getIndi(this.httpOptions);
+        this.mapObservable = this.dashboardApiProviderService.getIndi(this.fileName);
         break; 
       }
     }
@@ -1657,8 +1653,7 @@ export class DeforestationOptionsComponent implements OnInit  {
             /**
              * Setting up authentication api
              */
-            let orig=document.location.origin;
-            let isLocal=( (orig.includes('localhost') || orig.includes('127'))?("http://terrabrasilis.dpi.inpe.br/oauth-api/"):("") );
+            let isLocal=( (process.env.BUILD_TYPE == 'development')?("https://terrabrasilis.dpi.inpe.br/oauth-api/"):("") );
             isLocal = "";
             Authentication.init(lang, function()
             {
