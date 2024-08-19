@@ -1,9 +1,7 @@
 import {  Component, 
           OnInit } from '@angular/core';
 
-import {  HttpClient, 
-          HttpHeaders, 
-          HttpParams } from '@angular/common/http';
+import {  HttpClient } from '@angular/common/http';
 
 import {  ISubscription } from "rxjs/Subscription";
 
@@ -43,7 +41,7 @@ export class OnDemandDownloadComponent implements OnInit {
   value: string;
   private biomeSubscription: ISubscription;
   private typeSubscription: ISubscription;
-  public httpOptions: any;
+  public fileName: any;
   
   private dataJson: any;
   private loiNamesJson: any;
@@ -79,16 +77,14 @@ export class OnDemandDownloadComponent implements OnInit {
     let half=parseInt( ( (this.states.length%2)?( (this.states.length/2)+1 ):( this.states.length/2 ) )+""  );
     this.statesBlk1=this.states.slice(0,half);
     this.statesBlk2=this.states.slice(half,this.states.length);
-    this.httpOptions = { headers: new  HttpHeaders(
-      { 'App-Identifier': 'prodes_'+this.biome}
-    )};
+    this.fileName = 'prodes_'+this.biome;
 
     // if (this.DB_NoContain == false)
     //   this.biome = "amazon";
 
-    this.dataObservable = this.dashboardApiProviderService.getDeforestation(this.httpOptions);  
+    this.dataObservable = this.dashboardApiProviderService.getDeforestation(this.fileName);  
     
-    this.loiNamesObservable = this.dashboardApiProviderService.getLoinames(this.httpOptions); 
+    this.loiNamesObservable = this.dashboardApiProviderService.getLoinames(this.fileName); 
   
           
   }

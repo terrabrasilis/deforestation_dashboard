@@ -13,10 +13,10 @@ export class Constants {
     };
 
     public static get DASHBOARD_API_HOST(): string {
-        let url = Constants.BASE_URL+"/app/dashboard/deforestation/";
+        let url = Constants.BASE_URL+"/app/prodes/dashboard/deforestation/files/";
 
         if(process.env.BUILD_TYPE == 'homologation' && process.env.ENV == 'production')
-            url = Constants.BASE_URL+"/homologation/dashboard/deforestation/";
+            url = Constants.BASE_URL+"/homologation/prodes/dashboard/deforestation/files/";
 
         return url;
     };
