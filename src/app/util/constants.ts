@@ -29,7 +29,7 @@ export class Constants {
     };
 
     public static get LAST_UPDATE_DATE(): string {
-        return "2024-05-06";
+        return "2024-09-27";
     };
 
     public static get DASHBOARD_BIOMES_NAMES(): string[] {
