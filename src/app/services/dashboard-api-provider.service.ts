@@ -72,6 +72,10 @@ export class DashboardApiProviderService {
     return this.http.get(this.dashboardAPIHost+this.deforestation+fileName+'.json');
   }
 
+  getLastUpdatedDate() {
+    return this.http.get(Constants.LAST_UPDATE_DATE);
+  }
+
   getDeforestationRates() {
     return this.http.get(Constants.FILE_RATES);
   }

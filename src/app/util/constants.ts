@@ -29,7 +29,10 @@ export class Constants {
     };
 
     public static get LAST_UPDATE_DATE(): string {
-        return "2024-09-27";
+        let filename="last_update_date.json";
+        let url = Constants.DASHBOARD_API_HOST;
+        // return the URL and name of JSON file with rates
+        return url+filename;
     };
 
     public static get DASHBOARD_BIOMES_NAMES(): string[] {

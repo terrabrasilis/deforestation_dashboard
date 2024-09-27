@@ -185,7 +185,10 @@ export class DeforestationOptionsComponent implements OnInit  {
 
     this.maxLoi = 15;
     
-    this.last_update_date = Constants.LAST_UPDATE_DATE;
+    // this.last_update_date = Constants.LAST_UPDATE_DATE;
+    this.dashboardApiProviderService.getLastUpdatedDate().subscribe(data => {
+      this.last_update_date = data["last_date"];
+    });
 
     this.includeMask=false;
   }
