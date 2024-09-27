@@ -136,6 +136,7 @@ export class DeforestationOptionsComponent implements OnInit  {
   private languageKey: string = "translate";
   private lang: string;
 
+  private last_date: string;
   private last_update_date: string;
 
   public loiSearchComponent: LoiSearchComponent;
@@ -185,9 +186,8 @@ export class DeforestationOptionsComponent implements OnInit  {
 
     this.maxLoi = 15;
     
-    // this.last_update_date = Constants.LAST_UPDATE_DATE;
     this.dashboardApiProviderService.getLastUpdatedDate().subscribe(data => {
-      this.last_update_date = data["last_date"];
+      this.last_date = data["last_date"];
     });
 
     this.includeMask=false;
@@ -210,7 +210,7 @@ export class DeforestationOptionsComponent implements OnInit  {
 
         this._translate.setDefaultLang(this.lang);
 
-        this.last_update_date=(new Date(Constants.LAST_UPDATE_DATE+'T12:00:00.000Z')).toLocaleDateString(this.lang);
+        this.last_update_date=(new Date(this.last_date+'T12:00:00.000Z')).toLocaleDateString(this.lang);
         
         let currentRateNotes=(Constants.BARCHART_PRELIMINARY_DATA_YEAR)?('dashboard.modals.warning_rates'):('dashboard.tooltip.rates');
         let currentIncreaseNotes=(Constants.BARCHART_PRELIMINARY_DATA_YEAR)?('dashboard.modals.warning_increase'):('dashboard.tooltip.incr');
@@ -1585,7 +1585,7 @@ export class DeforestationOptionsComponent implements OnInit  {
 
   changeLanguage(value:string) {
     this.lang=value;
-    this.last_update_date=(new Date(Constants.LAST_UPDATE_DATE+'T12:00:00.000Z')).toLocaleDateString(this.lang);
+    this.last_update_date=(new Date(this.last_date+'T12:00:00.000Z')).toLocaleDateString(this.lang);
     this.localStorageService.setValue(this.languageKey, value);
     this._translate.use(value);
     this.updateGridstackLanguage();
