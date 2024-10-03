@@ -1,6 +1,6 @@
 {
   "name": "deforestation-dashboard",
-  "version": "3.4.2",
+  "version": "3.4.3",
   "license": "MIT",
   "scripts": {
     "ng": "ng",
@@ -13,7 +13,7 @@
     "oldwebpack-dev": "cross-env NODE_ENV=development webpack --mode development",
     "oldwebpack-prod": "cross-env NODE_ENV=production webpack --mode production",
     "dev": "webpack --mode development",
-    "webpack-dev": "webpack-dev-server --host 192.168.15.49 --port 3001 --config config/webpack.dev.js --mode development --preserve-symlinks --watch-content-base --open --optimize-minimize",
+    "webpack-dev": "webpack-dev-server --port 3001 --config config/webpack.dev.js --mode development --preserve-symlinks --watch-content-base --open --optimize-minimize",
     "build-webpack-prod": "webpack --config config/webpack.prod.js",
     "build-production": "rimraf dist && webpack --config config/webpack.prod.js --profile --env --bail -p --preserve-symlinks",
     "build-homologation": "rimraf dist && webpack --config config/webpack.hom.js --profile --env --bail -p --preserve-symlinks",

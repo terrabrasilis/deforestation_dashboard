@@ -108,6 +108,7 @@
             "ratesAmazon": "Legal Amazon",
             "relatedPage": "Related Page",
             "deforestationMap": "Deforestation Map",
+            "enableMap": "Load Map",
             "alertsMap": "Notices Map",
             "cerradoPage": "Home - Cerrado",
             "amazonPage": "Home - Amazon"
