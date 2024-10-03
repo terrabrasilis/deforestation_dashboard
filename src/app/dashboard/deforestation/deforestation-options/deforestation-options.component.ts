@@ -95,6 +95,7 @@ export class DeforestationOptionsComponent implements OnInit  {
   initTab: any;
   ctrlSto: any;
   resetOn: boolean=false;
+  
 
   private biomeSubscription: ISubscription;
   private typeSubscription: ISubscription;
@@ -144,6 +145,8 @@ export class DeforestationOptionsComponent implements OnInit  {
 
   private redrawMap:any;
 
+  private loadingGraphsComponents: Map<string, boolean>;
+
   constructor(private route: ActivatedRoute,
               private router: Router,
               private dom: DomSanitizer,
@@ -152,7 +155,10 @@ export class DeforestationOptionsComponent implements OnInit  {
               private _translate: TranslateService,
               private localStorageService: LocalStorageService,
               private cdRef: ChangeDetectorRef
-            ) {
+            ) 
+  {
+
+    this.loadingGraphsComponents = new Map();
     
     // create subscription for biome data
     this.biomeSubscription = this.route.params.subscribe(params => this.biome = params["biome"].replace("-", " "));
@@ -194,7 +200,47 @@ export class DeforestationOptionsComponent implements OnInit  {
     this.includeMask=false;
   }
 
-  ngOnInit() {
+  private enableLoadingAllComponents()  
+  {
+    this.enableLoading("#series-chart");
+    this.enableLoading("#row-chart");
+    this.enableLoading("#bar-chart");
+    this.enableLoading("#loi-chart");   
+  }
+
+  private enableLoading(graphComponent: string)  
+  {
+    this.loadingGraphsComponents.set(graphComponent, true);
+
+    Terrabrasilis.enableLoading("#myTabContent");
+  }
+  private disableLoading(graphComponent: string)  
+  {
+    if(this.resetOn==false)
+    {
+      this.loadingGraphsComponents.set(graphComponent, false);
+    }   
+
+    for (let i = 0; i < this.loadingGraphsComponents.keys.length; i++) {
+      const key = this.loadingGraphsComponents.keys[i];
+      if(this.loadingGraphsComponents.get(key))
+      {
+        return;
+      }
+    }
+
+    if(this.resetOn==false)
+    {
+      Terrabrasilis.disableLoading("#myTabContent");      
+    }
+    else
+    {
+      this.resetOn=false;
+    }
+  }
+  
+  ngOnInit() 
+  {
    
         
     // define the height for div content using the div identifier: "myTabContent"
@@ -266,6 +312,8 @@ export class DeforestationOptionsComponent implements OnInit  {
 
   changeTab(self: DeforestationOptionsComponent, element: EventTarget)
   {
+    this.enableLoadingAllComponents()
+
     var idx = self.lois.findIndex(function(el) {
       return el.value == self.selectedLoi;
     });
@@ -430,7 +478,8 @@ export class DeforestationOptionsComponent implements OnInit  {
     
       case 'series-chart':
         csv=this.prepareSeriesChartToDownload(targetChart.data());
-        Terrabrasilis.disableLoading("#series-chart");
+        //Terrabrasilis.disableLoading("#series-chart");
+        this.disableLoading('#series-chart');
         content=this.csvFormat(csv);
         break;
       
@@ -566,7 +615,11 @@ export class DeforestationOptionsComponent implements OnInit  {
 
   }
 
-  drawGrid():void {
+  drawGrid():void 
+  {
+
+    this.enableLoadingAllComponents();
+
 
     // call function inside this
     var self = this;
@@ -726,8 +779,9 @@ export class DeforestationOptionsComponent implements OnInit  {
     
   }
   
-  loadData():void {
-
+  loadData():void 
+  {
+    this.enableLoadingAllComponents();
     // call of the required json for specific loi
     switch(this.selectedLoi) {
       case "uf": {
@@ -837,6 +891,7 @@ export class DeforestationOptionsComponent implements OnInit  {
 
   makeGraphs(includeMask:boolean):void 
   {
+    this.enableLoadingAllComponents();
 
     // call function inside this
     let self=this;
@@ -1054,7 +1109,16 @@ export class DeforestationOptionsComponent implements OnInit  {
               mapJson["features"].forEach(function(feature:any) {
                 
                 var auxIndex = auxAreaByLoiName.findIndex(
-                              (obj:any) => { return (self.loiNames[obj.key] === feature["properties"].name) }
+                              (obj:any) => {
+                                  if(self.loiNames[obj.key] && feature["properties"].name)
+                                  {
+                                    return self.loiNames[obj.key].toUpperCase() == feature["properties"].name.toUpperCase()
+                                  }
+                                  else
+                                  {
+                                    return false;
+                                  }                                 
+                                }
                             );
                 
                 // if loiname exists
@@ -1068,7 +1132,16 @@ export class DeforestationOptionsComponent implements OnInit  {
               auxAreaByLoiName.forEach(function(element:any, index:any, object:any) {
                 
                 var auxIndex = mapJson["features"].findIndex(
-                              (obj:any) => { return (self.loiNames[element.key] === obj["properties"].name)}
+                              (obj:any) => {
+                                if(self.loiNames[element.key] && obj["properties"].name)
+                                {
+                                  return self.loiNames[element.key].toUpperCase() == obj["properties"].name.toUpperCase()
+                                }
+                                else
+                                {
+                                  return false;
+                                }                                
+                              }
                             );
                 
                 // if loiname exists
@@ -1080,7 +1153,7 @@ export class DeforestationOptionsComponent implements OnInit  {
               });
             }
 
-            Terrabrasilis.enableLoading("#loi-chart");
+            //Terrabrasilis.enableLoading("#loi-chart");
 
             var geojsonLayers:any = [{
               "type": "Multipolygon",     
@@ -1095,8 +1168,8 @@ export class DeforestationOptionsComponent implements OnInit  {
           {            
             this.disableMap();
           }
-          Terrabrasilis.disableLoading("#loi-chart");
-          var loiChart = document.getElementById("loi-chart");
+          //Terrabrasilis.disableLoading("#loi-chart");
+          self.disableLoading("#loi-chart");
         },
         disableMap: function()
         {
@@ -1116,17 +1189,18 @@ export class DeforestationOptionsComponent implements OnInit  {
             $(enableMapButton).attr("type", "button");
             
             let enableMapFunction = this.enableMap;
-            let self = this;
+            let redrawMapObject = this;
             $(enableMapButton).click(function()
             {
-              enableMapFunction($(disabledMapDiv), self);          
+              enableMapFunction($(disabledMapDiv), redrawMapObject);          
             });
             $(enableMapButton).html(buttonContent);
             $(disabledMapDiv).append(enableMapButton);
       
             $('#loi-chart').append(disabledMapDiv);
 
-            Terrabrasilis.disableLoading("#loi-chart");
+            //Terrabrasilis.disableLoading("#loi-chart");
+            self.disableLoading("#loi-chart");
           }
           else
           {
@@ -1138,7 +1212,7 @@ export class DeforestationOptionsComponent implements OnInit  {
         {        
           if(redrawMapObject.mapJson && redrawMapObject.areaByLoiName && redrawMapObject.filteredLoiName)
           {
-            Terrabrasilis.enableLoading("#loi-chart");
+            //Terrabrasilis.enableLoading("#loi-chart");
             button.toggle();
             redrawMapObject.disabledMap = false;
             redrawMapObject.call(redrawMapObject.mapJson, redrawMapObject.areaByLoiName, redrawMapObject.filteredLoiName);
@@ -1266,7 +1340,8 @@ export class DeforestationOptionsComponent implements OnInit  {
           }
         });
       }
-      Terrabrasilis.disableLoading("#bar-chart");
+      //Terrabrasilis.disableLoading("#bar-chart");      
+      self.disableLoading("#bar-chart");
     });
 
     this.barChart.on("renderlet.a",function (chart:any) {
@@ -1375,8 +1450,12 @@ export class DeforestationOptionsComponent implements OnInit  {
                 }))
                 .brushOn(false);
 
+    
     this.seriesChart.data(function (group:any) {
-                  Terrabrasilis.enableLoading("#series-chart");
+                
+                  //Terrabrasilis.enableLoading("#series-chart");
+                  self.enableLoading('#series-chart');
+                  
                   var aux:any = []; 
                   // filter by years from composite bar chart
                   if (!self.area.hasFilter()) {                    
@@ -1434,7 +1513,8 @@ export class DeforestationOptionsComponent implements OnInit  {
     // erase black filling
     this.seriesChart.on('renderlet', function (chart:any) {
       d3.selectAll('.line').style('fill', 'none');
-      Terrabrasilis.disableLoading("#series-chart");
+      //Terrabrasilis.disableLoading("#series-chart");
+      self.disableLoading("#series-chart");
     });
 
     this.seriesChart.xAxis().ticks(auxYears.length);
@@ -1510,13 +1590,16 @@ export class DeforestationOptionsComponent implements OnInit  {
     this.rowChart.xAxis().tickFormat(function(d:any) {return d+"km2";});
     
     this.rowChart.data(function (group:any) {
-      Terrabrasilis.enableLoading("#row-chart");
+      self.enableLoading('#row-chart');
+      //Terrabrasilis.enableLoading("#row-chart");
       //Terrabrasilis.enableLoading("#loi-chart");
       return group.top(self.maxLoi);
     });
 
-    this.rowChart.on('renderlet', function () {      
-      Terrabrasilis.disableLoading("#row-chart");
+    this.rowChart.on('renderlet', function ()     
+    {      
+      self.disableLoading("#row-chart");
+      //Terrabrasilis.disableLoading("#row-chart");
     });
 
     let loiSearchComponent = this.loiSearchComponent;
@@ -1663,8 +1746,8 @@ export class DeforestationOptionsComponent implements OnInit  {
     context.seriesChart.filterAll();
 
     dc.redrawAll("agrega");
-    dc.redrawAll("filtra");
-    context.resetOn=false;
+    dc.redrawAll("filtra");  
+    
   }
 
   updateSizeCharts(transition:any) {
@@ -1726,7 +1809,8 @@ export class DeforestationOptionsComponent implements OnInit  {
                 this.barChart.render();
                 this.seriesChart.yAxisLabel((this.type == "rates")?(this.labelRates):(this.labelArea));
                 this.seriesChart.render();
-                Terrabrasilis.disableLoading("#loi-chart");
+                this.disableLoading("#loi-chart");
+                //Terrabrasilis.disableLoading("#loi-chart");
                 $('#0').text(data[9]);
                 $('#1').text(data[10]);
                 $('#2').text(data[11]);
