@@ -205,7 +205,8 @@ export class DeforestationOptionsComponent implements OnInit  {
     this.enableLoading("#series-chart");
     this.enableLoading("#row-chart");
     this.enableLoading("#bar-chart");
-    this.enableLoading("#loi-chart");   
+    this.enableLoading("#loi-chart");
+    this.enableLoading("rendering");
   }
 
   private enableLoading(graphComponent: string)  
@@ -216,28 +217,23 @@ export class DeforestationOptionsComponent implements OnInit  {
   }
   private disableLoading(graphComponent: string)  
   {
-    if(this.resetOn==false)
-    {
-      this.loadingGraphsComponents.set(graphComponent, false);
-    }   
+    this.loadingGraphsComponents.set(graphComponent, false);  
 
-    for (let i = 0; i < this.loadingGraphsComponents.keys.length; i++) {
-      const key = this.loadingGraphsComponents.keys[i];
-      if(this.loadingGraphsComponents.get(key))
+    let allDisabled = true;
+    this.loadingGraphsComponents.forEach(function(value, key) {
+        if(value)
+        {
+          allDisabled = false;
+          return;
+        }
+    });
+
+      if(allDisabled)
       {
-        return;
-      }
-    }
+        Terrabrasilis.disableLoading("#myTabContent");      
+      }      
 
-    if(this.resetOn==false)
-    {
-      Terrabrasilis.disableLoading("#myTabContent");      
-    }
-    else
-    {
-      this.resetOn=false;
-    }
-  }
+   }
   
   ngOnInit() 
   {
@@ -1315,7 +1311,7 @@ export class DeforestationOptionsComponent implements OnInit  {
       //   }
       // });
 
-    this.barChart.on('renderlet', function (chart:any) {
+    this.barChart.on('renderlet', function (chart:any, filter:any) {
       
       var barLabels = chart.selectAll("text.barLabel");
       barLabels._groups[0].forEach( (bl:any) => {
@@ -1341,8 +1337,12 @@ export class DeforestationOptionsComponent implements OnInit  {
         });
       }
       //Terrabrasilis.disableLoading("#bar-chart");      
-      self.disableLoading("#bar-chart");
+    
     });
+
+    this.barChart.on('postRender', function (chart:any) {
+      self.disableLoading("#bar-chart");
+    });   
 
     this.barChart.on("renderlet.a",function (chart:any) {
       // rotate x-axis labels
@@ -1454,7 +1454,7 @@ export class DeforestationOptionsComponent implements OnInit  {
     this.seriesChart.data(function (group:any) {
                 
                   //Terrabrasilis.enableLoading("#series-chart");
-                  self.enableLoading('#series-chart');
+                  //self.enableLoading('#series-chart');
                   
                   var aux:any = []; 
                   // filter by years from composite bar chart
@@ -1516,6 +1516,12 @@ export class DeforestationOptionsComponent implements OnInit  {
       //Terrabrasilis.disableLoading("#series-chart");
       self.disableLoading("#series-chart");
     });
+
+    this.seriesChart.on('postRender', function (chart:any) 
+    {
+      self.disableLoading("#series-chart");
+    });
+
 
     this.seriesChart.xAxis().ticks(auxYears.length);
     
@@ -1590,7 +1596,7 @@ export class DeforestationOptionsComponent implements OnInit  {
     this.rowChart.xAxis().tickFormat(function(d:any) {return d+"km2";});
     
     this.rowChart.data(function (group:any) {
-      self.enableLoading('#row-chart');
+      self.enableLoading("#row-chart");
       //Terrabrasilis.enableLoading("#row-chart");
       //Terrabrasilis.enableLoading("#loi-chart");
       return group.top(self.maxLoi);
@@ -1601,6 +1607,12 @@ export class DeforestationOptionsComponent implements OnInit  {
       self.disableLoading("#row-chart");
       //Terrabrasilis.disableLoading("#row-chart");
     });
+
+    this.rowChart.on('postRender', function (chart:any) 
+    {
+      self.disableLoading("#row-chart");
+    });
+
 
     let loiSearchComponent = this.loiSearchComponent;
     this.rowChart.on('filtered', function(chart:any) {
@@ -1656,8 +1668,10 @@ export class DeforestationOptionsComponent implements OnInit  {
 
     (function(j, dc){
       setTimeout(() => {
+        self.enableLoadingAllComponents();
         dc.renderAll("agrega");
-        dc.renderAll("filtra");
+        dc.renderAll("filtra");        
+        self.disableLoading("rendering");
       },100 * j);
     })(1, dc);
 
@@ -1734,7 +1748,11 @@ export class DeforestationOptionsComponent implements OnInit  {
       
   }// makeGraphs end function
 
-  resetFilters(context:any) {
+  resetFilters(context:any) 
+  {
+    this.enableLoading('#row-chart');
+    this.enableLoading('#loi-chart');
+    this.enableLoading('#series-chart');
 
     if(!context) return;
     if(context.resetOn) return;
@@ -1746,7 +1764,8 @@ export class DeforestationOptionsComponent implements OnInit  {
     context.seriesChart.filterAll();
 
     dc.redrawAll("agrega");
-    dc.redrawAll("filtra");  
+    dc.redrawAll("filtra");
+    context.resetOn=false;
     
   }
 

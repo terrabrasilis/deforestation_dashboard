@@ -128,3 +128,7 @@ mat-toolbar-row {
     display: grid;
     place-items: center;
 }
+.modal
+{
+    z-index: 10000 !important;
+}
