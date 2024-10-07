@@ -62,8 +62,8 @@
     "rxjs": "^5.5.6",
     "terrabrasilis-api": "latest",
     "terrabrasilis-jsonix": "^2.4.2",
-    "workerpool": "^6.2.1",
     "w3c-schemas": "^1.4.0",
+    "workerpool": "^6.2.1",
     "zone.js": "^0.8.19"
   },
   "devDependencies": {

@@ -1844,7 +1844,7 @@ export class DeforestationOptionsComponent implements OnInit  {
 
     initAuthentication()
     {
-
+      
         this.localStorageService.getValue(this.languageKey)
         .subscribe((item:any) => {
             let toUse = JSON.parse(item);

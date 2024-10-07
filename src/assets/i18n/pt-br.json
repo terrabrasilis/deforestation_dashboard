@@ -132,7 +132,8 @@
             },
             "priorityCitiesSwitch" : "Filtrar por Municípios Prioritários",
             "selectall":"Marcar/desmarcar todos ou selecione item a item na lista.",
-            "apply":"Aplicar"
+            "apply":"Aplicar",
+            "loisLimitError": "Favor selecionar dentro do limite de quantidade de locais de interesse. <br>Selecionados: %s, Máximo: %m"
         },
         "on-demand": {
             "alert":{

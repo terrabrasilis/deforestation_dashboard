@@ -132,3 +132,7 @@ mat-toolbar-row {
 {
     z-index: 10000 !important;
 }
+.toast-error
+{
+    z-index: 12000 !important;
+}
