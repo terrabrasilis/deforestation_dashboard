@@ -689,8 +689,13 @@ export class DeforestationOptionsComponent implements OnInit  {
 
         if(this.currentFilterKeys != null)
         {
-          setTimeout(()=>{
-            this.applyCountyFilter(this.currentFilterKeys);
+          let applyFilter = setInterval(()=>{
+            if(self.isLoading()==false)
+            {
+              this.applyCountyFilter(this.currentFilterKeys);
+              clearInterval(applyFilter);
+            }
+            
           },1000);
           
         }
@@ -763,6 +768,26 @@ export class DeforestationOptionsComponent implements OnInit  {
     });
 
   } 
+
+  isLoading()
+  {
+    let allDisabled = true;
+    this.loadingGraphsComponents.forEach(function(value, key) {
+        if(allDisabled == true && value)
+        {
+          allDisabled = false;
+        }
+    });
+
+      if(allDisabled)
+      {
+        return false;      
+      }
+      else
+      {
+        return true;
+      }  
+  }
 
   getData(selectedClass:any):void {
 
