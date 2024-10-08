@@ -147,6 +147,8 @@ export class DeforestationOptionsComponent implements OnInit  {
 
   private loadingGraphsComponents: Map<string, boolean>;
 
+  private currentFilterKeys:number[];
+
   constructor(private route: ActivatedRoute,
               private router: Router,
               private dom: DomSanitizer,
@@ -300,7 +302,8 @@ export class DeforestationOptionsComponent implements OnInit  {
     this.typeSubscription.unsubscribe();
   }
 
-  maskOnOff(input: HTMLInputElement) {
+  maskOnOff(input: HTMLInputElement) 
+  {
     this.includeMask = input.checked;
     var self=this;
     self.setMaskDisplay();
@@ -323,6 +326,7 @@ export class DeforestationOptionsComponent implements OnInit  {
     $('li.nav-item.active').removeClass('active');      
     $(element).closest('li').addClass('active');
 
+    this.currentFilterKeys = null;
   }
 
   filterPriorityCities() 
@@ -362,7 +366,7 @@ export class DeforestationOptionsComponent implements OnInit  {
   }
 
   applyCountyFilter(keys:number[])
-  {
+  {    
     let groupKeys = [keys];
     let self=this;
     if(!keys || !keys.length || keys.length==0) {
@@ -430,6 +434,9 @@ export class DeforestationOptionsComponent implements OnInit  {
         
       //});
 			
+      //Saving filter keys
+      this.currentFilterKeys = keys;
+
 			dc.redrawAll("agrega");
       dc.redrawAll("filtra");
 		}
@@ -679,6 +686,14 @@ export class DeforestationOptionsComponent implements OnInit  {
         self.makeGraphs(self.includeMask);
         self.makeTables();
         self.moreOptionsBtn();
+
+        if(this.currentFilterKeys != null)
+        {
+          setTimeout(()=>{
+            this.applyCountyFilter(this.currentFilterKeys);
+          },1000);
+          
+        }
         return;
       }
       
@@ -1753,6 +1768,8 @@ export class DeforestationOptionsComponent implements OnInit  {
     this.enableLoading('#row-chart');
     this.enableLoading('#loi-chart');
     this.enableLoading('#series-chart');
+
+    this.currentFilterKeys = null;
 
     if(!context) return;
     if(context.resetOn) return;
