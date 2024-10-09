@@ -21,6 +21,8 @@
                     <label for="priority-cities-selector" class="bg-white"></label>
                   </div>
                 </div>
+              </div>
+              <div class="alert alert-danger" role="alert" id="loi-search-error-div" style="display: none;">              
               </div>              
               <!--div class="sub-title"></div-->
               <div class="input-group input-group-sm" >
@@ -48,7 +50,7 @@
               </div>
               <div class="button-div">                
                 <button type="button" class="btn btngreen" data-dismiss="modal"><i class="material-icons">clear</i>{{ 'dashboard.search.close' | translate }}</button>
-                <button type="button" class="btn btngreen" (click)="apply()"><i class="material-icons">done</i>{{ 'dashboard.search.apply' | translate }}</button>
+                <button type="button" class="btn btngreen" id="apply-button" (click)="apply()"><i class="material-icons">done</i>{{ 'dashboard.search.apply' | translate }}</button>
               </div>
           </div>
           <div class="modal-footer">

@@ -108,6 +108,7 @@
             "ratesAmazon": "Legal Amazon",
             "relatedPage": "Related Page",
             "deforestationMap": "Deforestation Map",
+            "enableMap": "Load Map",
             "alertsMap": "Notices Map",
             "cerradoPage": "Home - Cerrado",
             "amazonPage": "Home - Amazon"
@@ -125,7 +126,8 @@
             "close": "Close",
             "priorityCitiesSwitch" : "Filter by Priority Cities",
             "selectall":"Check/Uncheck all or select a item on the list.",
-            "apply":"Apply"
+            "apply":"Apply",
+            "loisLimitError": "Please select within the limit of number of places of interest. <br>Selected: %s, Maximum: %m"
             
         },
         "on-demand": {

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { DashboardLoiSearchService } from '../../services/dashboard-loi-search.service';
 import { Subject } from 'rxjs/Subject';
-import { DeforestationOptionsComponent } from '../deforestation/deforestation-options/deforestation-options.component'
+import { DashboardLoiSearchService } from '../../services/dashboard-loi-search.service';
+import { DeforestationOptionsComponent } from '../deforestation/deforestation-options/deforestation-options.component';
 
 /* Translate */
 import { TranslateService } from '@ngx-translate/core';
@@ -30,11 +30,14 @@ export class LoiSearchComponent implements OnInit {
   public prioritiesCities: boolean;
   searchTerm: string;
   private selectAll: boolean = false;
+  private maxSelection: number;
   
   constructor(private deforestationOptionsComponent: DeforestationOptionsComponent,
     private searchService: DashboardLoiSearchService,
-    private _translate: TranslateService,
-    private localStorageService: LocalStorageService) {
+    private _translate: TranslateService,    
+    private localStorageService: LocalStorageService)
+    {
+      this.maxSelection=20;
 
     this.panelReference=deforestationOptionsComponent;
 
@@ -107,6 +110,7 @@ export class LoiSearchComponent implements OnInit {
     {
       this.selectedKeys.delete(key);
     }
+    this.checkMaximumLoisSelected();
   }
 
   resetActives() 
@@ -116,6 +120,7 @@ export class LoiSearchComponent implements OnInit {
         $('#'+item.key+'_item').removeClass('active');
       }
     );
+    this.checkMaximumLoisSelected();
   }
 
   evaluateActives(actives:Array<any>) {
@@ -225,8 +230,21 @@ export class LoiSearchComponent implements OnInit {
     
     if(selected.length>0)
     {
-      this.panelReference.resetFilters(this.panelReference);
-      this.panelReference.filterByLois(selected);
+      if(selected.length<=this.maxSelection)
+      {
+        this.panelReference.resetFilters(this.panelReference);
+        this.panelReference.filterByLois(selected);
+      }
+      else
+      {
+        this._translate.get("dashboard.search.loisLimitError").subscribe((text) => {
+          
+          text=text.replace('%s', selected.length);
+          text=text.replace('%m', this.maxSelection);          
+          
+        });
+        
+      }    
     }
     else
     {
@@ -234,6 +252,33 @@ export class LoiSearchComponent implements OnInit {
     }
     
   }
+
+  checkMaximumLoisSelected()
+  {
+    let selected = Array.from(this.selectedKeys.values());
+    
+
+    if(selected.length<=this.maxSelection)
+    {
+      $('#apply-button').removeAttr('disabled');
+      $('#loi-search-error-div').hide();        
+    }
+    else
+    {        
+      $('#apply-button').attr('disabled', 'disabled');
+      $('#loi-search-error-div').show();
+
+      this._translate.get("dashboard.search.loisLimitError").subscribe((text) => {
+        
+        text=text.replace('%s', selected.length);
+        text=text.replace('%m', this.maxSelection);          
+        $('#loi-search-error-div').html(text);
+        
+      });
+    }    
+
+  }
+  
 
 
   toogleSelectAll()
@@ -253,6 +298,7 @@ export class LoiSearchComponent implements OnInit {
         }
       );
     }
+    this.checkMaximumLoisSelected();
   }
 
 }

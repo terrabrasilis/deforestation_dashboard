@@ -117,3 +117,22 @@ mat-toolbar-row {
     cursor: auto;
     cursor: url('assets/img/map/cursor-info.png') 2 1, auto;
 }
+
+#disabled-map-div{
+    background-color:rgba(134, 134, 134, 0.69);
+    width:100%;
+    height:20px;
+    position:absolute;
+    cursor:default;
+    z-index: 99999;
+    display: grid;
+    place-items: center;
+}
+.modal
+{
+    z-index: 10000 !important;
+}
+.toast-error
+{
+    z-index: 12000 !important;
+}
