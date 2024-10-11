@@ -12,8 +12,12 @@ body {
     position: fixed;
     top:0 ;
     left: 0;
-    height: 90%;
+    height: 100%;
     width: 100%;
+    overflow: hidden !important;
+}
+html {
+    overflow: hidden !important;
 }
 
 .done {
