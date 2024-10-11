@@ -37,7 +37,7 @@ export class LoiSearchComponent implements OnInit {
     private _translate: TranslateService,    
     private localStorageService: LocalStorageService)
     {
-      this.maxSelection=20;
+      this.maxSelection=200;
 
     this.panelReference=deforestationOptionsComponent;
 
@@ -82,7 +82,10 @@ export class LoiSearchComponent implements OnInit {
     
     if(this.panelReference.selectedLoi=='mun' && this.prioritiesCities && this.panelReference.biome == 'legal_amazon')
     {
-      this.selectPrioritiesCities(results);
+      this.getPrioritiesCities(results).then((prioritiesCitiesResults: Array<{key:any,value:any}>)=>
+      {
+        this.results = prioritiesCitiesResults;      
+      });
     }
     else
     {
@@ -172,57 +175,61 @@ export class LoiSearchComponent implements OnInit {
     this._translate.use(value);    
   }
 
-  selectPrioritiesCities(currentResult: Array<{key:any,value:any}>)
-  {    
-    if(this.panelReference.selectedLoi=='mun' && this.panelReference.biome == 'legal_amazon')
-    {
-      let prioritiesCitiesResults = new Array<{key:any,value:any}>();
-      let oSelectedLoi=this.panelReference.dataLoinamesJson.lois.find((l:any)=>{return l.name==this.panelReference.selectedLoi;});
-
-      this.searchService.getPrioritiesCities()
-          .subscribe(data => {
-            if(data['features'] && data['features'].length>0)
-            {
-              
-              if(data['features'][0].properties &&
-              data['features'][0].properties.year &&
-              data['features'][0].properties.codes)
+  getPrioritiesCities(currentResult: Array<{key:any,value:any}>) : Promise<Array<{key:any,value:any}>>
+  {
+    let promise = new Promise<Array<{key:any,value:any}>>((resolve, reject) => {
+      let results=new Array<{key:any,value:any}>();
+      if(this.panelReference.selectedLoi=='mun' && this.panelReference.biome == 'legal_amazon')
+      {      
+        let prioritiesCitiesResults = new Array<{key:any,value:any}>();
+        let oSelectedLoi=this.panelReference.dataLoinamesJson.lois.find((l:any)=>{return l.name==this.panelReference.selectedLoi;});
+  
+        this.searchService.getPrioritiesCities()
+            .subscribe(data => {
+              if(data['features'] && data['features'].length>0)
               {
-                let codesStr = data['features'][0].properties.codes.split(',');
-  
-                //Locate loi gid by codibge
-                for (let i = 0; i < oSelectedLoi.loinames.length; i++) 
-                {
-                  const loiname = oSelectedLoi.loinames[i];
-  
-                  codesStr.forEach((cityCode: string) =>
-                  {
-                    if(loiname.codibge == Number.parseInt(cityCode))
-                    {      
-                      //codes.push(loiname.gid);
-                      for (let j = 0; j < currentResult.length; j++) 
-                      {
-                        if(loiname.gid == currentResult[j].key)
-                        {
-                          prioritiesCitiesResults.push(currentResult[j]);
-                          break;
-                        }
-                      }
-                      
-                    }                  
-                  });                  
-                }
                 
-                this.results=prioritiesCitiesResults.sort(function(a:any, b:any) {
-                  return ('' + a.value).localeCompare(b.value);
-                });
-
+                if(data['features'][0].properties &&
+                data['features'][0].properties.year &&
+                data['features'][0].properties.codes)
+                {
+                  let codesStr = data['features'][0].properties.codes.split(',');
+    
+                  //Locate loi gid by codibge
+                  for (let i = 0; i < oSelectedLoi.loinames.length; i++) 
+                  {
+                    const loiname = oSelectedLoi.loinames[i];
+    
+                    codesStr.forEach((cityCode: string) =>
+                    {
+                      if(loiname.codibge == Number.parseInt(cityCode))
+                      {      
+                        //codes.push(loiname.gid);
+                        for (let j = 0; j < currentResult.length; j++) 
+                        {
+                          if(loiname.gid == currentResult[j].key)
+                          {
+                            prioritiesCitiesResults.push(currentResult[j]);
+                            break;
+                          }
+                        }
+                        
+                      }                  
+                    });                  
+                  }
+                  
+                  results=prioritiesCitiesResults.sort(function(a:any, b:any) {
+                    return ('' + a.value).localeCompare(b.value);
+                  });
+                  resolve(results);
+                }
               }
-            }
-            
-          });
-    }
-
+              
+            });
+      }
+    });
+    
+    return promise;
   }
   apply()
   {
@@ -278,9 +285,6 @@ export class LoiSearchComponent implements OnInit {
     }    
 
   }
-  
-
-
   toogleSelectAll()
   {
     if(this.selectAll)
@@ -299,6 +303,11 @@ export class LoiSearchComponent implements OnInit {
       );
     }
     this.checkMaximumLoisSelected();
+  }
+
+  getSearchService()
+  {
+    return this.searchService;
   }
 
 }

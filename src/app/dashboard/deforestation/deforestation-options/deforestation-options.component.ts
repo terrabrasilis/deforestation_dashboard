@@ -156,7 +156,7 @@ export class DeforestationOptionsComponent implements OnInit  {
               public dialog: MatDialog,
               private dashboardApiProviderService: DashboardApiProviderService,
               private _translate: TranslateService,
-              private localStorageService: LocalStorageService,
+              private localStorageService: LocalStorageService,              
               private cdRef: ChangeDetectorRef
             ) 
   {
@@ -246,7 +246,7 @@ export class DeforestationOptionsComponent implements OnInit  {
         
     // define the height for div content using the div identifier: "myTabContent"
     // (sub-bar + filters-bar + header + footer)
-    let h = $(window).height() - ($('#sub-bar-options').height() + $('#title-chart').height() + $('#content').height() + $('.footer').height());
+    let h = $(window).height() - ($('#sub-bar-options').height() + $('#content').height() + $('.footer').height());
     $('#myTabContent').height( h );
 
     if (!this.checkBiome())
@@ -316,44 +316,65 @@ export class DeforestationOptionsComponent implements OnInit  {
   {
     this.enableLoadingAllComponents()
 
+    // match tab index with loi
+    var id:any = $(element).find("span").attr("id");
+
+    this.changeLoi(self, id);
+
+  }
+
+  changeLoi(self: DeforestationOptionsComponent, id: string)
+  {
     var idx = self.lois.findIndex(function(el) {
       return el.value == self.selectedLoi;
     });
-    // match tab index with loi
-    var id:any = $(element).find("span").attr("id");
+    
     if (!(idx == Number(id))) {
       self.resetFilters(self);
       self.selectedLoi = self.lois[Number(id)].value;
       self.loadData();
     }
     $('li.nav-item.active').removeClass('active');      
-    $(element).closest('li').addClass('active');
+    $("#"+id).closest('li').addClass('active');
 
     this.currentFilterKeys = null;
   }
 
+
   filterPriorityCities() 
-  {    
-    //let munElementTab = $('#nav-link-mun');
-    //this.changeTab(this, munElementTab);    
-    if(this.loiSearchComponent)    
-    { 
-      this.loiSearchComponent.prioritiesCities = true;
-      this.loiSearchComponent.updateLoi();
-      $('#search_lois').click();
+  {
+    this.changeLoi(this, "1");
 
+    let self = this;
 
-    // let warningMsgPriorityCtitiesKey='dashboard.modals.warning_priority_cities'
-    // this._translate.get(warningMsgPriorityCtitiesKey).subscribe((text) => {
-    //   let msg=text;
-    //   let dialogRef = this.dialog.open(DialogComponent, {width : '450px'});
-    //   dialogRef.componentInstance.content = this.dom.bypassSecurityTrustHtml(msg);
-    // });
+    let applyFilter = setInterval(()=>{
+      if(self.isLoading()==false)
+      {
+        if(self.loiSearchComponent)    
+        { 
+          self.loiSearchComponent.prioritiesCities = true;
+          //self.loiSearchComponent.updateLoi();
 
-      //setTimeout( () => {
-    //this.loiSearchComponent.selectPrioritiesCities();
-      //}, 5000 );      
-    }    
+          let results = self.loiSearchComponent.getSearchService().searchEntries("");
+          
+          self.loiSearchComponent.getPrioritiesCities(results).then((prioritiesCitiesResults: Array<{key:any,value:any}>)=>
+          {
+            let keys:number[] = []
+            for (let i = 0; i < prioritiesCitiesResults.length; i++) {
+              const loi = prioritiesCitiesResults[i];              
+              keys.push(loi.key);              
+            }       
+            self.filterByLois(keys);
+          });
+          
+          
+          //$('#search_lois').click();
+        }    
+        clearInterval(applyFilter);
+      }
+      
+    },10);
+
   }
 
   filterByLoi(key:number) {
@@ -1823,7 +1844,7 @@ export class DeforestationOptionsComponent implements OnInit  {
     setTimeout(() => {
       // define the height for div content using the div identifier: "myTabContent"
       // (sub-bar + filters-bar + header + footer)
-      let h = $(window).height() - ($('#sub-bar-options').height() + $('#title-chart').height() + $('#content').height() + $('.footer').height());
+      let h = $(window).height() - ($('#sub-bar-options').height() + $('#content').height() + $('.footer').height());
       $('#myTabContent').height( h );
     }, 500);
   }
