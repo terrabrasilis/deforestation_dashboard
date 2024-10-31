@@ -22,7 +22,7 @@ export class Constants {
     };
 
     public static get FILE_RATES(): string {
-        let filename=(process.env.BUILD_TYPE == 'homologation' && process.env.ENV == 'production')?("rates2023_homol.json"):("rates2023.json");
+        let filename=(process.env.BUILD_TYPE == 'homologation' && process.env.ENV == 'production')?("rates2024_homol.json"):("rates2024.json");
         let url = Constants.DASHBOARD_API_HOST;
         // return the URL and name of JSON file with rates
         return url+filename;
@@ -46,9 +46,9 @@ export class Constants {
      */
     public static get BARCHART_PRELIMINARY_DATA_YEAR(): String {
         // enable preliminary notes
-        //return '2023';
+        return '2024';
         // disable preliminary notes
-        return null;
+        //return null;
     }
 
     public static get MAP_LEGEND_COLORS(): any[] {
