@@ -184,8 +184,8 @@
         }
         },
         "modals": {
-            "warning_rates":"New data.<br>Estimated deforestation rates in the Brazilian Legal Amazon for 2022/2023 period based on 117 priority scenes.<br><a target='_blank' style='color: blue;' href='https://www.gov.br/mcti/pt-br/acompanhe-o-mcti/noticias/2023/11/taxa-de-desmatamento-na-amazonia-legal-teve-reducao-de-22-3-entre-agosto-de-2022-e-julho-de-2023'>Learn more at technical note.</a>",
-            "warning_increase":"See the new deforestation increment data for the Brazilian Legal Amazon and Amazon Biome for the 2022/2023 period, measured based on 117 priority scenes.",
+            "warning_rates":"New data.<br>Estimated deforestation rates in the Brazilian Legal Amazon for 2023/2024 period based on 268 priority scenes.<br><a target='_blank' style='color: blue;' href='https://www.gov.br/mcti/pt-br/acompanhe-o-mcti/noticias/'>Learn more at technical note.</a>",
+            "warning_increase":"See the new deforestation increment data for the Brazilian Legal Amazon and Amazon Biome for the 2023/2024 period, measured based on 268 priority scenes.",
             "warning_priority_cities":"Texto de Municípios Prioritários."
         }
     }

@@ -189,8 +189,8 @@
             }
         },
         "modals": {
-            "warning_rates":"Novos dados.<br>Taxa estimada de desmatamento na Amazônia Legal Brasileira, para o período 2023/2024, com base em 117 cenas prioritárias.<br><a style='color: blue;' target='_blank' href='https://www.gov.br/mcti/pt-br/acompanhe-o-mcti/noticias/'>Saiba mais na nota técnica.</a>",
-            "warning_increase":"Consulte os novos dados de incremento de desmatamento na Amazônia Legal Brasileira e Bioma Amazônia, para o período 2023/2024, medidos com base em 117 cenas prioritárias.",
+            "warning_rates":"Novos dados.<br>Taxa estimada de desmatamento na Amazônia Legal Brasileira, para o período 2023/2024, com base em 268 cenas prioritárias.<br><a style='color: blue;' target='_blank' href='https://www.gov.br/mcti/pt-br/acompanhe-o-mcti/noticias/'>Saiba mais na nota técnica.</a>",
+            "warning_increase":"Consulte os novos dados de incremento de desmatamento na Amazônia Legal Brasileira e Bioma Amazônia, para o período 2023/2024, medidos com base em 268 cenas prioritárias.",
             "warning_priority_cities":"Texto de Municípios Prioritários."
         }
     }
