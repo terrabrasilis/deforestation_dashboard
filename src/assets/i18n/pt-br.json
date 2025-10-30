@@ -189,9 +189,8 @@
             }
         },
         "modals": {
-            "warning_rates":"Novos dados.<br>Taxa estimada de desmatamento na Amazônia Legal Brasileira, para o período 2024/2025, com base em 268 tiles prioritários.<br><a style='color: blue;' target='_blank' href='https://terrabrasilis.dpi.inpe.br/geonetwork/srv/api/records/54c9ad38-cd5f-4629-bb42-aa75c205c010/attachments/2024_1031_NotaTecnica_estimado_PRODES_2024_SEI.pdf'>Saiba mais na nota técnica.</a>",
-            "warning_increase":"Consulte os novos dados de incremento de desmatamento na Amazônia Legal Brasileira e Bioma Amazônia, para o período 2024/2025, medidos com base em 268 tiles prioritários.",
-            "warning_priority_cities":"Texto de Municípios Prioritários."
+            "warning_rates":"Novos dados.<br>Taxa estimada de desmatamento na Amazônia Legal Brasileira, para o período 2024/2025, com base em 282 tiles prioritários.<br><a style='color: blue;' target='_blank' href='https://terrabrasilis.dpi.inpe.br/geonetwork/srv/api/records/54c9ad38-cd5f-4629-bb42-aa75c205c010/attachments/20251015Nota_tecnica_EstimativaPRODES_2025_F.pdf'>Saiba mais na nota técnica.</a>",
+            "warning_increase":"Consulte os novos dados de incremento de desmatamento na Amazônia Legal Brasileira e Bioma Amazônia, para o período 2024/2025, medidos com base em 282 tiles prioritários."
         }
     }
 }
