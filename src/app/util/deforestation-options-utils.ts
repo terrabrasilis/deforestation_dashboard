@@ -56,12 +56,15 @@ export class DeforestationOptionsUtils {
     dataJson["periods"].forEach(function(period:any) {
       period.features.forEach(function(feature:any) {       
         var year = period.endDate.year;
-        var area = feature.areas.filter((area:any) => area.type == 1).map(function(e:any) { return e.area; })[0];
-        all.push({ 
-          endDate: year,
-          loi: feature.loi,
-          loiName: feature.loiname,
-          area: area
+        // Preserve all area types: create one record per area.type so charts can stack by type
+        feature.areas.forEach(function(a:any) {
+          all.push({
+            endDate: year,
+            loi: feature.loi,
+            loiName: feature.loiname,
+            area: a.area,
+            type: a.type
+          });
         });
       });
     });
@@ -79,52 +82,65 @@ export class DeforestationOptionsUtils {
       var isMask = startY==1500;
       // to avoid the area division of mask, force to 1
       var difYears = (isMask) ? (1) : (parseInt(endY) - parseInt(startY));
-      var area = feature.areas[0].area;
-      var maskArea = mask[feature.loi]&&mask[feature.loi][feature.loiname] ? mask[feature.loi][feature.loiname] : 0;
 
-      var areaTotal = includeMask ?  maskArea : 0;
-      var currentYear = isMask ? endY : startY+1;
+      // handle each area.type separately so increments keep the type information
+      feature.areas.forEach(function(areaObj:any) {
+        var area = areaObj.area;
+        var type = areaObj.type;
+        var maskArea = mask[feature.loi] && mask[feature.loi][feature.loiname] && mask[feature.loi][feature.loiname][type] ? mask[feature.loi][feature.loiname][type] : 0;
 
-      if(includeMask || !isMask) {
-        while(currentYear<=endY) {
-          areaTotal = isMask ? areaTotal : ( (area*(1/difYears)) + areaTotal );
-          if(includeMask){
-            if(!mask[feature.loi]) {
-              mask[feature.loi]={};
+        var areaTotal = includeMask ?  maskArea : 0;
+        var currentYear = isMask ? endY : startY+1;
+
+        if(includeMask || !isMask) {
+          while(currentYear<=endY) {
+            areaTotal = isMask ? areaTotal : ( (area*(1/difYears)) + areaTotal );
+            if(includeMask){
+              if(!mask[feature.loi]) {
+                mask[feature.loi]={};
+              }
+              if(!mask[feature.loi][feature.loiname]) {
+                mask[feature.loi][feature.loiname]={};
+              }
+              if(!mask[feature.loi][feature.loiname][type]) {
+                mask[feature.loi][feature.loiname][type]=0;
+              }
+              mask[feature.loi][feature.loiname][type] = areaTotal;
             }
-            if(!mask[feature.loi][feature.loiname]) {
-              mask[feature.loi][feature.loiname]={};
-            }
-            mask[feature.loi][feature.loiname] = areaTotal;
+            var d={
+              endDate: currentYear,
+              loi: feature.loi,
+              loiName: feature.loiname,
+              area: areaTotal,
+              type: type
+            };
+            aData.push(d);
+            d={
+              endDate: currentYear,
+              loi: feature.loi,
+              loiName: feature.loiname,
+              area: area*(1/difYears),
+              type: type
+            };
+            data.push(d);
+            currentYear=currentYear+1;
+            if(!includeMask) areaTotal=0;
           }
-          var d={
-            endDate: currentYear,
-            loi: feature.loi,
-            loiName: feature.loiname,
-            area: areaTotal
-          };
-          aData.push(d);
-          d={
-            endDate: currentYear,
-            loi: feature.loi,
-            loiName: feature.loiname,
-            area: area*(1/difYears)
-          };
-          data.push(d);
-          currentYear=currentYear+1;
-          if(!includeMask) areaTotal=0;
         }
-      }
+      });
     };
 
     var storeMask=function(feature:any, aData:any[]){
-      var area = feature.areas[0].area;
-      var d=[];
-      d[feature.loiname]=area;
+      // store mask per type
       if(typeof aData[feature.loi] == 'undefined'){
         aData[feature.loi]=[];
       }
-      aData[feature.loi][feature.loiname]=area;
+      if(typeof aData[feature.loi][feature.loiname] == 'undefined'){
+        aData[feature.loi][feature.loiname]={};
+      }
+      feature.areas.forEach(function(areaObj:any){
+        aData[feature.loi][feature.loiname][areaObj.type] = areaObj.area;
+      });
     };
 
     dataJson["periods"].forEach(function(period:any) {
@@ -226,20 +242,22 @@ export class DeforestationOptionsUtils {
     return d3.timeFormatDefaultLocale(localeDate);
   }
 
-  // format Number
-  public static formatTitle(num:number) {
-    
-    if (num >= 1000000000) {
-        return (num / 1000000000).toFixed(1).replace(/\.0$/, '') + 'G';
-    } else if (num >= 1000000) {
-        return (num / 1000000).toFixed(1).replace(/\.0$/, '') + 'M';
-    } else if (num >= 1000) {
-        return (num / 1000).toFixed(1).replace(/\.0$/, '') + 'K';
-    }        
+    // format Number (robust to undefined/NaN)
+    public static formatTitle(num:any) {
+    let n = (typeof num === 'number') ? num : parseFloat(num);
+    if (!isFinite(n) || isNaN(n)) n = 0;
 
-    return (num).toFixed(1).replace(/\.0$/, '');
+    if (n >= 1000000000) {
+      return (n / 1000000000).toFixed(1).replace(/\.0$/, '') + 'G';
+    } else if (n >= 1000000) {
+      return (n / 1000000).toFixed(1).replace(/\.0$/, '') + 'M';
+    } else if (n >= 1000) {
+      return (n / 1000).toFixed(1).replace(/\.0$/, '') + 'K';
+    }
 
-  };
+    return (n).toFixed(1).replace(/\.0$/, '');
+
+    };
 
   public static get MAP_LEGEND_GRADES(): number {
       return 8;

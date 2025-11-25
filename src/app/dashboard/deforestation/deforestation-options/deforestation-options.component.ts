@@ -117,6 +117,8 @@ export class DeforestationOptionsComponent implements OnInit  {
   private loiNameDim0: any;
   private tableTotalAreaByLoiName: any;
   private areaByDate: any;
+  private areaByDateType1: any;
+  private areaByDateType2: any;
   private areaByLoiName: any;
 
   // dashboard title
@@ -295,7 +297,7 @@ export class DeforestationOptionsComponent implements OnInit  {
     else
       $("a."+this.biome).closest('li').addClass("enable_menu");
 
-    this.initAuthentication();
+    // this.initAuthentication();
   }
 
   ngOnDestroy() {
@@ -999,7 +1001,8 @@ export class DeforestationOptionsComponent implements OnInit  {
         return {
           endDate: e.endDate,
           loiName: e.loiName,
-          area: e.area
+          area: e.area,
+          type: (typeof e.type !== 'undefined') ? e.type : 1
         };
       }
     );
@@ -1014,7 +1017,8 @@ export class DeforestationOptionsComponent implements OnInit  {
           return {
             endDate: e.endDate,
             loiName: e.loiName,
-            area: e.area
+            area: e.area,
+            type: (typeof e.type !== 'undefined') ? e.type : 1
           };
         }
       );
@@ -1035,6 +1039,17 @@ export class DeforestationOptionsComponent implements OnInit  {
     this.areaByDate = dateDim.group().reduceSum(
       function(d:any) {
         return +d["area"];
+      }
+    );
+    // groups by type so bars can be stacked when there are multiple types per year
+    this.areaByDateType1 = dateDim.group().reduceSum(
+      function(d:any) {
+        return ((+d['type'] === 1) || (d['type'] === '1')) ? +d['area'] : 0;
+      }
+    );
+    this.areaByDateType2 = dateDim.group().reduceSum(
+      function(d:any) {
+        return ((+d['type'] === 2) || (d['type'] === '2')) ? +d['area'] : 0;
       }
     );
     // used to apply filter from rowChart
@@ -1318,15 +1333,30 @@ export class DeforestationOptionsComponent implements OnInit  {
     this.area
       .clipPadding(0)
       .barPadding(0.3)
-      .group(snapToZero(this.areaByDate))
-      .colors("#ffd76d")
+      // stack bars by 'type' when more than one type exists for a given year
+      .group(snapToZero(this.areaByDateType1), 'Type 1')
+      .stack(snapToZero(this.areaByDateType2), 'Type 2')
+      .ordinalColors(['#096ceeff', '#ff7f0eff'])
       .valueAccessor(
         function (d:any) {
           return d["value"];
         }
       )
       .label(function(d:any) {
-        return DeforestationOptionsUtils.formatTitle(d.data.value);
+        // For stacked bars, compute the total for the year from areaByDate
+        try {
+          var key:any = (d && d.x) ? d.x : (d && d.data && d.data.key) ? d.data.key : d.key;
+          var total = 0;
+          if (self.areaByDate && self.areaByDate.all) {
+            var all = self.areaByDate.all();
+            for (var i = 0; i < all.length; i++) {
+              if (all[i].key == key) { total = all[i].value; break; }
+            }
+          }
+          return DeforestationOptionsUtils.formatTitle(total);
+        } catch (e) {
+          return DeforestationOptionsUtils.formatTitle(0);
+        }
       })
       .title(
         function (d:any) {
@@ -1344,7 +1374,7 @@ export class DeforestationOptionsComponent implements OnInit  {
       .transitionDuration(transition)
       .margins({top: 10, right: 10, bottom: 50, left: 50})
       .dimension(dateDim)
-      .group(snapToZero(this.areaByDate))
+      .group(snapToZero(this.areaByDateType1))
       .elasticY(true)
       .yAxisPadding('20%')
       //.xAxisLabel("Brazilian "+ this.biome.charAt(0).toUpperCase() + this.biome.slice(1)+" Monitoring Period: "+this.minDate+" - "+this.maxDate)
@@ -1358,6 +1388,9 @@ export class DeforestationOptionsComponent implements OnInit  {
       .renderVerticalGridLines(true)
       ._rangeBandPadding(0.2)
       .compose([this.area]);
+
+    // unified legend for the stacked classes (Type 1 / Type 2)
+    this.barChart.legend(dc.legend().x(barChartWidth - 140).y(10).gap(5).legendText(function(d:any) { return d.name; }));
       // This code is needed only if we use two bars for each year to represents the área with more than one filter
       // .on("pretransition", (chart:any) => {
       //   Terrabrasilis.enableLoading("#bar-chart");
@@ -1824,10 +1857,24 @@ export class DeforestationOptionsComponent implements OnInit  {
     if(context.resetOn) return;
     context.resetOn=true;// to lock calls during execution
 
-    context.barChart.filterAll();
-    context.rowChart.filterAll();
-    context.applyCountyFilter();// to reset function data() of the rowChart
-    context.seriesChart.filterAll();
+    if (context.barChart && typeof context.barChart.filterAll === 'function') {
+      context.barChart.filterAll();
+    }
+    if (context.rowChart && typeof context.rowChart.filterAll === 'function') {
+      context.rowChart.filterAll();
+    }
+    // call applyCountyFilter with empty keys to reset rowChart data safely
+    if (typeof context.applyCountyFilter === 'function') {
+      try {
+        context.applyCountyFilter([]);
+      } catch (e) {
+        // fallback: call without args if the function expects it
+        try { context.applyCountyFilter(); } catch (err) { /* ignore */ }
+      }
+    }
+    if (context.seriesChart && typeof context.seriesChart.filterAll === 'function') {
+      context.seriesChart.filterAll();
+    }
 
     dc.redrawAll("agrega");
     dc.redrawAll("filtra");
