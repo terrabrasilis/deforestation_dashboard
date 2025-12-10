@@ -85,6 +85,42 @@ export class DeforestationOptionsUtils {
       var areaTotal = includeMask ?  maskArea : 0;
       var currentYear = isMask ? endY : startY+1;
 
+      // Special case: period starts and ends in the same year (partial year)
+      // e.g. the EU marker (2020-08-01 to 2020-12-31). We create an intermediate
+      // key with endDate = year + 0.5 so the bar appears between year and year+1.
+      if(!isMask && difYears === 0) {
+        if(includeMask){
+          if(!mask[feature.loi]) {
+            mask[feature.loi]={};
+          }
+          if(!mask[feature.loi][feature.loiname]) {
+            mask[feature.loi][feature.loiname]={};
+          }
+          // store cumulative mask value including this partial area
+          mask[feature.loi][feature.loiname] = areaTotal + area;
+        }
+
+        // push accumulated value (if includeMask) and the partial increment
+        var partialKey = parseFloat(endY) + 0.5;
+        var dAccum = {
+          endDate: partialKey,
+          loi: feature.loi,
+          loiName: feature.loiname,
+          area: areaTotal + area
+        };
+        aData.push(dAccum);
+
+        var dInc = {
+          endDate: partialKey,
+          loi: feature.loi,
+          loiName: feature.loiname,
+          area: area
+        };
+        data.push(dInc);
+
+        return;
+      }
+
       if(includeMask || !isMask) {
         while(currentYear<=endY) {
           areaTotal = isMask ? areaTotal : ( (area*(1/difYears)) + areaTotal );
