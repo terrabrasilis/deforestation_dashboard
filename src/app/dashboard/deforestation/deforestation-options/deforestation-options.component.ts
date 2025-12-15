@@ -539,8 +539,9 @@ export class DeforestationOptionsComponent implements OnInit  {
     let csv:any=[];
     if(data && data.length) {
       data.forEach(function(d:any) {
+        let yearLabel = DeforestationOptionsUtils.formatYearLabel(d.key);
         let aux = {
-          "year":d.key,
+          "year": yearLabel,
           "area km²":formater(d.value)
         }      
         csv.push(aux);
@@ -614,8 +615,9 @@ export class DeforestationOptionsComponent implements OnInit  {
     let allData=this.tableDateDim.top(Infinity);
     let csv:any=[];
     allData.forEach(function(d:any) {
+      let yearLabel = DeforestationOptionsUtils.formatYearLabel(d.endDate);
       let aux = {
-        "year":d.endDate,
+        "year": yearLabel,
         "area km²":formater(d.area)
       }      
       aux[self.selectedLoi] = self.loiNames[d.loiName];
@@ -925,8 +927,7 @@ export class DeforestationOptionsComponent implements OnInit  {
         {
           label: "",
           format: function(d:any) {
-            
-            return +d['endDate'];
+            return DeforestationOptionsUtils.formatYearLabel(d['endDate']);
           }
         },
         {
@@ -1498,11 +1499,12 @@ export class DeforestationOptionsComponent implements OnInit  {
       self.selectedTime = "[";
       var first = 1;
       filters.forEach(function(f:any) {
+        var displayLabel = DeforestationOptionsUtils.formatYearLabel(f);
         if (first) {
-          self.selectedTime = self.selectedTime.concat(f);
+          self.selectedTime = self.selectedTime.concat(displayLabel);
           first = 0;
         } else {
-          self.selectedTime = self.selectedTime.concat(", ", f);
+          self.selectedTime = self.selectedTime.concat(", ", displayLabel);
         }
       });        
       self.selectedTime = self.selectedTime + "]";

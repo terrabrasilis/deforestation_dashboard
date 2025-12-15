@@ -89,6 +89,9 @@ export class DeforestationOptionsUtils {
       // e.g. the EU marker (2020-08-01 to 2020-12-31). We create an intermediate
       // key with endDate = year + 0.5 so the bar appears between year and year+1.
       if(!isMask && difYears === 0) {
+        // For partial years, the accumulated value should be: current accumulated + new area
+        var partialAccumulated = areaTotal + area;
+        
         if(includeMask){
           if(!mask[feature.loi]) {
             mask[feature.loi]={};
@@ -96,8 +99,8 @@ export class DeforestationOptionsUtils {
           if(!mask[feature.loi][feature.loiname]) {
             mask[feature.loi][feature.loiname]={};
           }
-          // store cumulative mask value including this partial area
-          mask[feature.loi][feature.loiname] = areaTotal + area;
+          // store cumulative mask value including this partial area for next periods
+          mask[feature.loi][feature.loiname] = partialAccumulated;
         }
 
         // push accumulated value (if includeMask) and the partial increment
@@ -106,7 +109,7 @@ export class DeforestationOptionsUtils {
           endDate: partialKey,
           loi: feature.loi,
           loiName: feature.loiname,
-          area: areaTotal + area
+          area: partialAccumulated
         };
         aData.push(dAccum);
 
@@ -247,6 +250,18 @@ export class DeforestationOptionsUtils {
     
     return d3.formatDefaultLocale(locales[lang]).format(',.2f');
   };
+
+
+  public static formatYearLabel(value: any): string {
+    var num = parseFloat(value);
+    // Check if it's a fractional year (2020.5 for EU marker)
+    if (!isNaN(num) && Math.floor(num) !== num) {
+      // This is a partial year, represent it as "Marco UE YYYY"
+      var year = Math.floor(num);
+      return "Marco UE " + year;
+    }
+    return value + "";
+  }
 
   public static dateFormat() {
     let localeDate:d3.TimeLocaleDefinition={
