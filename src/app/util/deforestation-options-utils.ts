@@ -166,7 +166,41 @@ export class DeforestationOptionsUtils {
       aData[feature.loi][feature.loiname]=area;
     };
 
-    dataJson["periods"].forEach(function(period:any) {
+    // Sort periods: 
+    // 1. Process mask periods first (1500)
+    // 2. Then process periods that END before any partial period
+    // 3. Then process partial periods (same start/end year, e.g., EU marker 2020-2020)
+    // 4. Finally process periods that START after the partial period year
+    var sortedPeriods = dataJson["periods"].slice().sort(function(a:any, b:any) {
+      var aIsMask = (a.startDate.year === 1500);
+      var bIsMask = (b.startDate.year === 1500);
+      var aIsPartial = (a.startDate.year === a.endDate.year && !aIsMask);
+      var bIsPartial = (b.startDate.year === b.endDate.year && !bIsMask);
+      
+      // Mask periods come first
+      if(aIsMask && !bIsMask) return -1;
+      if(!aIsMask && bIsMask) return 1;
+      
+      // Among non-mask periods:
+      // - Periods that END at or before 2020 come first
+      // - Then partial periods (2020-2020)
+      // - Then periods that START at or after 2020
+      if(!aIsMask && !bIsMask) {
+        var partialYear = 2020; // Year of the EU marker
+        
+        // Periods ending before partial year come first
+        if(a.endDate.year < partialYear && b.endDate.year >= partialYear) return -1;
+        if(a.endDate.year >= partialYear && b.endDate.year < partialYear) return 1;
+        
+        // Partial periods come before periods starting after partial year
+        if(aIsPartial && !bIsPartial && b.startDate.year >= partialYear) return -1;
+        if(!aIsPartial && bIsPartial && a.startDate.year >= partialYear) return 1;
+      }
+      
+      return 0; // keep original order
+    });
+    
+    sortedPeriods.forEach(function(period:any) {
       var startYear = period.startDate.year;
       var endYear = period.endDate.year;
       let loinamesForPeriod:any[] = [];

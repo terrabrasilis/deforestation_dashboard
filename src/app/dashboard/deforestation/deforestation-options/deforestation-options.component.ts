@@ -576,8 +576,9 @@ export class DeforestationOptionsComponent implements OnInit  {
     let csv:any=[];
     if(data && data.length) {
       data.forEach(function(d:any) {
+        let yearLabel = DeforestationOptionsUtils.formatYearLabel(d.key[1]);
         let aux = {
-          "year":d.key[1],
+          "year": yearLabel,
           "area km²":formater(d.value)
         };
         aux[self.selectedLoi]=self.loiNames[d.key[0]];
@@ -1554,8 +1555,9 @@ export class DeforestationOptionsComponent implements OnInit  {
                 .ordinalColors(seriesColors)
                 .title(function(d:any) {
                   let formater=DeforestationOptionsUtils.numberFormat(self.lang);
+                  let yearLabel = DeforestationOptionsUtils.formatYearLabel(d.key[1]);
                   return  self.loiNames[d.key[0]] + "\n" +
-                          d.key[1] + "\n" +
+                          yearLabel + "\n" +
                           formater(d.value) + " km²";
                 })
                 .yAxisPadding('15%')
@@ -1647,7 +1649,7 @@ export class DeforestationOptionsComponent implements OnInit  {
     this.seriesChart.xAxis().ticks(auxYears.length);
     
     this.seriesChart.xAxis().tickFormat(function(d:any) {
-			return d+"";
+			return DeforestationOptionsUtils.formatYearLabel(d);
     });
     
 		this.seriesChart.addFilterHandler(function(filters:any, filter:any) {
