@@ -1315,6 +1315,12 @@ export class DeforestationOptionsComponent implements OnInit  {
       text_bar=text;
     });
 
+    // translation for EU marker tooltip (used for fractional-year bars)
+    let euMarkerText = "Incremento consolidado do Marco da União Europeia";
+    self._translate.get('dashboard.tooltip.eu_marker').subscribe((text) => {
+      euMarkerText = text;
+    });
+
     this.area
       .clipPadding(0)
       .barPadding(0.3)
@@ -1331,7 +1337,16 @@ export class DeforestationOptionsComponent implements OnInit  {
       .title(
         function (d:any) {
           let formater=DeforestationOptionsUtils.numberFormat(self.lang);
-          return text_bar + " " + d.key + "\n"+ formater(d.value) + " km²";
+          // show integer year for fractional keys (e.g., 2020.5 -> 2020) in tooltip
+          var k = d.key;
+          var kn = parseFloat(k);
+          var isFractional = (!isNaN(kn) && Math.floor(kn) !== kn);
+          var labelKey = isFractional ? Math.floor(kn) : k;
+          if (isFractional) {
+            // special-case: show the consolidated increment for the EU marker using translation
+            return euMarkerText + " " + labelKey + "\n" + formater(d.value) + " km²";
+          }
+          return text_bar + " " + labelKey + "\n"+ formater(d.value) + " km²";
         }
       );
       
@@ -1386,8 +1401,37 @@ export class DeforestationOptionsComponent implements OnInit  {
         bl.setAttribute('transform','rotate(300 '+x+', '+y+')');
       });
 
+      var bars = chart.selectAll("rect.bar");
+
+      // color fractional-year bars (e.g., 2020.5) with a distinct color
+      try {
+        bars._groups[0].forEach( (bar:any) => {
+          var key:any = null;
+          if (bar.__data__) {
+            // dc/d3 sometimes stores the key in different places
+            key = (bar.__data__.x !== undefined) ? bar.__data__.x : (bar.__data__.data && bar.__data__.data.key) ? bar.__data__.data.key : bar.__data__.data;
+          }
+          if (key === null || typeof key === 'object') {
+            // fallback: try to parse from textContent
+            var txt = (bar.textContent || '').trim();
+            var parts = txt.split('\n');
+            if(parts.length) {
+              var first = parts[0].match(/[-+]?[0-9]*\.?[0-9]+/);
+              if(first) key = first[0];
+            }
+          }
+
+          var num = parseFloat(key);
+          if(!isNaN(num) && Math.floor(num) !== num) {
+            // fractional key -> special color
+            bar.setAttribute('fill', '#8c510a');
+          }
+        });
+      } catch(e) {
+        // ignore if structure is different
+      }
+
       if(self.biome == "legal_amazon" || self.biome == "amazon") {
-        var bars = chart.selectAll("rect.bar");
         // define color to priority result of PRODES
         bars._groups[0].forEach( (bar:any) => {
           if(bar.textContent.indexOf(Constants.BARCHART_PRELIMINARY_DATA_YEAR) >= 0){
@@ -1414,6 +1458,17 @@ export class DeforestationOptionsComponent implements OnInit  {
         .attr('transform', 'translate(-10,10) rotate(315)');
       $("#bar-chart > svg").attr("width", barChartWidth);
     });
+
+    // Format x-axis ticks: show integer year when key is fractional (e.g., 2020.5 -> "2020")
+    try {
+      this.barChart.xAxis().tickFormat(function(d:any){
+        var num = parseFloat(d);
+        if(!isNaN(num) && Math.floor(num) !== num) return Math.floor(num)+"";
+        return d+"";
+      });
+    } catch(e) {
+      // ignore if xAxis not available in this context
+    }
 
     this.area.on('filtered', function(chart:any) {
       let filters = chart.filters();

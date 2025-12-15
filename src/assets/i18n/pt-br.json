@@ -183,6 +183,7 @@
             "rates_bar":"Taxa consolidada",
             "incr_bar_pri":"Incremento parcial",
             "incr_bar":"Incremento consolidado",
+            "eu_marker":"Incremento consolidado do Marco da União Europeia",
             "tool":{
                 "addmask":"Somar o desmatamento agregado ao incremento de desmatamento.", 
                 "filterprioritycities":"Selecionar somente por municipios prioritários."

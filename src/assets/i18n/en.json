@@ -178,6 +178,7 @@
             "rates_bar":"Consolidated rate",
             "incr_bar_pri":"Partial increment",
             "incr_bar":"Consolidated increment",
+            "eu_marker":"Consolidated increment of the European Union marker",
             "tool":{
                 "addmask":"Add the aggregated deforestation to the deforestation increment.", 
                 "filterprioritycities":"Select only by priority municipalities."
