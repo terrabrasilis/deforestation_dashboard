@@ -91,6 +91,7 @@
             "indi": "Indigeneous Areas"
         },
         "openOptions": {
+            "info": "Informations",
             "tools": "Tools",
             "increProdes": "Deforestation Increments",
             "increLegalAmazon": "Legal Amazon",
@@ -155,6 +156,12 @@
                 "comma":"Comma"
             }
         },
+        "marco-ue": {
+            "button-label": "European Union Framework",
+            "close": "Close",
+            "title": "Information about the European Union Framework",
+            "message": "Waiting for content..."
+        },
         "title": {
             "filters": "Filters - ",
             "increments": "PRODES (Deforestation)",
@@ -171,6 +178,7 @@
             "update": "Updated at: "
         },
         "tooltip": {
+            "ue_marker_info": "European Union Framework",
             "rates": "Deforestation rates are calculated based on areas of deforestation greater than 6.25 hectares.",
             "incr": "Deforestation increments are calculated based on all available deforestation data.",
             "download": "This download option is only available for deforestation increments",

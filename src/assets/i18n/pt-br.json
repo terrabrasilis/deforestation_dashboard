@@ -90,6 +90,7 @@
             "indi": "Áreas Indígenas"
         },
         "openOptions": {
+            "info": "Informações",
             "tools": "Ferramentas",
             "increProdes": "Incrementos do Desmatamento",
             "increLegalAmazon": "Amazônia Legal",
@@ -160,6 +161,12 @@
                 "comma":"Vírgula"
             }
         },
+        "marco-ue": {
+            "button-label": "Marco da União Europeia",
+            "close": "Fechar",
+            "title": "Informações sobre o Marco da União Europeia",
+            "message": "Aguardando conteúdo..."
+        },
         "title": {
             "filters": "Filtros - ",
             "increments": "PRODES (Desmatamento)",
@@ -176,6 +183,7 @@
             "update": "Atualizado em: "
         },
         "tooltip": {
+            "ue_marker_info": "Marco da União Europeia",
             "rates": "As taxas de desmatamento calculadas, são baseadas nas áreas de desmatamento maiores que 6.25 hectares",
             "incr": "Os incrementos de desmatamento calculados, são baseados em todas as áreas de desmatamento disponíveis",
             "download": "Esta opção de download está disponível somente para os incrementos de desmatamento",

@@ -390,6 +390,15 @@ a[data-toggle="collapse"] {
     right: 10px !important;
 }
 
+.pull-right-2 {
+    position: absolute !important;
+    top: 10px !important;
+    right: 40px !important;
+    background-color: #8c510a;
+    color: white;
+    border-radius: 50%;
+}
+
 .title-chart {
     color: #5c6574 !important; 
 }

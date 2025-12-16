@@ -680,10 +680,15 @@ export class DeforestationOptionsComponent implements OnInit  {
       function append2Grid(grid:any, tag:any, x:any, y:any, width:any, height:any) {
         grid.addWidget(tag, x, y, width, height);
       }
-      
+
+    let marco_tooltip = "Marco da União Europeia";
+    self._translate.get('dashboard.tooltip.ue_marker_info').subscribe((text) => {
+      marco_tooltip = text;
+    });
+
       // build main grid
       function buildMainGrid() {
-        append2Grid(mainGrid, '<div class="grid-stack-item"><div class="grid-stack-item-content"><div class="custom-drag-incr"> <span class="aggregateTemporal">Aggregated Temporal Data </span> <i class="material-icons pull-right">open_with</i> </div><div id="bar-chart"></div></div></div>', 0, 0, 7, 7);
+        append2Grid(mainGrid, '<div class="grid-stack-item"><div class="grid-stack-item-content"><div><a href="#marco-ue-info" id="downloadBtn" data-toggle="modal" data-target="#marco-ue-info"><i class="material-icons pull-right-2" title="'+ marco_tooltip +'">info_outline</i></div></a><div class="custom-drag-incr"> <span class="aggregateTemporal">Aggregated Temporal Data </span> <i class="material-icons pull-right">open_with</i> </div><div id="bar-chart"></div></div></div>', 0, 0, 7, 7);
         append2Grid(mainGrid, '<div class="grid-stack-item"><div class="grid-stack-item-content"><div class="custom-drag-incr"> <span class="absoluteData"> Absolute Data </span> <i class="material-icons pull-right">open_with</i> </div><div id="row-chart"></div></div></div>', 8, 0, 5, 7);
         append2Grid(mainGrid, '<div class="grid-stack-item"><div class="grid-stack-item-content"><div class="custom-drag-incr"> <span class="timeSeries"> Time Series </span> <i class="material-icons pull-right">open_with</i> </div><div id="series-chart"></div></div></div>', 0, 7, 12, 6);
         append2Grid(mainGrid, '<div class="grid-stack-item"><div class="grid-stack-item-content"><div class="custom-drag-incr"> <span class="tableLois"> Area per years and Local of Interests </span> <i class="material-icons pull-right">open_with</i></div><div id="table-chart"><table id="tb-area" class="table table-hover dc-data-table dc-chart"></table></div></div></div>', 8, 15, 5, 6);
