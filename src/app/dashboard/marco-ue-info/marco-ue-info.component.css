@@ -75,3 +75,13 @@ border-color: #108d6f;
     .box-grafico {   margin-left: 0px;}
    
 }
+
+.marco-ue-link {
+    color: #007bff !important; /* azul padrão de link */
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.marco-ue-link:hover {
+    color: #0056b3 !important;
+}

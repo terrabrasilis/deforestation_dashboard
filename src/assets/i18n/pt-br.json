@@ -165,7 +165,9 @@
             "button-label": "Marco da União Europeia",
             "close": "Fechar",
             "title": "Informações sobre o Marco da União Europeia",
-            "message": "Aguardando conteúdo..."
+            "description": "O Marco Temporal da União Europeia 2020 é um mapa de referência de supressão de vegetação nativa até 31 de dezembro de 2020, elaborado pelo INPE para o Brasil, que identifica áreas desmatadas em todos os biomas com alta resolução (mínimo de 0,5 ha).",
+            "moreInfo":"<a target='_blank' href='https://data.inpe.br/biomasbr/o-valor-de-incremento-de-desmatamento-supressao-devegetacao-nativa-referente-ao-mapeamento-do-marco-temporalda-uniao-europeia-2020/'>Saiba mais na nota técnica.</a>"
+
         },
         "title": {
             "filters": "Filtros - ",

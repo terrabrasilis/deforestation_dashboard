@@ -160,7 +160,8 @@
             "button-label": "European Union Framework",
             "close": "Close",
             "title": "Information about the European Union Framework",
-            "message": "Waiting for content..."
+            "description": "The European Union 2020 cut-off date is a reference map of native vegetation suppression up to December 31, 2020, produced by INPE for Brazil, which identifies deforested areas across all biomes with high spatial resolution (minimum mapping unit of 0.5 ha).",
+            "moreInfo": "<a style='color: blue;' target='_blank' rel='noopener noreferrer' href='https://data.inpe.br/biomasbr/o-valor-de-incremento-de-desmatamento-supressao-devegetacao-nativa-referente-ao-mapeamento-do-marco-temporalda-uniao-europeia-2020/'>Learn more at technical note.</a>"
         },
         "title": {
             "filters": "Filters - ",
