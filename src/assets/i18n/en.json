@@ -91,6 +91,7 @@
             "indi": "Indigeneous Areas"
         },
         "openOptions": {
+            "info": "Informations",
             "tools": "Tools",
             "increProdes": "Deforestation Increments",
             "increLegalAmazon": "Legal Amazon",
@@ -155,6 +156,13 @@
                 "comma":"Comma"
             }
         },
+        "marco-ue": {
+            "button-label": "European Union Framework",
+            "close": "Close",
+            "title": "Information about the European Union Framework",
+            "description": "The European Union 2020 cut-off date is a reference map of native vegetation suppression up to December 31, 2020, produced by INPE for Brazil, which identifies deforested areas across all biomes with high spatial resolution (minimum mapping unit of 0.5 ha).",
+            "moreInfo": "<a style='color: blue;' target='_blank' rel='noopener noreferrer' href='https://data.inpe.br/biomasbr/o-valor-de-incremento-de-desmatamento-supressao-devegetacao-nativa-referente-ao-mapeamento-do-marco-temporalda-uniao-europeia-2020/'>Learn more at technical note.</a>"
+        },
         "title": {
             "filters": "Filters - ",
             "increments": "PRODES (Deforestation)",
@@ -171,6 +179,7 @@
             "update": "Updated at: "
         },
         "tooltip": {
+            "ue_marker_info": "European Union Framework",
             "rates": "Deforestation rates are calculated based on areas of deforestation greater than 6.25 hectares.",
             "incr": "Deforestation increments are calculated based on all available deforestation data.",
             "download": "This download option is only available for deforestation increments",
@@ -178,6 +187,7 @@
             "rates_bar":"Consolidated rate",
             "incr_bar_pri":"Partial increment",
             "incr_bar":"Consolidated increment",
+            "eu_marker":"Consolidated increment of the European Union marker",
             "tool":{
                 "addmask":"Add the aggregated deforestation to the deforestation increment.", 
                 "filterprioritycities":"Select only by priority municipalities."

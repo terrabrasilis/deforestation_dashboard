@@ -85,6 +85,45 @@ export class DeforestationOptionsUtils {
       var areaTotal = includeMask ?  maskArea : 0;
       var currentYear = isMask ? endY : startY+1;
 
+      // Special case: period starts and ends in the same year (partial year)
+      // e.g. the EU marker (2020-08-01 to 2020-12-31). We create an intermediate
+      // key with endDate = year + 0.5 so the bar appears between year and year+1.
+      if(!isMask && difYears === 0) {
+        // For partial years, the accumulated value should be: current accumulated + new area
+        var partialAccumulated = areaTotal + area;
+        
+        if(includeMask){
+          if(!mask[feature.loi]) {
+            mask[feature.loi]={};
+          }
+          if(!mask[feature.loi][feature.loiname]) {
+            mask[feature.loi][feature.loiname]={};
+          }
+          // store cumulative mask value including this partial area for next periods
+          mask[feature.loi][feature.loiname] = partialAccumulated;
+        }
+
+        // push accumulated value (if includeMask) and the partial increment
+        var partialKey = parseFloat(endY) + 0.5;
+        var dAccum = {
+          endDate: partialKey,
+          loi: feature.loi,
+          loiName: feature.loiname,
+          area: partialAccumulated
+        };
+        aData.push(dAccum);
+
+        var dInc = {
+          endDate: partialKey,
+          loi: feature.loi,
+          loiName: feature.loiname,
+          area: area
+        };
+        data.push(dInc);
+
+        return;
+      }
+
       if(includeMask || !isMask) {
         while(currentYear<=endY) {
           areaTotal = isMask ? areaTotal : ( (area*(1/difYears)) + areaTotal );
@@ -127,7 +166,41 @@ export class DeforestationOptionsUtils {
       aData[feature.loi][feature.loiname]=area;
     };
 
-    dataJson["periods"].forEach(function(period:any) {
+    // Sort periods: 
+    // 1. Process mask periods first (1500)
+    // 2. Then process periods that END before any partial period
+    // 3. Then process partial periods (same start/end year, e.g., EU marker 2020-2020)
+    // 4. Finally process periods that START after the partial period year
+    var sortedPeriods = dataJson["periods"].slice().sort(function(a:any, b:any) {
+      var aIsMask = (a.startDate.year === 1500);
+      var bIsMask = (b.startDate.year === 1500);
+      var aIsPartial = (a.startDate.year === a.endDate.year && !aIsMask);
+      var bIsPartial = (b.startDate.year === b.endDate.year && !bIsMask);
+      
+      // Mask periods come first
+      if(aIsMask && !bIsMask) return -1;
+      if(!aIsMask && bIsMask) return 1;
+      
+      // Among non-mask periods:
+      // - Periods that END at or before 2020 come first
+      // - Then partial periods (2020-2020)
+      // - Then periods that START at or after 2020
+      if(!aIsMask && !bIsMask) {
+        var partialYear = 2020; // Year of the EU marker
+        
+        // Periods ending before partial year come first
+        if(a.endDate.year < partialYear && b.endDate.year >= partialYear) return -1;
+        if(a.endDate.year >= partialYear && b.endDate.year < partialYear) return 1;
+        
+        // Partial periods come before periods starting after partial year
+        if(aIsPartial && !bIsPartial && b.startDate.year >= partialYear) return -1;
+        if(!aIsPartial && bIsPartial && a.startDate.year >= partialYear) return 1;
+      }
+      
+      return 0; // keep original order
+    });
+    
+    sortedPeriods.forEach(function(period:any) {
       var startYear = period.startDate.year;
       var endYear = period.endDate.year;
       let loinamesForPeriod:any[] = [];
@@ -211,6 +284,18 @@ export class DeforestationOptionsUtils {
     
     return d3.formatDefaultLocale(locales[lang]).format(',.2f');
   };
+
+
+  public static formatYearLabel(value: any): string {
+    var num = parseFloat(value);
+    // Check if it's a fractional year (2020.5 for EU marker)
+    if (!isNaN(num) && Math.floor(num) !== num) {
+      // This is a partial year, represent it as "Marco UE YYYY"
+      var year = Math.floor(num);
+      return "Marco UE " + year;
+    }
+    return value + "";
+  }
 
   public static dateFormat() {
     let localeDate:d3.TimeLocaleDefinition={

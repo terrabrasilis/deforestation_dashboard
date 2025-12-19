@@ -88,7 +88,17 @@
       <li>
         <a class="pantanal" href="{{ imgPath }}biomes/pantanal/increments" aria-expanded="false"> <i class="material-icons">insert_chart</i><span id="nv-increments">{{ 'dashboard.openOptions.increPantanal' | translate }}</span></a> 
       </li>
-    </ul>     
+    </ul>
+    <ul class="list-unstyled components" id="tools-menu">
+      <li class="active"><!-- manter active no primeiro -->
+        <a class="title-sidebar" href="#ferramentas" data-toggle="collapse" aria-expanded="true"><span id="tools">{{ 'dashboard.openOptions.info' | translate }}</span></a>
+      </li>
+      <li>
+        <a href="#marco-ue-info" id="marcoUeInfo" data-toggle="modal" data-target="#marco-ue-info">
+          <i class="material-icons">book</i><span id="txt4"> {{ 'dashboard.marco-ue.button-label' | translate }} </span> <i class="material-icons infoicon" title="{{ 'dashboard.tooltip.ue_marker_info' | translate}}">info_outline</i>
+        </a>
+      </li>
+    </ul>
     <ul class="list-unstyled components" id="tools-menu">
       <li class="active"><!-- manter active no primeiro -->
         <a class="title-sidebar" href="#ferramentas" data-toggle="collapse" aria-expanded="true"><span id="tools">{{ 'dashboard.openOptions.tools' | translate }}</span></a>
@@ -206,5 +216,8 @@
 
   <!-- download modal -->
   <app-on-demand-download></app-on-demand-download>
+
+  <!-- marco ue info modal -->
+  <app-marco-ue-info></app-marco-ue-info>
 
 </div>
