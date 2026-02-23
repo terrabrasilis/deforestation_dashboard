@@ -46,9 +46,9 @@ export class Constants {
      */
     public static get BARCHART_PRELIMINARY_DATA_YEAR(): String {
         // enable preliminary notes
-        return '2025';
+        //return '2025';
         // disable preliminary notes
-        // return null;
+        return null;
     }
 
     public static get MAP_LEGEND_COLORS(): any[] {
