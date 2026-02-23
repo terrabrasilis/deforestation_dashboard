@@ -61,7 +61,6 @@ import 'hammerjs';
 import 'gridstack';
 
 import { OnDemandDownloadComponent } from './dashboard/on-demand-download/on-demand-download.component';
-import { MarcoUeInfoComponent } from './dashboard/marco-ue-info/marco-ue-info.component';
 
 @NgModule({
   declarations: [
@@ -70,8 +69,7 @@ import { MarcoUeInfoComponent } from './dashboard/marco-ue-info/marco-ue-info.co
     DeforestationOptionsComponent,
     ContactComponent,
     LoiSearchComponent,
-    OnDemandDownloadComponent,
-    MarcoUeInfoComponent
+    OnDemandDownloadComponent
   ],
   imports: [
     PipeSharedModule,

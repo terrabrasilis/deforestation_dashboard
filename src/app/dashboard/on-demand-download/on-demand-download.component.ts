@@ -162,9 +162,8 @@ export class OnDemandDownloadComponent implements OnInit {
         if(fraction=="comma") {
           a=(a+"").replace('.',',');
         }
-        let yearLabel = DeforestationOptionsUtils.formatYearLabel(feature.endDate);
         return {
-          year: yearLabel,
+          year: feature.endDate,
           'areakm': a,
           //'>1ha': feature.area,
           //'>6.25ha': feature.filteredArea,
@@ -203,8 +202,11 @@ export class OnDemandDownloadComponent implements OnInit {
 
     let blob = new Blob([d3DSV], {type: "text/csv;charset=utf-8"}),
     dt = new Date(),
-    fdt = dt.toLocaleDateString().replace(/\//g,'_'),
-    fileName = fdt + "_" + dt.getTime();
-    FileSaver.saveAs(blob, 'terrabrasilis_'+this.biome+'_'+fileName+'.csv');
+    dt1 = dt.toLocaleString();
+    dt1 = dt1.replace('/','_');
+    dt1 = dt1.replace(' ','_');
+    dt1 = dt1.replace(':','_');
+    let fileName = 'terrabrasilis_'+this.biome+'_'+dt1+'.csv';
+    FileSaver.saveAs(blob, fileName);
   }
 }
