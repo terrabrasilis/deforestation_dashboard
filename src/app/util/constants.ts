@@ -21,18 +21,25 @@ export class Constants {
         return url;
     };
 
+    public static get AVOID_CACHE(){
+        // Used to prevent caching of JSON requests when the application version changes.
+        return '?v=' + process.env.VERSION;
+        // another approach to prevent caching, but that solution avoid the cache for every.
+        // return '?t=' + String(Math.floor((Math.random() * 1000000) + 1));
+    }
+
     public static get FILE_RATES(): string {
         let filename=(process.env.BUILD_TYPE == 'homologation' && process.env.ENV == 'production')?("rates2025_homol.json"):("rates2025.json");
         let url = Constants.DASHBOARD_API_HOST;
         // return the URL and name of JSON file with rates
-        return url+filename;
+        return url+filename+Constants.AVOID_CACHE;
     };
 
     public static get LAST_UPDATE_DATE(): string {
         let filename="last_update_date.json";
         let url = Constants.DASHBOARD_API_HOST;
         // return the URL and name of JSON file with rates
-        return url+filename;
+        return url+filename+Constants.AVOID_CACHE;
     };
 
     public static get DASHBOARD_BIOMES_NAMES(): string[] {

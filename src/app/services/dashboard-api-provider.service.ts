@@ -29,47 +29,47 @@ export class DashboardApiProviderService {
   }
 
   getLois(fileName: any) {
-    return this.http.get(this.dashboardAPIHost+this.loisResource+fileName+'.json');
+    return this.http.get(this.dashboardAPIHost+this.loisResource+fileName+'.json'+Constants.AVOID_CACHE);
   }
 
   getLoinames(fileName: any) {
-    return this.http.get(this.dashboardAPIHost+this.loinamesResource+fileName+'.json');
+    return this.http.get(this.dashboardAPIHost+this.loinamesResource+fileName+'.json'+Constants.AVOID_CACHE);
   }
 
   getClasses(fileName: any) {
-    return this.http.get(this.dashboardAPIHost+this.classesResource+fileName+'.json');
+    return this.http.get(this.dashboardAPIHost+this.classesResource+fileName+'.json'+Constants.AVOID_CACHE);
   }
 
   getPeriods(fileName: any) {
-    return this.http.get(this.dashboardAPIHost+this.periodsResource+fileName+'.json');
+    return this.http.get(this.dashboardAPIHost+this.periodsResource+fileName+'.json'+Constants.AVOID_CACHE);
   }
 
   getUF(fileName: any) {
-    return this.http.get(this.dashboardAPIHost+this.ufResource+fileName+'.json');
+    return this.http.get(this.dashboardAPIHost+this.ufResource+fileName+'.json'+Constants.AVOID_CACHE);
   }
 
   getMun(fileName: any) {
-    return this.http.get(this.dashboardAPIHost+this.munResource+fileName+'.json');
+    return this.http.get(this.dashboardAPIHost+this.munResource+fileName+'.json'+Constants.AVOID_CACHE);
   }
   
   getConsUnit(fileName: any) {
-    return this.http.get(this.dashboardAPIHost+this.consunitResource+fileName+'.json');
+    return this.http.get(this.dashboardAPIHost+this.consunitResource+fileName+'.json'+Constants.AVOID_CACHE);
   }
 
   getIndi(fileName: any) {
-    return this.http.get(this.dashboardAPIHost+this.indiResource+fileName+'.json');
+    return this.http.get(this.dashboardAPIHost+this.indiResource+fileName+'.json'+Constants.AVOID_CACHE);
   }
 
   // getBiomes(fileName: any) {
-  //   return this.http.get(this.dashboardAPIHost+this.biomesResource+fileName+'.json');
+  //   return this.http.get(this.dashboardAPIHost+this.biomesResource+fileName+'.json'+Constants.AVOID_CACHE);
   // }
 
   // getPathRow(fileName: any) {
-  //   return this.http.get(this.dashboardAPIHost+this.pathrowResource+fileName+'.json');
+  //   return this.http.get(this.dashboardAPIHost+this.pathrowResource+fileName+'.json'+Constants.AVOID_CACHE);
   // }
 
   getDeforestation(fileName: any) {
-    return this.http.get(this.dashboardAPIHost+this.deforestation+fileName+'.json');
+    return this.http.get(this.dashboardAPIHost+this.deforestation+fileName+'.json'+Constants.AVOID_CACHE);
   }
 
   getLastUpdatedDate() {
