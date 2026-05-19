@@ -47,6 +47,8 @@ import { GraphProviderService } from './services/graph-provider.service';
 // deforestation
 import { DeforestationOptionsComponent } from './dashboard/deforestation/deforestation-options/deforestation-options.component';
 import { LoiSearchComponent } from './dashboard/loi-search/loi-search.component';
+import { DeforestationStateCardComponent } from './dashboard/deforestation/deforestation-state-card/deforestation-state-card.component';
+import { DeforestationPercentageCardComponent } from './dashboard/deforestation-percentage-card/deforestation-percentage-card.component';
 
 /**
  * Translate tool
@@ -69,7 +71,9 @@ import { OnDemandDownloadComponent } from './dashboard/on-demand-download/on-dem
     DeforestationOptionsComponent,
     ContactComponent,
     LoiSearchComponent,
-    OnDemandDownloadComponent
+    OnDemandDownloadComponent,
+    DeforestationStateCardComponent,
+    DeforestationPercentageCardComponent
   ],
   imports: [
     PipeSharedModule,
