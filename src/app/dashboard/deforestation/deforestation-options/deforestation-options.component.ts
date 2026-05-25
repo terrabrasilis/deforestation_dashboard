@@ -32,6 +32,8 @@ import { LocalStorageService } from '../../../services/local-storage.service';
 import { ContactComponent } from '../../../contact/contact.component';
 import { LoiSearchComponent } from '../../loi-search/loi-search.component';
 
+import { DeforestationStateCardComponent } from '../../deforestation/deforestation-state-card/deforestation-state-card.component';
+
 declare var $ : any;
 
 declare var Authentication: any;
@@ -69,6 +71,10 @@ export class DeforestationOptionsComponent implements OnInit  {
   classes: Class[];
   lois: Class[];
   maxLoi: any;
+
+  initialIncrementValue: number = 0;
+  totalIncrement: number = 0;
+  percentageData: any = [];
 
   trashIcon: string; 
   
@@ -143,6 +149,8 @@ export class DeforestationOptionsComponent implements OnInit  {
   private last_update_date: string;
 
   public loiSearchComponent: LoiSearchComponent;
+
+  public deforestationStateCardComponent: DeforestationStateCardComponent;
 
   private redrawMap:any;
 
@@ -445,7 +453,6 @@ export class DeforestationOptionsComponent implements OnInit  {
 				min.reverse();
 				filteredGroup=min.concat(filteredGroup);
         filteredGroup.reverse();
-        
 				return filteredGroup;
       });
 
@@ -1330,6 +1337,7 @@ export class DeforestationOptionsComponent implements OnInit  {
       })
       .title(
         function (d:any) {
+          self.initialIncrementValue = d.value;
           let formater=DeforestationOptionsUtils.numberFormat(self.lang);
           return text_bar + " " + d.key + "\n"+ formater(d.value) + " km²";
         }
@@ -1570,7 +1578,48 @@ export class DeforestationOptionsComponent implements OnInit  {
                             )
                     })
                   }
+
+                  const filtered = self.areaByDate.top(Infinity)
+                    .sort(function(a:any, b:any) {
+                      return a.key - b.key;
+                    })
+                    .filter(function(d:any) {
+                      return (self.area.hasFilter())
+                        ? self.area.filters().indexOf(d.key) >= 0
+                        : true;
+                    });
+
+                  if (self.includeMask) {
+                    // sem seleção
+                    if (!self.area.hasFilter()) {
+                      const all = self.areaByDate.top(Infinity)
+                        .sort((a:any, b:any) => a.key - b.key);
+                      const last = all[all.length - 1];
+                      self.totalIncrement = last.value;
+                    }
+                    // apenas 1 selecionado
+                    else if (filtered.length === 1) {
+                      self.totalIncrement = filtered[0].value;
+                    }
+                    // múltiplos selecionados
+                    else {
+                      self.totalIncrement = filtered.reduce(function(acc:any, element:any) {
+                        return acc + element.value;
+                      }, 0);
+                    }
+                  } else {
+                    self.totalIncrement = result.reduce(function(acc:any, element:any) {
+                      return acc + element.value;
+                    }, 0);
+                  }
                   
+                  self.getYears()
+
+                  self.cdRef.detectChanges();
+
+
+                  
+
                   return result;
                 });
     
@@ -1811,6 +1860,55 @@ export class DeforestationOptionsComponent implements OnInit  {
     }
       
   }// makeGraphs end function
+
+
+  getYears() {
+    const all = this.areaByDate.top(Infinity)
+      .sort((a: any, b: any) => Number(a.key) - Number(b.key));
+
+    const selected = this.area.filters();
+
+    // apenas 1 ano selecionado
+    if (selected.length === 1) {
+
+      const index = all.findIndex((d: any) =>
+        Number(d.key) === Number(selected[0])
+      );
+
+      const current = all[index];
+      const previous = index > 0 ? all[index - 1] : null;
+      const next = index < all.length - 1 ? all[index + 1] : null;
+
+      this.percentageData = {
+        mode: 'single',
+        previous: {
+          key: previous ? previous.key : null,
+          value: previous ? previous.value : null
+        },
+        current: {
+          key: current ? current.key : null,
+          value: current ? current.value : null
+        },
+        next: {
+          key: next ? next.key : null,
+          value: next ? next.value : null
+        }
+      };
+
+    } else {
+
+      // múltiplos anos selecionados
+      const selectedYears = all.filter((d: any) =>
+        selected.includes(d.key)
+      );
+
+      this.percentageData = {
+        mode: 'multiple',
+        years: selectedYears
+      };
+
+    }
+  }
 
   resetFilters(context:any) 
   {

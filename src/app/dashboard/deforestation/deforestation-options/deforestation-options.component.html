@@ -181,10 +181,16 @@
 
   <!-- Menu top graficos -->
   </div>
+
+  
   
   <!-- Menu top graficos -->      
   <div class="tab-content box-grafico" id="myTabContent">
+
+    
+
     <div class="row" id="title-chart">
+      
       <div class="col-9 all-charts-title boxtitlepanel"> 
         {{ 'dashboard.title.filters' | translate }} {{ 'dashboard.title.'+ biome | translate}} / {{ 'dashboard.loi.' + selectedLoi | translate }} / {{loiname}}
         <br><span id="title-time-row"> {{ 'dashboard.title.filters' | translate }} {{ 'dashboard.title.'+ biome | translate}} </span> / {{ 'dashboard.title.time' | translate }} / {{selectedTime}}
@@ -193,11 +199,33 @@
         {{ 'dashboard.title.update' | translate }} {{last_update_date}}
       </div>
     </div>
+
+    <div class="cards-wrapper">
+
+      <div class="row cards-row">
+
+        <div class="col-md-7">
+          <app-deforestation-percentage-card
+            [data]="percentageData">
+          </app-deforestation-percentage-card>
+        </div>
+
+        <div class="col-md-5">
+          <app-deforestation-state-card
+            [stateTotal]="totalIncrement">
+          </app-deforestation-state-card>
+        </div>
+
+        
+
+      </div>
+
+    </div>
     <div class="tab-pane fade show active" id="tab1" role="tabpanel" aria-labelledby="home-tab">
+
       <div class="row-sidenav-main-content">
         <div class="col-md-12">
-          <div class="grid-stack grid-stack-12" id="main-grid" #mygrid>
-          </div>
+          <div class="grid-stack grid-stack-12" id="main-grid" #mygrid></div>
         </div>
       </div> 
     <!-- graficos -->

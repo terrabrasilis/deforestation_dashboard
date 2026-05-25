@@ -1,0 +1,108 @@
+<div class="state-card">
+
+  <div class="state-card-title">
+    Variação percentual do desmatamento
+  </div>
+
+  <div class="deforestation-percentage-container">
+
+    <!-- ================================= -->
+    <!-- MODO 1 ANO -->
+    <!-- ================================= -->
+    <ng-container *ngIf="data && data.mode === 'single'">
+
+      <!-- Anterior -> Atual -->
+      <div
+        class="deforestation-percentage-item"
+        [class.hidden]="previousPercentage === null"
+      >
+
+        <div class="deforestation-percentage-years">
+          {{ data.previous.key }} → {{ data.current.key }}
+        </div>
+
+        <div
+          class="deforestation-percentage-value"
+          [ngClass]="{
+            'deforestation-percentage-positive': previousPercentage > 0,
+            'deforestation-percentage-negative': previousPercentage < 0
+          }"
+        >
+
+          <span class="deforestation-percentage-arrow">
+            {{ previousPercentage > 0 ? '↑' : '↓' }}
+          </span>
+
+          {{ formatPercentage(previousPercentage) }}
+
+        </div>
+
+      </div>
+
+      <!-- Atual -> Próximo -->
+      <div
+        class="deforestation-percentage-item"
+        *ngIf="nextPercentage !== null"
+      >
+
+        <div class="deforestation-percentage-years">
+          {{ data.current.key }} → {{ data.next.key }}
+        </div>
+
+        <div
+          class="deforestation-percentage-value"
+          [ngClass]="{
+            'deforestation-percentage-positive': nextPercentage > 0,
+            'deforestation-percentage-negative': nextPercentage < 0
+          }"
+        >
+
+          <span class="deforestation-percentage-arrow">
+            {{ nextPercentage > 0 ? '↑' : '↓' }}
+          </span>
+
+          {{ formatPercentage(nextPercentage) }}
+
+        </div>
+
+      </div>
+
+    </ng-container>
+
+    <!-- ================================= -->
+    <!-- MODO MULTIPLOS ANOS -->
+    <!-- ================================= -->
+    <ng-container *ngIf="data && data.mode === 'multiple'">
+
+      <div
+        class="deforestation-percentage-item"
+        *ngFor="let item of percentages"
+      >
+
+        <div class="deforestation-percentage-years">
+          {{ item.from }} → {{ item.to }}
+        </div>
+
+        <div
+          class="deforestation-percentage-value"
+          [ngClass]="{
+            'deforestation-percentage-positive': item.percentage > 0,
+            'deforestation-percentage-negative': item.percentage < 0
+          }"
+        >
+
+          <span class="deforestation-percentage-arrow">
+            {{ item.percentage > 0 ? '↑' : '↓' }}
+          </span>
+
+          {{ formatPercentage(item.percentage) }}
+
+        </div>
+
+      </div>
+
+    </ng-container>
+
+  </div>
+
+</div>
