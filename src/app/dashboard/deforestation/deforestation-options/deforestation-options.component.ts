@@ -1864,32 +1864,50 @@ export class DeforestationOptionsComponent implements OnInit  {
 
   getYears() {
     const all = this.areaByDate.top(Infinity)
-      .sort((a:any, b:any) => Number(a.key) - Number(b.key));
+      .sort((a: any, b: any) => Number(a.key) - Number(b.key));
 
-    const selected = this.area.filters()[0];
+    const selected = this.area.filters();
 
-    const index = all.findIndex((d:any) =>
-      Number(d.key) === Number(selected)
-    );
+    // apenas 1 ano selecionado
+    if (selected.length === 1) {
 
-    const current = all[index];
-    const previous = index > 0 ? all[index - 1] : null;
-    const next = index < all.length - 1 ? all[index + 1] : null;
+      const index = all.findIndex((d: any) =>
+        Number(d.key) === Number(selected[0])
+      );
 
-    this.percentageData = {
-      previous: {
-        key: previous ? previous.key : null,
-        value: previous ? previous.value : null
-      },
-      current: {
-        key: current ? current.key : null,
-        value: current ? current.value : null
-      },
-      next: {
-        key: next ? next.key : null,
-        value: next ? next.value : null
-      }
-    };
+      const current = all[index];
+      const previous = index > 0 ? all[index - 1] : null;
+      const next = index < all.length - 1 ? all[index + 1] : null;
+
+      this.percentageData = {
+        mode: 'single',
+        previous: {
+          key: previous ? previous.key : null,
+          value: previous ? previous.value : null
+        },
+        current: {
+          key: current ? current.key : null,
+          value: current ? current.value : null
+        },
+        next: {
+          key: next ? next.key : null,
+          value: next ? next.value : null
+        }
+      };
+
+    } else {
+
+      // múltiplos anos selecionados
+      const selectedYears = all.filter((d: any) =>
+        selected.includes(d.key)
+      );
+
+      this.percentageData = {
+        mode: 'multiple',
+        years: selectedYears
+      };
+
+    }
   }
 
   resetFilters(context:any) 

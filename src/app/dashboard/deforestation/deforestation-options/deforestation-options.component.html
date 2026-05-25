@@ -204,17 +204,19 @@
 
       <div class="row cards-row">
 
-        <div class="col-md-6">
+        <div class="col-md-7">
+          <app-deforestation-percentage-card
+            [data]="percentageData">
+          </app-deforestation-percentage-card>
+        </div>
+
+        <div class="col-md-5">
           <app-deforestation-state-card
             [stateTotal]="totalIncrement">
           </app-deforestation-state-card>
         </div>
 
-        <div class="col-md-6">
-          <app-deforestation-percentage-card
-            [data]="percentageData">
-          </app-deforestation-percentage-card>
-        </div>
+        
 
       </div>
 

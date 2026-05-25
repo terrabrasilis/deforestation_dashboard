@@ -11,57 +11,143 @@ export class DeforestationPercentageCardComponent implements OnChanges {
 
   previousPercentage: number | null = null;
   nextPercentage: number | null = null;
+  percentages: any[] = [];
 
   ngOnChanges() {
 
-    const previousValue = this.data &&
-                        this.data.previous
-      ? this.data.previous.value
-      : null;
+    // =========================
+    // MODO 1 ANO
+    // =========================
+    if (this.data && this.data.mode === 'single') {
 
-    const currentValue = this.data &&
-                        this.data.current
-      ? this.data.current.value
-      : null;
+      const previousValue =
+        this.data && this.data.previous
+          ? this.data.previous.value
+          : null;
 
-    const nextValue = this.data &&
-                      this.data.next
-      ? this.data.next.value
-      : null;
+      const currentValue =
+        this.data && this.data.current
+          ? this.data.current.value
+          : null;
 
-    // diferença entre anterior e atual
-    if (
-      previousValue !== null &&
-      previousValue !== undefined &&
-      previousValue !== 0 &&
-      currentValue !== null &&
-      currentValue !== undefined
-    ) {
+      const nextValue =
+        this.data && this.data.next
+          ? this.data.next.value
+          : null;
 
-      this.previousPercentage =
-        ((currentValue - previousValue) / previousValue) * 100;
+      // anterior -> atual
+      if (
+        previousValue !== null &&
+        previousValue !== 0 &&
+        currentValue !== null
+      ) {
 
-    } else {
+        this.previousPercentage =
+          ((currentValue - previousValue) / previousValue) * 100;
 
-      this.previousPercentage = null;
+      } else {
+
+        this.previousPercentage = null;
+
+      }
+
+      // atual -> próximo
+      if (
+        currentValue !== null &&
+        currentValue !== 0 &&
+        nextValue !== null
+      ) {
+
+        this.nextPercentage =
+          ((nextValue - currentValue) / currentValue) * 100;
+
+      } else {
+
+        this.nextPercentage = null;
+
+      }
 
     }
 
-    // diferença entre atual e próximo
-    if (
-      currentValue !== null &&
-      currentValue !== undefined &&
-      currentValue !== 0 &&
-      nextValue !== null &&
-      nextValue !== undefined
-    ) {
+    // =========================
+    // MODO MULTIPLOS ANOS
+    // =========================
+    if (this.data && this.data.mode === 'multiple') {
 
-      this.nextPercentage =
-        ((nextValue - currentValue) / currentValue) * 100;
+      const years = this.data.years;
 
-    } else {
+      // caso tenha apenas 2 anos
+      if (years.length === 2) {
 
-      this.nextPercentage = null;
+        const first = years[0];
+        const second = years[1];
+
+        let percentage = null;
+
+        if (
+          first.value !== null &&
+          first.value !== 0 &&
+          second.value !== null
+        ) {
+
+          percentage =
+            ((second.value - first.value) / first.value) * 100;
+
+        }
+
+        this.percentages = [
+          {
+            from: first.key,
+            to: second.key,
+            currentValue: first.value,
+            nextValue: second.value,
+            percentage
+          }
+        ];
+
+      } else {
+
+        // 3 ou mais anos
+        this.percentages = years.map((item: any, index: number) => {
+
+          let current = item;
+
+          let next =
+            index === years.length - 1
+              ? years[0]
+              : years[index + 1];
+
+          // último item:
+          // primeiro -> último
+          if (index === years.length - 1) {
+            current = years[0];
+            next = item;
+          }
+
+          let percentage = null;
+
+          if (
+            current.value !== null &&
+            current.value !== 0 &&
+            next.value !== null
+          ) {
+
+            percentage =
+              ((next.value - current.value) / current.value) * 100;
+
+          }
+
+          return {
+            from: current.key,
+            to: next.key,
+            currentValue: current.value,
+            nextValue: next.value,
+            percentage
+          };
+
+        });
+
+      }
 
     }
 
