@@ -6,6 +6,25 @@
 
   <div class="deforestation-percentage-container">
 
+    <!-- SEM DADOS -->
+    <div
+      class="deforestation-percentage-empty"
+      *ngIf="
+        (!data) ||
+        (
+          data.mode === 'single' &&
+          previousPercentage == null &&
+          nextPercentage == null
+        ) ||
+        (
+          data.mode === 'multiple' &&
+          (!percentages || percentages.length === 0)
+        )
+      "
+    >
+      Nenhum período selecionado
+    </div>
+
     <!-- ================================= -->
     <!-- MODO 1 ANO -->
     <!-- ================================= -->
@@ -14,7 +33,7 @@
       <!-- Anterior -> Atual -->
       <div
         class="deforestation-percentage-item"
-        [class.hidden]="previousPercentage === null"
+        *ngIf="previousPercentage != null"
       >
 
         <div class="deforestation-percentage-years">

@@ -46,6 +46,13 @@
   font-weight: bold;
 }
 
+.deforestation-percentage-empty {
+  text-align: center;
+  padding-top: 16px;
+  color: #777;
+  font-size: 14px;
+}
+
 .deforestation-percentage-arrow {
   font-size: 1.8rem;
   line-height: 1;
