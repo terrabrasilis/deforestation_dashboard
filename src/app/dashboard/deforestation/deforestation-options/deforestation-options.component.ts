@@ -1713,6 +1713,33 @@ export class DeforestationOptionsComponent implements OnInit  {
       self.enableLoading("#row-chart");
       //Terrabrasilis.enableLoading("#row-chart");
       //Terrabrasilis.enableLoading("#loi-chart");
+
+      // Se includeMask está ativo, filtrar para mostrar apenas o último período selecionado ou o último existente
+      if (self.includeMask) {
+        let allDates = self.dateDim1.top(Infinity)
+          .sort((a: any, b: any) => Number(a.endDate) - Number(b.endDate));
+        let selectedDates = self.area.filters();
+        let lastDate: any;
+        if (selectedDates && selectedDates.length > 0) {
+          lastDate = selectedDates[selectedDates.length - 1];
+        } else if (allDates.length > 0) {
+          lastDate = allDates[allDates.length - 1].endDate;
+        }
+        if (lastDate !== undefined) {
+          // group é um crossfilter group por loiName, soma apenas os valores do último período
+          // Para cada loiName, somar apenas os valores do último período
+          let data = self.dateDim1.top(Infinity).filter((d: any) => d.endDate === lastDate);
+          // Agrupa por loiName
+          let map = new Map();
+          data.forEach((d: any) => {
+            if (!map.has(d.loiName)) map.set(d.loiName, 0);
+            map.set(d.loiName, map.get(d.loiName) + d.area);
+          });
+          let arr = Array.from(map.entries()).map(([key, value]) => ({ key, value }));
+          arr.sort((a, b) => b.value - a.value);
+          return arr.slice(0, self.maxLoi);
+        }
+      }
       return group.top(self.maxLoi);
     });
 
