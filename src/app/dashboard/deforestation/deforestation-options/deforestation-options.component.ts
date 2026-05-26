@@ -1590,22 +1590,23 @@ export class DeforestationOptionsComponent implements OnInit  {
                     });
 
                   if (self.includeMask) {
+
                     // sem seleção
                     if (!self.area.hasFilter()) {
                       const all = self.areaByDate.top(Infinity)
                         .sort((a:any, b:any) => a.key - b.key);
+
                       const last = all[all.length - 1];
                       self.totalIncrement = last.value;
                     }
-                    // apenas 1 selecionado
-                    else if (filtered.length === 1) {
-                      self.totalIncrement = filtered[0].value;
-                    }
-                    // múltiplos selecionados
+                    // com seleção (1 ou mais)
                     else {
-                      self.totalIncrement = filtered.reduce(function(acc:any, element:any) {
-                        return acc + element.value;
-                      }, 0);
+                      const sortedFiltered = filtered
+                        .sort((a:any, b:any) => a.key - b.key);
+
+                      const lastSelected = sortedFiltered[sortedFiltered.length - 1];
+
+                      self.totalIncrement = lastSelected.value;
                     }
                   } else {
                     self.totalIncrement = result.reduce(function(acc:any, element:any) {
