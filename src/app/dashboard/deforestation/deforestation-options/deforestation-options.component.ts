@@ -1423,26 +1423,47 @@ export class DeforestationOptionsComponent implements OnInit  {
       $("#bar-chart > svg").attr("width", barChartWidth);
     });
 
-    this.area.on('filtered', function(chart:any) {
+    this.area.on('filtered', function(chart:any, filter:any) {
+
+      // Permitir apenas 1 seleção quando includeMask = true
+      if (self.includeMask) {
+
+        let filters = chart.filters();
+
+        if (filters.length > 1) {
+
+          // remove todos os filtros
+          chart.filter(null);
+
+          // aplica somente o último clicado
+          chart.filter(filter);
+        }
+      }
+
       let filters = chart.filters();
+
       let commonFilterFunction = function (d:any) {
         for (var i = 0; i < filters.length; i++) {
           var f = filters[i];
+
           if (f.isFiltered && f.isFiltered(d)) {
             return true;
           } else if (f == d) {
             return true;
           }
         }
+
         return false;
       };
+
       if (!chart.hasFilter()) {
         self.selectedTime = self.translatedTime;
         self.cdRef.detectChanges();
         self.dateDim1.filterAll();
-      }else {
+      } else {
         self.dateDim1.filterFunction(commonFilterFunction);
       }
+
       dc.redrawAll("agrega");
     });
 
