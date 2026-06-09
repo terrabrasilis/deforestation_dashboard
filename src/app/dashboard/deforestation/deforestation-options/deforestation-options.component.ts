@@ -1682,6 +1682,7 @@ export class DeforestationOptionsComponent implements OnInit  {
     // add one graph
     var rowChartWidth = $('#row-chart')[0].offsetWidth;
     var rowChartHeight = $('#row-chart')[0].offsetHeight;
+    let rowChartData:any[] = [];
             
     this.rowChart.width(rowChartWidth)
             .height(rowChartHeight)
@@ -1697,7 +1698,7 @@ export class DeforestationOptionsComponent implements OnInit  {
             .label(function(d:any) {
               
               // ordered array
-              var array = self.areaByLoiName.top(Infinity);
+              var array = rowChartData.slice();
               var order = array.sort(
                 function(a:any, b:any) {
                   return b.value - a.value;
@@ -1735,9 +1736,9 @@ export class DeforestationOptionsComponent implements OnInit  {
       //Terrabrasilis.enableLoading("#row-chart");
       //Terrabrasilis.enableLoading("#loi-chart");
 
-      // Se includeMask está ativo, filtrar para mostrar apenas o último período selecionado ou o último existente
+      // Se includeMask está ativo, usar a série acumulada no período selecionado
       if (self.includeMask) {
-        let allDates = self.dateDim1.top(Infinity)
+        let allDates = collection
           .sort((a: any, b: any) => Number(a.endDate) - Number(b.endDate));
         let selectedDates = self.area.filters();
         let lastDate: any;
@@ -1747,9 +1748,8 @@ export class DeforestationOptionsComponent implements OnInit  {
           lastDate = allDates[allDates.length - 1].endDate;
         }
         if (lastDate !== undefined) {
-          // group é um crossfilter group por loiName, soma apenas os valores do último período
-          // Para cada loiName, somar apenas os valores do último período
-          let data = self.dateDim1.top(Infinity).filter((d: any) => d.endDate === lastDate);
+          // usa o valor acumulado já calculado para cada loi no período selecionado
+          let data = collection.filter((d: any) => d.endDate === lastDate);
           // Agrupa por loiName
           let map = new Map();
           data.forEach((d: any) => {
@@ -1758,10 +1758,12 @@ export class DeforestationOptionsComponent implements OnInit  {
           });
           let arr = Array.from(map.entries()).map(([key, value]) => ({ key, value }));
           arr.sort((a, b) => b.value - a.value);
-          return arr.slice(0, self.maxLoi);
+          rowChartData = arr.slice(0, self.maxLoi);
+          return rowChartData;
         }
       }
-      return group.top(self.maxLoi);
+      rowChartData = group.top(self.maxLoi);
+      return rowChartData;
     });
 
     this.rowChart.on('renderlet', function ()     
