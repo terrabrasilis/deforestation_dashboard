@@ -1,17 +1,19 @@
 .state-card {
   background: #fff;
   border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   padding: 24px 32px;
-  margin-bottom: 0px;
+  margin-bottom: 0;
 
   display: flex;
   flex-direction: column;
   align-items: flex-start;
 
   min-width: 260px;
+  min-height: 160px;
 
-  min-height: 160px; /* adiciona isso */
+  width: 100%;
+  overflow: hidden;
 }
 
 .state-card-title {
@@ -25,11 +27,39 @@
   display: flex;
   gap: 32px;
   width: 100%;
+
+  overflow-x: auto;
+  overflow-y: hidden;
+
+  flex-wrap: nowrap;
+  white-space: nowrap;
+
+  padding-bottom: 12px; /* espaço entre conteúdo e scrollbar */
+  scrollbar-gutter: stable;
+}
+
+/* Scroll personalizado */
+.deforestation-percentage-container::-webkit-scrollbar {
+  height: 8px;
+}
+
+.deforestation-percentage-container::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.deforestation-percentage-container::-webkit-scrollbar-thumb {
+  background: #c7c7c7;
+  border-radius: 4px;
+}
+
+.deforestation-percentage-container::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
 }
 
 .deforestation-percentage-item {
   display: flex;
   flex-direction: column;
+  flex-shrink: 0; /* impede que os itens encolham */
 }
 
 .deforestation-percentage-years {
