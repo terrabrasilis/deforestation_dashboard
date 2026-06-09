@@ -253,22 +253,27 @@ export class DeforestationOptionsUtils {
     var result = listCharts.get(id); // get result from list charts
         
     if (id == "bar-chart") {
-        result.width(width+10) // update width
-              .height(height) // update height
-              .transitionDuration(transition); // update transitions
+      var currentFilters: any[] = [];
+      var barChild: any = null;
 
-        result.x(d3.scaleBand().rangeRound([0, width]).paddingInner(0.05))
-              .xUnits(dc.units.ordinal);  
+      if (result.children && result.children().length) {
+        barChild = result.children()[0];
+        currentFilters = (barChild.filters && barChild.filters()) ? barChild.filters().slice() : [];
+      }
 
-        // if (type != "rates")         
-        //   result.legend(dc.legend().x(width-barChartLegend).y(5).itemHeight(13).gap(4).legendText(function(d:any) { return d.name; }));        
+      result.width(width+10) // update width
+            .height(height) // update height
+            .transitionDuration(transition); // update transitions
 
-        result.on("renderlet.a",function (chart:any) {
-          // rotate x-axis labels
-          chart.selectAll('g.x text')
-            .attr('transform', 'translate(-10,10) rotate(315)');
-          $("#bar-chart > svg").attr("width", width);
-        });
+      result.x(d3.scaleBand().rangeRound([0, width]).paddingInner(0.05))
+            .xUnits(dc.units.ordinal);
+
+      result.on("renderlet.a",function (chart:any) {
+        // rotate x-axis labels
+        chart.selectAll('g.x text')
+          .attr('transform', 'translate(-10,10) rotate(315)');
+        $("#bar-chart > svg").attr("width", width);
+      });
 
     } else if (id == "series-chart") {
 
@@ -298,13 +303,26 @@ export class DeforestationOptionsUtils {
         $('.search-loi').width(0.8*width);
     }
 
-    (function(j, result){
+    (function(j, result, barChild, currentFilters){
       setTimeout(() => {
         result.render();  
+
+        if (barChild) {
+          if (currentFilters && currentFilters.length) {
+            try {
+              barChild.filterAll();
+              currentFilters.forEach((f:any) => { barChild.filter(f); });
+              result.redraw();
+            } catch(e) {
+              // ignore if chart API differs
+            }
+          }
+        }
+
         Terrabrasilis.disableLoading(id);               
         Terrabrasilis.disableLoading("#loi-chart");      
       },100 * j);
-    })(2, result);    
+    })(2, result, barChild, currentFilters);    
 
   }
 
