@@ -10,6 +10,7 @@ export class DeforestationStateCardComponent implements OnChanges {
   @Input() stateTotal: number = 0;
   @Input() group1Total: number = 0;
   @Input() group2Total: number = 0;
+  @Input() includeMask: boolean = false;
 
   formattedTotal: string = '';
   formattedGroup1: string = '';

@@ -122,7 +122,9 @@
         },
         "stateCard": {
             "title": "Incremento de desmatamento - sensível a filtros",
-            "groupLabel": "Grupo {{number}}: {{value}} km²"
+            "groupLabel": "Grupo {{number}}: {{value}} km²",
+            "groupName": "Grupo {{number}}",
+            "noIncrementSelected": "Nenhum incremento selecionado"
         },
         "percentageCard": {
             "title": "Variação percentual do desmatamento",

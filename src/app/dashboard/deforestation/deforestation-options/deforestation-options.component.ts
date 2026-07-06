@@ -321,6 +321,12 @@ export class DeforestationOptionsComponent implements OnInit  {
   maskOnOff(input: HTMLInputElement) 
   {
     this.includeMask = input.checked;
+    this.group1 = [];
+    this.group2 = [];
+    this.activeGroup = 'group1';
+    this.area.filterAll();
+    dc.redrawAll("agrega");
+    dc.redrawAll("filtra");
     var self=this;
     self.setMaskDisplay();
   }
@@ -1437,6 +1443,10 @@ export class DeforestationOptionsComponent implements OnInit  {
         if (idx >= 0) {
           group.splice(idx, 1);
         } else {
+          // quando includeMask está ativo, permite apenas 1 valor por grupo
+          if (self.includeMask) {
+            group.length = 0;
+          }
           group.push(year);
         }
 

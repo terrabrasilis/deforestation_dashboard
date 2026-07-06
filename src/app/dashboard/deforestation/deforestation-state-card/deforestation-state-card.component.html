@@ -2,17 +2,29 @@
   <div class="state-card-title">
     {{ 'dashboard.stateCard.title' | translate }}
   </div>
-  <div class="state-card-value">
-    {{ formattedTotal }} km²
-  </div>
-  <div class="state-card-group-row">
-    <div class="state-card-group group1">
-      <span class="group-dot group1-dot"></span>
-      {{ 'dashboard.stateCard.groupLabel' | translate:{number: '1', value: formattedGroup1} }}
+  <ng-container *ngIf="!includeMask">
+    <div class="state-card-value">
+      {{ formattedTotal }} km²
     </div>
-    <div class="state-card-group group2">
-      <span class="group-dot group2-dot"></span>
-      {{ 'dashboard.stateCard.groupLabel' | translate:{number: '2', value: formattedGroup2} }}
+  </ng-container>
+  <ng-container *ngIf="includeMask">
+    <div class="state-card-mask-groups">
+      <div class="state-card-mask-group">
+        <div class="state-card-mask-group-header">
+          <span class="group-dot group1-dot"></span>
+          <span class="state-card-mask-group-label">{{ 'dashboard.stateCard.groupName' | translate:{number: '1'} }}</span>
+        </div>
+        <span class="state-card-mask-group-value" *ngIf="group1Total > 0; else noInc1">{{ formattedGroup1 }} km²</span>
+        <ng-template #noInc1><span class="state-card-mask-group-empty">{{ 'dashboard.stateCard.noIncrementSelected' | translate }}</span></ng-template>
+      </div>
+      <div class="state-card-mask-group">
+        <div class="state-card-mask-group-header">
+          <span class="group-dot group2-dot"></span>
+          <span class="state-card-mask-group-label">{{ 'dashboard.stateCard.groupName' | translate:{number: '2'} }}</span>
+        </div>
+        <span class="state-card-mask-group-value" *ngIf="group2Total > 0; else noInc2">{{ formattedGroup2 }} km²</span>
+        <ng-template #noInc2><span class="state-card-mask-group-empty">{{ 'dashboard.stateCard.noIncrementSelected' | translate }}</span></ng-template>
+      </div>
     </div>
-  </div>
+  </ng-container>
 </div>

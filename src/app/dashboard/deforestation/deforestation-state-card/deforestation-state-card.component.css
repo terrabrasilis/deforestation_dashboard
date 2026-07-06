@@ -11,7 +11,7 @@
 
   min-width: 260px;
 
-  min-height: 130px; /* adiciona isso */
+  min-height: 130px;
 }
 .state-card-title {
   font-size: 1.1rem;
@@ -30,25 +30,54 @@
   width: 100%;
 }
 
-.state-card-group-row {
+.state-card-mask-groups {
   display: flex;
-  gap: 16px;
-  margin-top: 8px;
-  flex-wrap: wrap;
+  flex-direction: column;
+  gap: 20px;
+  margin-top: 16px;
+  width: 100%;
 }
 
-.state-card-group {
-  font-size: 0.85rem;
-  color: #666;
+.state-card-mask-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.state-card-mask-group-header {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 8px;
+}
+
+.state-card-mask-group-label {
+  font-size: 1rem;
+  color: #555;
+  font-weight: 500;
+}
+
+.state-card-mask-group-value {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #2e7d32;
+  padding-left: 24px;
+}
+
+.state-card-mask-group:nth-child(2) .state-card-mask-group-value {
+  color: #e65100;
+}
+
+.state-card-mask-group-empty {
+  font-size: 1rem;
+  color: #999;
+  font-style: italic;
+  padding-left: 24px;
 }
 
 .group-dot {
   display: inline-block;
-  width: 10px;
-  height: 10px;
+  width: 12px;
+  height: 12px;
   border-radius: 50%;
   flex-shrink: 0;
 }

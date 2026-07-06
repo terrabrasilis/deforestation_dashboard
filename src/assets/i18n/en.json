@@ -123,7 +123,9 @@
         },
         "stateCard": {
             "title": "Deforestation increment - filter sensitive",
-            "groupLabel": "Group {{number}}: {{value}} km²"
+            "groupLabel": "Group {{number}}: {{value}} km²",
+            "groupName": "Group {{number}}",
+            "noIncrementSelected": "No increment selected"
         },
         "percentageCard": {
             "title": "Deforestation percentage change",
