@@ -29,3 +29,34 @@
 :host {
   width: 100%;
 }
+
+.state-card-group-row {
+  display: flex;
+  gap: 16px;
+  margin-top: 8px;
+  flex-wrap: wrap;
+}
+
+.state-card-group {
+  font-size: 0.85rem;
+  color: #666;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.group-dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.group1-dot {
+  background: #4CAF50;
+}
+
+.group2-dot {
+  background: #FF9800;
+}

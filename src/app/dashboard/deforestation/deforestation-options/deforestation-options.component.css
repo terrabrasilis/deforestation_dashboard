@@ -621,7 +621,7 @@ input:focus, select:focus, textarea:focus, button:focus {
     width: auto;
     z-index: 0!important;
     overflow-x: hidden;
-    overflow-y: auto;
+    overflow-y: hidden;
     padding: 20px;
     border-radius: 10px;
     -moz-border-radius: 10px;
@@ -777,6 +777,10 @@ th.dc-table-head {
     overflow-y: hidden;
 }
 
+.bar-chart-legend + #bar-chart {
+    height: calc(100% - 80px);
+}
+
 #table-chart{
     overflow-y: auto;
 }
@@ -903,4 +907,91 @@ footer {
 
 .cards-wrapper {
   padding: 0 15px;
+}
+
+.bar-chart-legend {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  background: #f5f5f5;
+  border-bottom: 1px solid #e0e0e0;
+  font-size: 13px;
+  z-index: 1;
+  position: relative;
+}
+
+.bar-chart-legend-title {
+  font-weight: 500;
+  color: #555;
+  margin-right: 4px;
+}
+
+.bar-chart-legend-btn {
+  padding: 4px 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background: #fff;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 500;
+  color: #333;
+  transition: all 0.2s;
+}
+
+.bar-chart-legend-btn:hover {
+  background: #e8e8e8;
+}
+
+.bar-chart-legend-btn.active[data-group="group1"] {
+  background: #4CAF50;
+  color: #fff;
+  border-color: #388E3C;
+}
+
+.bar-chart-legend-btn.active[data-group="group2"] {
+  background: #FF9800;
+  color: #fff;
+  border-color: #F57C00;
+}
+
+.bar-chart-legend-clear {
+  margin-left: auto;
+  padding: 4px 10px;
+  border: none;
+  border-radius: 4px;
+  background: transparent;
+  cursor: pointer;
+  font-size: 11px;
+  color: #999;
+  text-decoration: underline;
+}
+
+.bar-chart-legend-clear:hover {
+  color: #333;
+}
+
+.bar-chart-legend-separator {
+  width: 1px;
+  height: 18px;
+  background: #ccc;
+  margin: 0 6px;
+}
+
+.legend-dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin: 0 2px;
+}
+
+.dot-group1 { background: #4CAF50; }
+.dot-group2 { background: #FF9800; }
+.dot-both { background: #5C6BC0; }
+
+.legend-label {
+  font-size: 11px;
+  color: #777;
+  margin-right: 8px;
 }

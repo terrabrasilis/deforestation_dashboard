@@ -103,3 +103,57 @@
 .hidden {
   visibility: hidden;
 }
+
+.group-comparison {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.group-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 4px;
+  color: #fff;
+}
+
+.group1-label {
+  background: #4CAF50;
+}
+
+.group2-label {
+  background: #FF9800;
+}
+
+.group-arrow {
+  color: #999;
+  font-size: 1.2rem;
+}
+
+.deforestation-percentage-subtotal {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  color: #666;
+  margin-bottom: 4px;
+}
+
+.group-total {
+  font-weight: 500;
+}
+
+.group1-total {
+  color: #4CAF50;
+}
+
+.group2-total {
+  color: #FF9800;
+}
+
+.group-vs {
+  color: #999;
+  font-style: italic;
+}

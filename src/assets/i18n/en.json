@@ -118,8 +118,22 @@
             "restoreview": "Restore View",
             "loadmask": "Include Mask",
             "searchloi": "Search",
-            "legend": "Legend"
+            "legend": "Legend",
+            "moreOptions": "More Options"
         },
+        "stateCard": {
+            "title": "Deforestation increment - filter sensitive",
+            "groupLabel": "Group {{number}}: {{value}} km²"
+        },
+        "percentageCard": {
+            "title": "Deforestation percentage change",
+            "emptyGroup": "Select both groups to perform the comparison",
+            "emptyDefault": "No period selected",
+            "groupLabel": "Group {{number}}: {{value}}",
+            "vs": "vs",
+            "areaSuffix": "km²"
+        },
+        "noDataExport": "No data to export.",
         "search": {
             "searchTitle": "Search by local of interest",
             "searchDescription": "Type one term to search",

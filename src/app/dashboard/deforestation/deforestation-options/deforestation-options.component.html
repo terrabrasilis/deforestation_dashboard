@@ -126,7 +126,7 @@
     <nav class="navbar navbar-icon-top navbar-expand-lg navbar-dark bg-light">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContentInner" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <i class="fas fa-bars"></i>
-          <span class="maisop">Mais Opções</span>
+          <span class="maisop">{{ 'dashboard.options.moreOptions' | translate }}</span>
         </button>      
         <div class="collapse navbar-collapse" id="navbarSupportedContentInner">
           <ul class="navbar-nav mr-auto">
@@ -212,7 +212,9 @@
 
         <div class="col-md-5">
           <app-deforestation-state-card
-            [stateTotal]="totalIncrement">
+            [stateTotal]="totalIncrement"
+            [group1Total]="group1Total"
+            [group2Total]="group2Total">
           </app-deforestation-state-card>
         </div>
 

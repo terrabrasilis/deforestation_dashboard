@@ -1,8 +1,18 @@
 <div class="state-card">
   <div class="state-card-title">
-    Incremento de desmatamento - sensível a filtros
+    {{ 'dashboard.stateCard.title' | translate }}
   </div>
   <div class="state-card-value">
-    {{ formattedTotal }}
+    {{ formattedTotal }} km²
+  </div>
+  <div class="state-card-group-row">
+    <div class="state-card-group group1">
+      <span class="group-dot group1-dot"></span>
+      {{ 'dashboard.stateCard.groupLabel' | translate:{number: '1', value: formattedGroup1} }}
+    </div>
+    <div class="state-card-group group2">
+      <span class="group-dot group2-dot"></span>
+      {{ 'dashboard.stateCard.groupLabel' | translate:{number: '2', value: formattedGroup2} }}
+    </div>
   </div>
 </div>

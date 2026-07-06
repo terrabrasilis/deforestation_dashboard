@@ -74,6 +74,8 @@ export class DeforestationOptionsComponent implements OnInit  {
 
   initialIncrementValue: number = 0;
   totalIncrement: number = 0;
+  group1Total: number = 0;
+  group2Total: number = 0;
   percentageData: any = [];
 
   trashIcon: string; 
@@ -82,6 +84,9 @@ export class DeforestationOptionsComponent implements OnInit  {
   setMaskDisplay: any;
   moreOptionsBtn: any;
   includeMask: boolean;
+  group1: number[] = [];
+  group2: number[] = [];
+  activeGroup: string = 'group1';
   geojsonLayers:any;
   listCharts:any;
   rowChart:any;
@@ -535,7 +540,7 @@ export class DeforestationOptionsComponent implements OnInit  {
       fileName = fdt + "_" + dt.getTime();
       FileSaver.saveAs(blob, 'terrabrasilis_'+this.biome+'_'+fileName+'.'+fileExtension);
     }else{
-      alert('Não há dados para exportar.');
+      alert(this._translate.instant('dashboard.noDataExport'));
     }
   }
 
@@ -687,7 +692,7 @@ export class DeforestationOptionsComponent implements OnInit  {
       
       // build main grid
       function buildMainGrid() {
-        append2Grid(mainGrid, '<div class="grid-stack-item"><div class="grid-stack-item-content"><div class="custom-drag-incr"> <span class="aggregateTemporal">Aggregated Temporal Data </span> <i class="material-icons pull-right">open_with</i> </div><div id="bar-chart"></div></div></div>', 0, 0, 7, 7);
+        append2Grid(mainGrid, '<div class="grid-stack-item"><div class="grid-stack-item-content"><div class="custom-drag-incr"> <span class="aggregateTemporal">Aggregated Temporal Data </span> <i class="material-icons pull-right">open_with</i> </div><div class="bar-chart-legend"><span class="bar-chart-legend-title">Comparar:</span><button class="bar-chart-legend-btn" data-group="group1">Grupo 1</button><button class="bar-chart-legend-btn" data-group="group2">Grupo 2</button><button class="bar-chart-legend-clear">Limpar grupos</button><span class="bar-chart-legend-separator"></span><span class="legend-dot dot-group1"></span><span class="legend-label">Grupo 1</span><span class="legend-dot dot-group2"></span><span class="legend-label">Grupo 2</span><span class="legend-dot dot-both"></span><span class="legend-label">Ambos</span></div><div id="bar-chart"></div></div></div>', 0, 0, 7, 7);
         append2Grid(mainGrid, '<div class="grid-stack-item"><div class="grid-stack-item-content"><div class="custom-drag-incr"> <span class="absoluteData"> Absolute Data </span> <i class="material-icons pull-right">open_with</i> </div><div id="row-chart"></div></div></div>', 8, 0, 5, 7);
         append2Grid(mainGrid, '<div class="grid-stack-item"><div class="grid-stack-item-content"><div class="custom-drag-incr"> <span class="timeSeries"> Time Series </span> <i class="material-icons pull-right">open_with</i> </div><div id="series-chart"></div></div></div>', 0, 7, 12, 6);
         append2Grid(mainGrid, '<div class="grid-stack-item"><div class="grid-stack-item-content"><div class="custom-drag-incr"> <span class="tableLois"> Area per years and Local of Interests </span> <i class="material-icons pull-right">open_with</i></div><div id="table-chart"><table id="tb-area" class="table table-hover dc-data-table dc-chart"></table></div></div></div>', 8, 15, 5, 6);
@@ -1327,6 +1332,16 @@ export class DeforestationOptionsComponent implements OnInit  {
       .barPadding(0.3)
       .group(snapToZero(this.areaByDate))
       .colors("#ffd76d")
+      .addFilterHandler(function(filters:any, filter:any) {
+        if (filter === null || filter === undefined || (typeof filter === 'number' && isNaN(filter))) return [];
+        var idx = filters.indexOf(filter);
+        if (idx >= 0) {
+          filters.splice(idx, 1);
+          return filters;
+        }
+        filters.push(filter);
+        return filters;
+      })
       .valueAccessor(
         function (d:any) {
           return d["value"];
@@ -1360,7 +1375,6 @@ export class DeforestationOptionsComponent implements OnInit  {
       .x(d3.scaleBand().rangeRound([0, barChartWidth]))
       .brushOn(false)
       .controlsUseVisibility(false)
-      .addFilterHandler(function(filters:any, filter:any) {return [filter];})
       .xUnits(dc.units.ordinal)
       .renderHorizontalGridLines(true)
       .renderVerticalGridLines(true)
@@ -1408,7 +1422,38 @@ export class DeforestationOptionsComponent implements OnInit  {
           }
         });
       }
-      //Terrabrasilis.disableLoading("#bar-chart");      
+      //Terrabrasilis.disableLoading("#bar-chart");
+
+      // custom click handler on bars (replaces DC.js default)
+      chart.selectAll("rect.bar").on("click", function(d:any) {
+        var year = d.key || d.data.key;
+        if (year === null || year === undefined || (typeof year === 'number' && isNaN(year))) return;
+        year = Number(year);
+
+        // group mode — toggle year in active group only
+        var group = self.activeGroup === 'group1' ? self.group1 : self.group2;
+
+        var idx = group.indexOf(year);
+        if (idx >= 0) {
+          group.splice(idx, 1);
+        } else {
+          group.push(year);
+        }
+
+        self.refreshGroupCharts();
+      });
+
+      // color bars by group membership
+      chart.selectAll("rect.bar")
+        .attr('fill', function(d:any) {
+          var y = d.key || d.data.key;
+          var in1 = self.group1.indexOf(y) >= 0;
+          var in2 = self.group2.indexOf(y) >= 0;
+          if (in1 && in2) return '#5C6BC0';
+          if (in1) return '#4CAF50';
+          if (in2) return '#FF9800';
+          return '#e0e0e0';
+        });
     
     });
 
@@ -1425,22 +1470,9 @@ export class DeforestationOptionsComponent implements OnInit  {
 
     this.area.on('filtered', function(chart:any, filter:any) {
 
-      // Permitir apenas 1 seleção quando includeMask = true
-      if (self.includeMask) {
-
-        let filters = chart.filters();
-
-        if (filters.length > 1) {
-
-          // remove todos os filtros
-          chart.filter(null);
-
-          // aplica somente o último clicado
-          chart.filter(filter);
-        }
-      }
-
-      let filters = chart.filters();
+      let filters = chart.filters().filter(function(f:any) {
+        return f !== null && f !== undefined && !(typeof f === 'number' && isNaN(f));
+      });
 
       let commonFilterFunction = function (d:any) {
         for (var i = 0; i < filters.length; i++) {
@@ -1468,10 +1500,12 @@ export class DeforestationOptionsComponent implements OnInit  {
     });
 
     this.area.filterPrinter(function(filters:any) {
-      
+      var valid = filters.filter(function(f:any) {
+        return f !== null && f !== undefined && !(typeof f === 'number' && isNaN(f));
+      });
       self.selectedTime = "[";
       var first = 1;
-      filters.forEach(function(f:any) {
+      valid.forEach(function(f:any) {
         if (first) {
           self.selectedTime = self.selectedTime.concat(f);
           first = 0;
@@ -1485,6 +1519,28 @@ export class DeforestationOptionsComponent implements OnInit  {
 
     // add one graph
     this.listCharts.set('bar-chart', this.barChart);
+
+    // legend buttons for group selection (radio behavior, always one active)
+    $('.bar-chart-legend-btn').off('click').on('click', function() {
+      self.activeGroup = $(this).data('group');
+      $('.bar-chart-legend-btn').removeClass('active');
+      $('.bar-chart-legend-btn[data-group="' + self.activeGroup + '"]').addClass('active');
+    });
+
+    $('.bar-chart-legend-clear').off('click').on('click', function() {
+      self.group1 = [];
+      self.group2 = [];
+      self.activeGroup = 'group1';
+      $('.bar-chart-legend-btn').removeClass('active');
+      $('.bar-chart-legend-btn[data-group="group1"]').addClass('active');
+      // Clear DC.js filters
+      self.area.filterAll();
+      self.refreshGroupCharts();
+    });
+
+    // initialize group 1 as active
+    $('.bar-chart-legend-btn').removeClass('active');
+    $('.bar-chart-legend-btn[data-group="group1"]').addClass('active');
 
     var seriesChartWidth = $('#series-chart')[0].offsetWidth;
     var seriesChartHeight = $('#series-chart')[0].offsetHeight;
@@ -1634,6 +1690,14 @@ export class DeforestationOptionsComponent implements OnInit  {
                       return acc + element.value;
                     }, 0);
                   }
+
+                  // group totals for the state card
+                  self.group1Total = filtered
+                    .filter(function(d:any) { return self.group1.indexOf(d.key) >= 0; })
+                    .reduce(function(acc:any, d:any) { return acc + d.value; }, 0);
+                  self.group2Total = filtered
+                    .filter(function(d:any) { return self.group2.indexOf(d.key) >= 0; })
+                    .reduce(function(acc:any, d:any) { return acc + d.value; }, 0);
                   
                   self.getYears()
 
@@ -1917,19 +1981,37 @@ export class DeforestationOptionsComponent implements OnInit  {
     const all = this.areaByDate.top(Infinity)
       .sort((a: any, b: any) => Number(a.key) - Number(b.key));
 
-    const selected = this.area.filters();
+    // modo grupos
+    if (this.group1.length > 0 || this.group2.length > 0) {
+      const g1 = all.filter((d: any) => this.group1.indexOf(d.key) >= 0);
+      const g2 = all.filter((d: any) => this.group2.indexOf(d.key) >= 0);
+      const total1 = g1.reduce((acc: number, d: any) => acc + d.value, 0);
+      const total2 = g2.reduce((acc: number, d: any) => acc + d.value, 0);
+      // total de todos os períodos únicos selecionados (união)
+      const unionKeys = Array.from(new Set(this.group1.concat(this.group2)));
+      const allSelected = all.filter((d: any) => unionKeys.indexOf(d.key) >= 0);
+      const total = allSelected.reduce((acc: number, d: any) => acc + d.value, 0);
 
-    // apenas 1 ano selecionado
+      this.percentageData = {
+        mode: 'group',
+        total: total,
+        group1: { years: g1, total: total1 },
+        group2: { years: g2, total: total2 }
+      };
+      return;
+    }
+
+    const selected = this.area.filters().filter(function(f: any) {
+      return f !== null && f !== undefined && !(typeof f === 'number' && isNaN(f));
+    });
+
     if (selected.length === 1) {
-
       const index = all.findIndex((d: any) =>
         Number(d.key) === Number(selected[0])
       );
-
       const current = all[index];
       const previous = index > 0 ? all[index - 1] : null;
       const next = index < all.length - 1 ? all[index + 1] : null;
-
       this.percentageData = {
         mode: 'single',
         previous: {
@@ -1945,20 +2027,40 @@ export class DeforestationOptionsComponent implements OnInit  {
           value: next ? next.value : null
         }
       };
-
-    } else {
-
-      // múltiplos anos selecionados
+    } else if (selected.length > 1) {
       const selectedYears = all.filter((d: any) =>
         selected.includes(d.key)
       );
-
       this.percentageData = {
         mode: 'multiple',
         years: selectedYears
       };
-
+    } else {
+      this.percentageData = null;
     }
+  }
+
+  refreshGroupCharts() {
+    var union = this.group1.concat(this.group2)
+      .filter(function(y: any) {
+        return y !== null && y !== undefined && !(typeof y === 'number' && isNaN(y));
+      });
+    // deduplicate so a year in both groups is not filtered twice
+    union = union.filter(function(y: any, i: number) {
+      return union.indexOf(y) === i;
+    });
+    if (union.length === 0) {
+      this.area.filterAll();
+    } else {
+      this.area.filterAll();
+      union.forEach(function(y: any) {
+        this.area.filter(y);
+      }.bind(this));
+    }
+    dc.redrawAll("agrega");
+    dc.redrawAll("filtra");
+    this.getYears();
+    this.cdRef.detectChanges();
   }
 
   resetFilters(context:any) 
@@ -1977,6 +2079,12 @@ export class DeforestationOptionsComponent implements OnInit  {
     context.rowChart.filterAll();
     context.applyCountyFilter();// to reset function data() of the rowChart
     context.seriesChart.filterAll();
+
+    this.group1 = [];
+    this.group2 = [];
+    this.activeGroup = 'group1';
+    $('.bar-chart-legend-btn').removeClass('active');
+    $('.bar-chart-legend-btn[data-group="group1"]').addClass('active');
 
     dc.redrawAll("agrega");
     dc.redrawAll("filtra");

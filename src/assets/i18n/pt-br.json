@@ -117,8 +117,22 @@
             "restoreview": "Restaurar Visão",
             "loadmask": "Incluir Mascara",
             "searchloi": "Procurar",
-            "legend": "Legenda"
+            "legend": "Legenda",
+            "moreOptions": "Mais Opções"
         },
+        "stateCard": {
+            "title": "Incremento de desmatamento - sensível a filtros",
+            "groupLabel": "Grupo {{number}}: {{value}} km²"
+        },
+        "percentageCard": {
+            "title": "Variação percentual do desmatamento",
+            "emptyGroup": "Selecione os dois grupos para realizar a comparação",
+            "emptyDefault": "Nenhum período selecionado",
+            "groupLabel": "Grupo {{number}}: {{value}}",
+            "vs": "vs",
+            "areaSuffix": "km²"
+        },
+        "noDataExport": "Não há dados para exportar.",
         "search": {
             "searchTitle": "Procure por local de interesse",
             "searchDescription": "Digite um termo para pesquisa",

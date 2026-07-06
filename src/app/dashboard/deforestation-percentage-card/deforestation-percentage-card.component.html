@@ -1,7 +1,7 @@
 <div class="state-card">
 
   <div class="state-card-title">
-    Variação percentual do desmatamento
+    {{ 'dashboard.percentageCard.title' | translate }}
   </div>
 
   <div class="deforestation-percentage-container">
@@ -19,11 +19,62 @@
         (
           data.mode === 'multiple' &&
           (!percentages || percentages.length === 0)
+        ) ||
+        (
+          data.mode === 'group' &&
+          (!percentages || percentages.length === 0)
         )
       "
     >
-      Nenhum período selecionado
+      <span *ngIf="data && data.mode === 'group'; else defaultEmpty">
+        {{ 'dashboard.percentageCard.emptyGroup' | translate }}
+      </span>
+      <ng-template #defaultEmpty>
+        {{ 'dashboard.percentageCard.emptyDefault' | translate }}
+      </ng-template>
     </div>
+
+    <!-- ================================= -->
+    <!-- MODO GRUPOS -->
+    <!-- ================================= -->
+    <ng-container *ngIf="data && data.mode === 'group' && percentages && percentages.length > 0">
+
+      <div
+        class="deforestation-percentage-item"
+        *ngFor="let item of percentages"
+      >
+
+        <div class="deforestation-percentage-years group-comparison">
+          <span class="group-label group1-label">{{ 'dashboard.percentageCard.groupLabel' | translate:{number: '1', value: item.from} }}</span>
+          <span class="group-arrow">→</span>
+          <span class="group-label group2-label">{{ 'dashboard.percentageCard.groupLabel' | translate:{number: '2', value: item.to} }}</span>
+        </div>
+
+        <div class="deforestation-percentage-subtotal">
+          <span class="group-total group1-total">{{ formatArea(item.currentValue) }} {{ 'dashboard.percentageCard.areaSuffix' | translate }}</span>
+          <span class="group-vs">{{ 'dashboard.percentageCard.vs' | translate }}</span>
+          <span class="group-total group2-total">{{ formatArea(item.nextValue) }} {{ 'dashboard.percentageCard.areaSuffix' | translate }}</span>
+        </div>
+
+        <div
+          class="deforestation-percentage-value"
+          [ngClass]="{
+            'deforestation-percentage-positive': item.percentage > 0,
+            'deforestation-percentage-negative': item.percentage < 0
+          }"
+        >
+
+          <span class="deforestation-percentage-arrow" *ngIf="item.percentage !== null && item.percentage !== 0">
+            {{ item.percentage > 0 ? '↑' : '↓' }}
+          </span>
+
+          {{ formatPercentage(item.percentage) }}
+
+        </div>
+
+      </div>
+
+    </ng-container>
 
     <!-- ================================= -->
     <!-- MODO 1 ANO -->

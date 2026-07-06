@@ -1,4 +1,5 @@
 import { Component, Input, OnChanges } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-deforestation-percentage-card',
@@ -9,16 +10,60 @@ export class DeforestationPercentageCardComponent implements OnChanges {
 
   @Input() data: any;
 
+  constructor(private translate: TranslateService) {}
+
   previousPercentage: number | null = null;
   nextPercentage: number | null = null;
   percentages: any[] = [];
 
   ngOnChanges() {
 
+    this.previousPercentage = null;
+    this.nextPercentage = null;
+    this.percentages = [];
+
+    if (!this.data) return;
+
+    // =========================
+    // MODO GRUPOS
+    // =========================
+    if (this.data.mode === 'group') {
+
+      const g1 = this.data.group1;
+      const g2 = this.data.group2;
+
+      const hasG1Years = (g1.years || []).length > 0;
+      const hasG2Years = (g2.years || []).length > 0;
+
+      if (!hasG1Years || !hasG2Years) {
+        this.percentages = [];
+        return;
+      }
+      const g1total = g1.total || 0;
+      const g2total = g2.total || 0;
+
+      let percentage = null;
+      if (g1total !== 0 && g2total !== null) {
+        percentage = ((g2total - g1total) / g1total) * 100;
+      }
+
+      this.percentages = [
+        {
+          from: (g1.years || []).map((y: any) => y.key).join(', '),
+          to: (g2.years || []).map((y: any) => y.key).join(', '),
+          currentValue: g1total,
+          nextValue: g2total,
+          percentage,
+          isGroup: true
+        }
+      ];
+      return;
+    }
+
     // =========================
     // MODO 1 ANO
     // =========================
-    if (this.data && this.data.mode === 'single') {
+    if (this.data.mode === 'single') {
 
       const previousValue =
         this.data && this.data.previous
@@ -67,12 +112,13 @@ export class DeforestationPercentageCardComponent implements OnChanges {
 
       }
 
+      return;
     }
 
     // =========================
     // MODO MULTIPLOS ANOS
     // =========================
-    if (this.data && this.data.mode === 'multiple') {
+    if (this.data.mode === 'multiple') {
 
       const years = this.data.years;
 
@@ -117,8 +163,6 @@ export class DeforestationPercentageCardComponent implements OnChanges {
               ? years[0]
               : years[index + 1];
 
-          // último item:
-          // primeiro -> último
           if (index === years.length - 1) {
             current = years[0];
             next = item;
@@ -153,13 +197,27 @@ export class DeforestationPercentageCardComponent implements OnChanges {
 
   }
 
+  get locale(): string {
+    return this.translate.currentLang === 'pt-br' ? 'pt-BR' : 'en-US';
+  }
+
+  formatArea(value: number | null): string {
+    if (value === null || value === undefined) {
+      return '-';
+    }
+    return value.toLocaleString(this.locale, {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    });
+  }
+
   formatPercentage(value: number | null): string {
 
     if (value === null || value === undefined) {
       return '-';
     }
 
-    return value.toLocaleString('pt-BR', {
+    return value.toLocaleString(this.locale, {
       minimumFractionDigits: 2,
       maximumFractionDigits: 2
     }) + '%';
