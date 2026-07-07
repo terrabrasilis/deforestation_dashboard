@@ -5,7 +5,8 @@
 </div>
 <div></div>
 <!-- end -->
-<h2 mat-dialog-title>{{ 'dialog.text' | translate }}</h2>
+<h2 mat-dialog-title *ngIf="title === undefined || title === null; else customTitle">{{ 'dialog.text' | translate }}</h2>
+<ng-template #customTitle><h2 mat-dialog-title *ngIf="title !== ''">{{ title }}</h2></ng-template>
 <mat-dialog-content >  
   <div [innerHtml]="content"></div>
 </mat-dialog-content>

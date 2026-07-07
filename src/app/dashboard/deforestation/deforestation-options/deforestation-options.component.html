@@ -99,13 +99,13 @@
         </a>
       </li>
       <li>
-        <a href="#" aria-expanded="false">
+        <a href="javascript:void(0)" aria-expanded="false" (click)="toggleMask($event)">
           <i class="material-icons">select_all</i><span> {{ 'dashboard.tool.addmask' | translate }} </span>
           <div class="material-switch addmask">
-            <input id="mask-selector" name="addMask01" type="checkbox" (change)="maskOnOff($event.srcElement)" checked="{{ (includeMask) ? 'checked' : null }}"/>
+            <input #maskCheckbox id="mask-selector" name="addMask01" type="checkbox" (change)="maskOnOff($event.srcElement)" checked="{{ (includeMask) ? 'checked' : null }}"/>
             <label for="mask-selector" class="bg-white"></label>
           </div>
-          <i class="material-icons infoicon" title="{{ 'dashboard.tooltip.tool.addmask' | translate}}">info_outline</i>
+          <i class="material-icons infoicon" title="{{ 'dashboard.tooltip.tool.addmask' | translate}}" (click)="showAddMaskInfo($event)">info_outline</i>
         </a>
       </li>
       <li>

@@ -84,6 +84,7 @@ export class DeforestationOptionsComponent implements OnInit  {
   setMaskDisplay: any;
   moreOptionsBtn: any;
   includeMask: boolean;
+  addMaskInfoSeen: boolean = false;
   group1: number[] = [];
   group2: number[] = [];
   activeGroup: string = 'group1';
@@ -329,6 +330,45 @@ export class DeforestationOptionsComponent implements OnInit  {
     dc.redrawAll("filtra");
     var self=this;
     self.setMaskDisplay();
+    if (this.includeMask && !this.addMaskInfoSeen) {
+      this.addMaskInfoSeen = true;
+      this.openAddMaskModal();
+    }
+  }
+
+  private openAddMaskModal() {
+    const msg = `
+      <h3>Dados Agregados</h3>
+      <p>Os dados agregados são compostos pela soma da <em>máscara acumulada</em> e dos <em>resíduos de desmatamento</em>, representando o total de área desmatada consolidada ao longo do tempo.</p>
+      <h3>Alteração na exibição dos gráficos</h3>
+      <p>Ao habilitar esta opção, os gráficos de incremento de desmatamento passam a apresentar os <em>dados agregados</em>, em vez dos incrementos anuais.</p>
+      <p>Nesse modo de visualização, cada ano representa o <em>total acumulado de desmatamento</em> até aquele período. O valor de um determinado ano é obtido pela soma do total acumulado do ano anterior com o incremento registrado no ano corrente.</p>
+      <p>Como consequência, os valores deixam de representar apenas o incremento anual e passam a representar o desmatamento acumulado até cada ano.</p>
+      <h3>Comportamento do filtro por ano</h3>
+      <p>Como os valores são acumulativos, cada grupo (Grupo 1 e Grupo 2) permite a seleção de <em>apenas um ano por vez</em>.</p>
+      <p>Para comparar dois períodos, selecione um ano no Grupo 1 e outro ano no Grupo 2. O card <em>Incremento de desmatamento - sensível a filtros</em> exibirá o valor acumulado de cada grupo.</p>
+    `;
+    let dialogRef = this.dialog.open(DialogComponent, {width : '840px'});
+    dialogRef.componentInstance.title = '';
+    dialogRef.componentInstance.content = this.dom.bypassSecurityTrustHtml(msg);
+  }
+
+  showAddMaskInfo(event: Event) {
+    event.stopPropagation();
+    event.preventDefault();
+    this.openAddMaskModal();
+  }
+
+  toggleMask(event: Event) {
+    const target = event.target as HTMLElement;
+    if (target.classList.contains('infoicon') || target.closest('.infoicon')) {
+      return;
+    }
+    const checkbox = document.getElementById('mask-selector') as HTMLInputElement;
+    if (checkbox) {
+      checkbox.checked = !checkbox.checked;
+      this.maskOnOff(checkbox);
+    }
   }
 
   changeTab(self: DeforestationOptionsComponent, element: EventTarget)
