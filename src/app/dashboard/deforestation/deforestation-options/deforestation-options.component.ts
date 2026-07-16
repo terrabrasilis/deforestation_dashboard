@@ -76,6 +76,7 @@ export class DeforestationOptionsComponent implements OnInit  {
   totalIncrement: number = 0;
   group1Total: number = 0;
   group2Total: number = 0;
+  groupDifference: number = 0;
   percentageData: any = [];
 
   trashIcon: string; 
@@ -325,6 +326,7 @@ export class DeforestationOptionsComponent implements OnInit  {
     this.group1 = [];
     this.group2 = [];
     this.activeGroup = 'group1';
+    this.groupDifference = 0;
     this.area.filterAll();
     dc.redrawAll("agrega");
     dc.redrawAll("filtra");
@@ -1581,6 +1583,7 @@ export class DeforestationOptionsComponent implements OnInit  {
       self.group1 = [];
       self.group2 = [];
       self.activeGroup = 'group1';
+      self.groupDifference = 0;
       $('.bar-chart-legend-btn').removeClass('active');
       $('.bar-chart-legend-btn[data-group="group1"]').addClass('active');
       // Clear DC.js filters
@@ -1748,6 +1751,7 @@ export class DeforestationOptionsComponent implements OnInit  {
                   self.group2Total = filtered
                     .filter(function(d:any) { return self.group2.indexOf(d.key) >= 0; })
                     .reduce(function(acc:any, d:any) { return acc + d.value; }, 0);
+                  self.groupDifference = self.group2Total - self.group1Total;
                   
                   self.getYears()
 
@@ -2133,6 +2137,7 @@ export class DeforestationOptionsComponent implements OnInit  {
     this.group1 = [];
     this.group2 = [];
     this.activeGroup = 'group1';
+    this.groupDifference = 0;
     $('.bar-chart-legend-btn').removeClass('active');
     $('.bar-chart-legend-btn[data-group="group1"]').addClass('active');
 

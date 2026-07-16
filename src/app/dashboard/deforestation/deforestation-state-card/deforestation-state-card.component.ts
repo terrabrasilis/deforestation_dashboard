@@ -15,6 +15,7 @@ export class DeforestationStateCardComponent implements OnChanges {
   formattedTotal: string = '';
   formattedGroup1: string = '';
   formattedGroup2: string = '';
+  formattedDifference: string = '';
 
   constructor(private translate: TranslateService) {}
 
@@ -22,6 +23,7 @@ export class DeforestationStateCardComponent implements OnChanges {
     this.formattedTotal = this.formatNumber(this.stateTotal);
     this.formattedGroup1 = this.formatNumber(this.group1Total);
     this.formattedGroup2 = this.formatNumber(this.group2Total);
+    this.formattedDifference = this.formatNumber(this.group2Total - this.group1Total);
   }
 
   get locale(): string {

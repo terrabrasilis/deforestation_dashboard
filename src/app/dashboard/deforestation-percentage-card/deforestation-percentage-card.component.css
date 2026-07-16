@@ -105,18 +105,26 @@
   visibility: hidden;
 }
 
-.group-comparison {
+.group-content {
   display: flex;
   align-items: center;
-  gap: 8px;
-  flex-wrap: wrap;
+  justify-content: center;
+  gap: 24px;
+}
+
+.group-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  min-width: 160px;
 }
 
 .group-label {
-  font-size: 0.85rem;
-  font-weight: 600;
-  padding: 2px 8px;
-  border-radius: 4px;
+  font-size: 1rem;
+  font-weight: 700;
+  padding: 6px 16px;
+  border-radius: 6px;
   color: #fff;
 }
 
@@ -128,22 +136,9 @@
   background: #FF9800;
 }
 
-.group-arrow {
-  color: #999;
-  font-size: 1.2rem;
-}
-
-.deforestation-percentage-subtotal {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 0.85rem;
-  color: #666;
-  margin-bottom: 4px;
-}
-
-.group-total {
-  font-weight: 500;
+.group-value {
+  font-size: 1.6rem;
+  font-weight: 700;
 }
 
 .group1-total {
@@ -154,7 +149,55 @@
   color: #FF9800;
 }
 
-.group-vs {
-  color: #999;
-  font-style: italic;
+.group-operator {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.group-operator-top {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #555;
+}
+
+.group-arrow {
+  color: #555;
+  font-size: 1.4rem;
+  font-weight: 700;
+}
+
+.group-equal {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #222;
+}
+
+.group-result {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.group-percent {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 1.6rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.group-percent .deforestation-percentage-arrow {
+  font-size: 1.6rem;
+}
+
+.group-diff {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #333;
+  padding-top: 4px;
+  border-top: 1px solid #ccc;
 }

@@ -26,13 +26,14 @@
   font-weight: bold;
 }
 
+
 :host {
   width: 100%;
 }
 
 .state-card-mask-groups {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   gap: 20px;
   margin-top: 16px;
   width: 100%;
@@ -67,11 +68,19 @@
   color: #e65100;
 }
 
+.state-card-mask-group:nth-child(3) .state-card-mask-group-value {
+  color: #333;
+}
+
 .state-card-mask-group-empty {
   font-size: 1rem;
   color: #999;
   font-style: italic;
   padding-left: 24px;
+}
+
+.state-card-sum-value {
+  color: #333;
 }
 
 .group-dot {
@@ -88,4 +97,8 @@
 
 .group2-dot {
   background: #FF9800;
+}
+
+.group-sum-dot {
+  background: #333;
 }

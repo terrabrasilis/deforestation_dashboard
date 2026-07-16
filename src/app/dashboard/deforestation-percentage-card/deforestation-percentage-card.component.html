@@ -44,32 +44,39 @@
         *ngFor="let item of percentages"
       >
 
-        <div class="deforestation-percentage-years group-comparison">
-          <span class="group-label group1-label">{{ 'dashboard.percentageCard.groupLabel' | translate:{number: '1', value: item.from} }}</span>
-          <span class="group-arrow">→</span>
-          <span class="group-label group2-label">{{ 'dashboard.percentageCard.groupLabel' | translate:{number: '2', value: item.to} }}</span>
-        </div>
+        <div class="group-content">
+          <div class="group-column">
+            <span class="group-label group1-label">{{ 'dashboard.percentageCard.groupLabel' | translate:{number: '1', value: item.from} }}</span>
+            <span class="group-value group1-total">{{ formatArea(item.currentValue) }} {{ 'dashboard.percentageCard.areaSuffix' | translate }}</span>
+          </div>
 
-        <div class="deforestation-percentage-subtotal">
-          <span class="group-total group1-total">{{ formatArea(item.currentValue) }} {{ 'dashboard.percentageCard.areaSuffix' | translate }}</span>
-          <span class="group-vs">{{ 'dashboard.percentageCard.vs' | translate }}</span>
-          <span class="group-total group2-total">{{ formatArea(item.nextValue) }} {{ 'dashboard.percentageCard.areaSuffix' | translate }}</span>
-        </div>
+          <div class="group-operator">
+            <span class="group-operator-top">{{ 'dashboard.percentageCard.vs' | translate }}</span>
+            <span class="group-arrow">→</span>
+          </div>
 
-        <div
-          class="deforestation-percentage-value"
-          [ngClass]="{
-            'deforestation-percentage-positive': item.percentage > 0,
-            'deforestation-percentage-negative': item.percentage < 0
-          }"
-        >
+          <div class="group-column">
+            <span class="group-label group2-label">{{ 'dashboard.percentageCard.groupLabel' | translate:{number: '2', value: item.to} }}</span>
+            <span class="group-value group2-total">{{ formatArea(item.nextValue) }} {{ 'dashboard.percentageCard.areaSuffix' | translate }}</span>
+          </div>
 
-          <span class="deforestation-percentage-arrow" *ngIf="item.percentage !== null && item.percentage !== 0">
-            {{ item.percentage > 0 ? '↑' : '↓' }}
-          </span>
+          <span class="group-equal">=</span>
 
-          {{ formatPercentage(item.percentage) }}
-
+          <div class="group-result">
+            <span
+              class="group-percent"
+              [ngClass]="{
+                'deforestation-percentage-positive': item.percentage > 0,
+                'deforestation-percentage-negative': item.percentage < 0
+              }"
+            >
+              <span class="deforestation-percentage-arrow" *ngIf="item.percentage !== null && item.percentage !== 0">
+                {{ item.percentage > 0 ? '↑' : '↓' }}
+              </span>
+              {{ formatPercentage(item.percentage) }}
+            </span>
+            <span class="group-diff" *ngIf="!includeMask">{{ formatDifference(item.difference) }} {{ 'dashboard.percentageCard.areaSuffix' | translate }}</span>
+          </div>
         </div>
 
       </div>

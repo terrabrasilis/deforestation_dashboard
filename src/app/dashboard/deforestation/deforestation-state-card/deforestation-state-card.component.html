@@ -6,6 +6,7 @@
     <div class="state-card-value">
       {{ formattedTotal }} km²
     </div>
+
   </ng-container>
   <ng-container *ngIf="includeMask">
     <div class="state-card-mask-groups">
@@ -25,6 +26,14 @@
         <span class="state-card-mask-group-value" *ngIf="group2Total > 0; else noInc2">{{ formattedGroup2 }} km²</span>
         <ng-template #noInc2><span class="state-card-mask-group-empty">{{ 'dashboard.stateCard.noIncrementSelected' | translate }}</span></ng-template>
       </div>
+      <div class="state-card-mask-group" *ngIf="group1Total > 0 && group2Total > 0">
+        <div class="state-card-mask-group-header">
+          <span class="group-dot group-sum-dot"></span>
+          <span class="state-card-mask-group-label">{{ 'dashboard.stateCard.difference' | translate }}</span>
+        </div>
+        <span class="state-card-mask-group-value state-card-sum-value">{{ formattedDifference }} km²</span>
+      </div>
+
     </div>
   </ng-container>
 </div>

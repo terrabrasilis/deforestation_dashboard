@@ -9,6 +9,7 @@ import { TranslateService } from '@ngx-translate/core';
 export class DeforestationPercentageCardComponent implements OnChanges {
 
   @Input() data: any;
+  @Input() includeMask: boolean = false;
 
   constructor(private translate: TranslateService) {}
 
@@ -53,6 +54,7 @@ export class DeforestationPercentageCardComponent implements OnChanges {
           to: (g2.years || []).map((y: any) => y.key).join(', '),
           currentValue: g1total,
           nextValue: g2total,
+          difference: g2total - g1total,
           percentage,
           isGroup: true
         }
@@ -221,6 +223,13 @@ export class DeforestationPercentageCardComponent implements OnChanges {
       minimumFractionDigits: 2,
       maximumFractionDigits: 2
     }) + '%';
+  }
+
+  formatDifference(value: number): string {
+    return value.toLocaleString(this.locale, {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    });
   }
 
 }
