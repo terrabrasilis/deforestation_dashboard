@@ -189,6 +189,7 @@
             }
         },
         "modals": {
+            "disclaimer_ucs":"Os dados sobre áreas de conservação utilizados nestas estatísticas abrangem todas as categorias: federal, estadual e municipal. Essas áreas foram atualizadas pela última vez em 2022, e uma nova atualização será realizada em breve. Para mais detalhes sobre os dados de origem, consulte os <br><a target='_blank' style='color: blue;' href='https://terrabrasilis.dpi.inpe.br/geonetwork/srv/eng/catalog.search#/metadata/62c97440-507d-4002-868d-3379050bce03'>metadados</a>.",
             "warning_rates":"Novos dados.<br>Taxa estimada de desmatamento na Amazônia Legal Brasileira, para o período 2024/2025, com base em 282 tiles prioritários.<br><a style='color: blue;' target='_blank' href='https://data.inpe.br/biomasbr/notas-tecnicas/'>Saiba mais na nota técnica.</a>",
             "warning_increase":"Consulte os novos dados de incremento de desmatamento na Amazônia Legal Brasileira e Bioma Amazônia, para o período 2024/2025, medidos com base em 282 tiles prioritários."
         }
