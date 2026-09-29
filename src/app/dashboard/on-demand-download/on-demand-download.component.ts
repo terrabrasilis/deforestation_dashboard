@@ -201,12 +201,11 @@ export class OnDemandDownloadComponent implements OnInit {
     let d3DSV=(fraction=="comma")?(d3.dsvFormat(";").format(dataCSV)):(d3.csvFormat(dataCSV));
 
     let blob = new Blob([d3DSV], {type: "text/csv;charset=utf-8"}),
-    dt = new Date(),
-    dt1 = dt.toLocaleString();
-    dt1 = dt1.replace('/','_');
-    dt1 = dt1.replace(' ','_');
-    dt1 = dt1.replace(':','_');
-    let fileName = 'terrabrasilis_'+this.biome+'_'+dt1+'.csv';
+    dt = new Date();
+    let pad = (n:number) => (n<10 ? '0'+n : ''+n);
+    let dt1 = pad(dt.getDate())+'_'+pad(dt.getMonth()+1)+'_'+dt.getFullYear()+'_'+pad(dt.getHours())+'_'+pad(dt.getMinutes())+'_'+pad(dt.getSeconds());
+    let biomeName = (this.biome+'').replace(/\s+/g,'_').replace(/[^A-Za-z0-9_-]/g,'');
+    let fileName = 'terrabrasilis_'+biomeName+'_'+dt1+'.csv';
     FileSaver.saveAs(blob, fileName);
   }
 }
