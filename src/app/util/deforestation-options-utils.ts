@@ -30,11 +30,11 @@ export class DeforestationOptionsUtils {
   /**
    * Relate the municipality names with the selected states
    * @param loi The municipality list from redis-api
-   * @param loinames A map to relate the gid of municipalities and all municipalities of selected states (output)
+   * @param loinames A Map to relate the gid of municipalities and all municipalities of selected states (output)
    * @param checkedLoiNames The list of selected states in UI. The state list gettered from constants.ts
    * @returns null
    */
-  public static setLoiNamesDownload(loi:any, loinames:any, checkedLoiNames:any) {
+  public static setLoiNamesDownload(loi:any, loiNames:Map<number,string[]>, checkedLoiNames:any) {
         
     loi.loinames.forEach(function(loiname:any) {
       var value = (loiname.loiname) ? String(loiname.loiname).split("_") : [],
@@ -45,8 +45,10 @@ export class DeforestationOptionsUtils {
       if(!mun || !state)
         return;
 
+      // a Map stores its entries with set(), an index assignment would only create
+      // a plain property and the entries would never be found by get()/has()
       if (checkedLoiNames.indexOf(state.toUpperCase()) > -1)
-        loinames[loiname.gid] = [mun, state, loiname.codibge];
+        loiNames.set(loiname.gid, [mun, state, loiname.codibge]);
     });
 
     return;
