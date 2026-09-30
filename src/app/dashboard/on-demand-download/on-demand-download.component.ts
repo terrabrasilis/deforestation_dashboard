@@ -146,13 +146,14 @@ export class OnDemandDownloadComponent implements OnInit {
       }
     ).filter(
       (filteredFeatures:any) => {     
-        return filteredFeatures.loiName in loiNames;
+        return loiNames.has(filteredFeatures.loiName);
       }
     ).map(
       (feature:any) => {
-        let mun=loiNames[feature.loiName][0],
-        uf=loiNames[feature.loiName][1],
-        geocode=(loiNames[feature.loiName][2])?(loiNames[feature.loiName][2]):('-'),
+        let entry = loiNames.get(feature.loiName),
+        mun=entry[0],
+        uf=entry[1],
+        geocode=(entry[2])?(entry[2]):('-'),
         a=feature.area;
 
         if(accent) {

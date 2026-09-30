@@ -10,6 +10,24 @@ import * as d3 from "d3";
 export class DeforestationOptionsUtils {
 
   /**
+   * Recovers the state of a municipality from its IBGE code (codibge).
+   * Some loinames files have no UF suffix in the loiname, like the legal amazon one,
+   * where the state is only available through the two first digits of the codibge.
+   * @param codibge The IBGE code of a municipality
+   * @returns The state name, or null when the codibge is missing or unknown
+   */
+  public static getStateByCodibge(codibge:any):string {
+
+    if(codibge===null || codibge===undefined || codibge==="")
+      return null;
+
+    let state = Constants.DASHBOARD_UF_CODES.get(String(codibge).substring(0,2));
+
+    return state ? state : null;
+
+  }
+
+  /**
    * Relate the municipality names with the selected states
    * @param loi The municipality list from redis-api
    * @param loinames A map to relate the gid of municipalities and all municipalities of selected states (output)
@@ -19,7 +37,14 @@ export class DeforestationOptionsUtils {
   public static setLoiNamesDownload(loi:any, loinames:any, checkedLoiNames:any) {
         
     loi.loinames.forEach(function(loiname:any) {
-      var [mun, state] = loiname.loiname.split("_");
+      var value = (loiname.loiname) ? String(loiname.loiname).split("_") : [],
+      mun = value[0],
+      // the UF suffix is absent on some files, so the state comes from the codibge
+      state = (value.length>1) ? value[1] : DeforestationOptionsUtils.getStateByCodibge(loiname.codibge);
+
+      if(!mun || !state)
+        return;
+
       if (checkedLoiNames.indexOf(state.toUpperCase()) > -1)
         loinames[loiname.gid] = [mun, state, loiname.codibge];
     });

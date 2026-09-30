@@ -79,6 +79,43 @@ export class Constants {
         return map;
     };
 
+    /**
+     * Relates the two first digits of the IBGE code (codibge) of a municipality to its state.
+     * The state names use the same spelling of DASHBOARD_STATES, so the values can be compared
+     * with the state checkboxes of the download modal.
+     */
+    public static get DASHBOARD_UF_CODES(): any {
+        var map = new Map();
+        map.set("11", 'RONDÔNIA');
+        map.set("12", 'ACRE');
+        map.set("13", 'AMAZONAS');
+        map.set("14", 'RORAIMA');
+        map.set("15", 'PARÁ');
+        map.set("16", 'AMAPÁ');
+        map.set("17", 'TOCANTINS');
+        map.set("21", 'MARANHÃO');
+        map.set("22", 'PIAUÍ');
+        map.set("23", 'CEARÁ');
+        map.set("24", 'RIO GRANDE DO NORTE');
+        map.set("25", 'PARAÍBA');
+        map.set("26", 'PERNAMBUCO');
+        map.set("27", 'ALAGOAS');
+        map.set("28", 'SERGIPE');
+        map.set("29", 'BAHIA');
+        map.set("31", 'MINAS GERAIS');
+        map.set("32", 'ESPÍRITO SANTO');
+        map.set("33", 'RIO DE JANEIRO');
+        map.set("35", 'SÃO PAULO');
+        map.set("41", 'PARANÁ');
+        map.set("42", 'SANTA CATARINA');
+        map.set("43", 'RIO GRANDE DO SUL');
+        map.set("50", 'MATO GROSSO DO SUL');
+        map.set("51", 'MATO GROSSO');
+        map.set("52", 'GOIÁS');
+        map.set("53", 'DISTRITO FEDERAL');
+        return map;
+    };
+
     public static get DASHBOARD_LEGEND_WIDTH_SERIES_CHART(): any {
         var map = new Map();
         map.set("uf", 140);
