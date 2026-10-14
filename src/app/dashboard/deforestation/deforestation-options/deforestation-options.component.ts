@@ -347,7 +347,7 @@ export class DeforestationOptionsComponent implements OnInit  {
       <p>Nesse modo de visualização, cada ano representa o <em>total acumulado de desmatamento</em> até aquele período. O valor de um determinado ano é obtido pela soma do total acumulado do ano anterior com o incremento registrado no ano corrente.</p>
       <p>Como consequência, os valores deixam de representar apenas o incremento anual e passam a representar o desmatamento acumulado até cada ano.</p>
       <h3>Comportamento do filtro por ano</h3>
-      <p>Como os valores são acumulativos, cada grupo (Grupo 1 e Grupo 2) permite a seleção de <em>apenas um ano por vez</em>.</p>
+      <p>Como os valores são cumulativos, cada grupo (Grupo 1 e Grupo 2) permite a seleção de <em>apenas um ano por vez</em>.</p>
       <p>Para comparar dois períodos, selecione um ano no Grupo 1 e outro ano no Grupo 2. O card <em>Incremento de desmatamento - sensível a filtros</em> exibirá o valor acumulado de cada grupo.</p>
     `;
     let dialogRef = this.dialog.open(DialogComponent, {width : '840px'});
