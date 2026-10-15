@@ -34,6 +34,14 @@
         "title":"Envie sugestões ou perguntas para"
     },
     "dashboard": {
+        "barChartLegend": {
+            "compare": "Comparar:",
+            "group1": "Grupo 1",
+            "group2": "Grupo 2",
+            "clearGroups": "Limpar grupos",
+            "both": "Ambos",
+            "preliminary": "Incremento parcial"
+        },
         "tool":{
             "addmask":"Incluir agregado",
             "filterprioritycities":"Municipios prioritários"
@@ -209,7 +217,8 @@
         "modals": {
             "disclaimer_ucs":"Os dados sobre áreas de conservação utilizados nestas estatísticas abrangem todas as categorias: federal, estadual e municipal. Essas áreas foram atualizadas pela última vez em 2022, e uma nova atualização será realizada em breve. Para mais detalhes sobre os dados de origem, consulte os <br><a target='_blank' style='color: blue;' href='https://terrabrasilis.dpi.inpe.br/geonetwork/srv/eng/catalog.search#/metadata/62c97440-507d-4002-868d-3379050bce03'>metadados</a>.",
             "warning_rates":"Novos dados.<br>Taxa estimada de desmatamento na Amazônia Legal Brasileira, para o período 2025/2026, com base em 271 tiles prioritários.<br><a style='color: blue;' target='_blank' href='https://data.inpe.br/biomasbr/notas-tecnicas/'>Saiba mais na nota técnica.</a>",
-            "warning_increase":"Consulte os novos dados de incremento de desmatamento na Amazônia Legal Brasileira e Bioma Amazônia, para o período 2025/2026, medidos com base em 271 tiles prioritários."
+            "warning_increase":"Consulte os novos dados de incremento de desmatamento na Amazônia Legal Brasileira e Bioma Amazônia, para o período 2025/2026, medidos com base em 271 tiles prioritários.",
+            "addMask":"<h3>Dados Agregados</h3><p>Os dados agregados são compostos pela soma da <em>máscara acumulada</em> e dos <em>resíduos de desmatamento</em>, representando o total de área desmatada consolidada ao longo do tempo.</p><h3>Alteração na exibição dos gráficos</h3><p>Ao habilitar esta opção, os gráficos de incremento de desmatamento passam a apresentar os <em>dados agregados</em>, em vez dos incrementos anuais.</p><p>Nesse modo de visualização, cada ano representa o <em>total acumulado de desmatamento</em> até aquele período. O valor de um determinado ano é obtido pela soma do total acumulado do ano anterior com o incremento registrado no ano corrente.</p><p>Como consequência, os valores deixam de representar apenas o incremento anual e passam a representar o desmatamento acumulado até cada ano.</p><h3>Comportamento do filtro por ano</h3><p>Como os valores são cumulativos, cada grupo (Grupo 1 e Grupo 2) permite a seleção de <em>apenas um ano por vez</em>.</p><p>Para comparar dois períodos, selecione um ano no Grupo 1 e outro ano no Grupo 2. O card <em>Incremento de desmatamento - sensível a filtros</em> exibirá o valor acumulado de cada grupo.</p>"
         }
     }
 }

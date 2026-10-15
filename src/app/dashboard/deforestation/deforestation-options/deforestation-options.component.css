@@ -989,6 +989,7 @@ footer {
 .dot-group1 { background: #4CAF50; }
 .dot-group2 { background: #FF9800; }
 .dot-both { background: #5C6BC0; }
+.dot-preliminary { background: #ffd76d; }
 
 .legend-label {
   font-size: 11px;

@@ -339,20 +339,11 @@ export class DeforestationOptionsComponent implements OnInit  {
   }
 
   private openAddMaskModal() {
-    const msg = `
-      <h3>Dados Agregados</h3>
-      <p>Os dados agregados são compostos pela soma da <em>máscara acumulada</em> e dos <em>resíduos de desmatamento</em>, representando o total de área desmatada consolidada ao longo do tempo.</p>
-      <h3>Alteração na exibição dos gráficos</h3>
-      <p>Ao habilitar esta opção, os gráficos de incremento de desmatamento passam a apresentar os <em>dados agregados</em>, em vez dos incrementos anuais.</p>
-      <p>Nesse modo de visualização, cada ano representa o <em>total acumulado de desmatamento</em> até aquele período. O valor de um determinado ano é obtido pela soma do total acumulado do ano anterior com o incremento registrado no ano corrente.</p>
-      <p>Como consequência, os valores deixam de representar apenas o incremento anual e passam a representar o desmatamento acumulado até cada ano.</p>
-      <h3>Comportamento do filtro por ano</h3>
-      <p>Como os valores são cumulativos, cada grupo (Grupo 1 e Grupo 2) permite a seleção de <em>apenas um ano por vez</em>.</p>
-      <p>Para comparar dois períodos, selecione um ano no Grupo 1 e outro ano no Grupo 2. O card <em>Incremento de desmatamento - sensível a filtros</em> exibirá o valor acumulado de cada grupo.</p>
-    `;
     let dialogRef = this.dialog.open(DialogComponent, {width : '840px'});
     dialogRef.componentInstance.title = '';
-    dialogRef.componentInstance.content = this.dom.bypassSecurityTrustHtml(msg);
+    this._translate.get('dashboard.modals.addMask').subscribe((text) => {
+      dialogRef.componentInstance.content = this.dom.bypassSecurityTrustHtml(text);
+    });
   }
 
   showAddMaskInfo(event: Event) {
@@ -749,7 +740,8 @@ export class DeforestationOptionsComponent implements OnInit  {
       
       // build main grid
       function buildMainGrid() {
-        append2Grid(mainGrid, '<div class="grid-stack-item"><div class="grid-stack-item-content"><div class="custom-drag-incr"> <span class="aggregateTemporal">Aggregated Temporal Data </span> <i class="material-icons pull-right">open_with</i> </div><div class="bar-chart-legend"><span class="bar-chart-legend-title">Comparar:</span><button class="bar-chart-legend-btn" data-group="group1">Grupo 1</button><button class="bar-chart-legend-btn" data-group="group2">Grupo 2</button><button class="bar-chart-legend-clear">Limpar grupos</button><span class="bar-chart-legend-separator"></span><span class="legend-dot dot-group1"></span><span class="legend-label">Grupo 1</span><span class="legend-dot dot-group2"></span><span class="legend-label">Grupo 2</span><span class="legend-dot dot-both"></span><span class="legend-label">Ambos</span></div><div id="bar-chart"></div></div></div>', 0, 0, 7, 7);
+        var preliminaryLegend = Constants.BARCHART_PRELIMINARY_DATA_YEAR ? '<span class="legend-dot dot-preliminary"></span><span class="legend-label legend-label-preliminary">Incremento parcial</span>' : '';
+        append2Grid(mainGrid, '<div class="grid-stack-item"><div class="grid-stack-item-content"><div class="custom-drag-incr"> <span class="aggregateTemporal">Aggregated Temporal Data </span> <i class="material-icons pull-right">open_with</i> </div><div class="bar-chart-legend"><span class="bar-chart-legend-title">Comparar:</span><button class="bar-chart-legend-btn" data-group="group1">Grupo 1</button><button class="bar-chart-legend-btn" data-group="group2">Grupo 2</button><button class="bar-chart-legend-clear">Limpar grupos</button><span class="bar-chart-legend-separator"></span><span class="legend-dot dot-group1"></span><span class="legend-label legend-label-group1">Grupo 1</span><span class="legend-dot dot-group2"></span><span class="legend-label legend-label-group2">Grupo 2</span><span class="legend-dot dot-both"></span><span class="legend-label legend-label-both">Ambos</span>' + preliminaryLegend + '</div><div id="bar-chart"></div></div></div>', 0, 0, 7, 7);
         append2Grid(mainGrid, '<div class="grid-stack-item"><div class="grid-stack-item-content"><div class="custom-drag-incr"> <span class="absoluteData"> Absolute Data </span> <i class="material-icons pull-right">open_with</i> </div><div id="row-chart"></div></div></div>', 8, 0, 5, 7);
         append2Grid(mainGrid, '<div class="grid-stack-item"><div class="grid-stack-item-content"><div class="custom-drag-incr"> <span class="timeSeries"> Time Series </span> <i class="material-icons pull-right">open_with</i> </div><div id="series-chart"></div></div></div>', 0, 7, 12, 6);
         append2Grid(mainGrid, '<div class="grid-stack-item"><div class="grid-stack-item-content"><div class="custom-drag-incr"> <span class="tableLois"> Area per years and Local of Interests </span> <i class="material-icons pull-right">open_with</i></div><div id="table-chart"><table id="tb-area" class="table table-hover dc-data-table dc-chart"></table></div></div></div>', 8, 15, 5, 6);
@@ -1474,7 +1466,6 @@ export class DeforestationOptionsComponent implements OnInit  {
             self._translate.get( (self.type == "rates")?('dashboard.tooltip.rates_bar_pri'):('dashboard.tooltip.incr_bar_pri') ).subscribe((text) => {
               text=text+" "+Constants.BARCHART_PRELIMINARY_DATA_YEAR+"\n"+$('#rates_bar_pri').text().split('\n')[1];
               $('#rates_bar_pri').text(text);
-              bar.setAttribute('fill', '#ed6621');
             });
           }
         });
@@ -1513,6 +1504,9 @@ export class DeforestationOptionsComponent implements OnInit  {
           if (in1 && in2) return '#5C6BC0';
           if (in1) return '#4CAF50';
           if (in2) return '#FF9800';
+          if (Constants.BARCHART_PRELIMINARY_DATA_YEAR && String(y) === String(Constants.BARCHART_PRELIMINARY_DATA_YEAR)) {
+            return '#ffd76d';
+          }
           return '#e0e0e0';
         });
     
@@ -2185,6 +2179,8 @@ export class DeforestationOptionsComponent implements OnInit  {
 
   updateGridstackLanguage():void {
 
+    this.updateBarChartLegendLanguage();
+
     forkJoin([(this.type == "rates")?(this._translate.get('dashboard.graph.aggregateTemporalRates')):(this._translate.get('dashboard.graph.aggregateTemporalIncrements')),
               (this.type == "rates")?(this._translate.get('dashboard.graph.aggregateSpatialRates')):(this._translate.get('dashboard.graph.aggregateSpatialIncrements')),
               (this.type == "rates")?(this._translate.get('dashboard.graph.timeSeriesRates')):(this._translate.get('dashboard.graph.timeSeriesIncrements')),
@@ -2223,8 +2219,28 @@ export class DeforestationOptionsComponent implements OnInit  {
                 $('#3').text(data[12]);
               });
     }
-  
-    showContact() {
+
+  updateBarChartLegendLanguage():void {
+    forkJoin([
+      this._translate.get('dashboard.barChartLegend.compare'),
+      this._translate.get('dashboard.barChartLegend.group1'),
+      this._translate.get('dashboard.barChartLegend.group2'),
+      this._translate.get('dashboard.barChartLegend.clearGroups'),
+      this._translate.get('dashboard.barChartLegend.both'),
+      this._translate.get('dashboard.barChartLegend.preliminary')
+    ]).subscribe((data:any) => {
+      $('.bar-chart-legend-title').text(data[0]);
+      $('.bar-chart-legend-btn[data-group="group1"]').text(data[1]);
+      $('.bar-chart-legend-btn[data-group="group2"]').text(data[2]);
+      $('.bar-chart-legend-clear').text(data[3]);
+      $('.legend-label-group1').text(data[1]);
+      $('.legend-label-group2').text(data[2]);
+      $('.legend-label-both').text(data[4]);
+      $('.legend-label-preliminary').text(data[5]);
+    });
+  }
+
+  showContact() {
       this.cdRef.detectChanges();
       this.dialog.open(ContactComponent, { width : '450px' });
     }
