@@ -53,7 +53,7 @@ export class Constants {
      */
     public static get BARCHART_PRELIMINARY_DATA_YEAR(): String {
         // enable preliminary notes
-        return '2026';
+        return '2026'; 
         // disable preliminary notes
         // return null;
     }
