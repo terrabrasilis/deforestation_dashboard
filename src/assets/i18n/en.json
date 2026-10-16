@@ -184,6 +184,7 @@
         }
         },
         "modals": {
+            "disclaimer_ucs":"The data on conservation areas used in these statistics cover all categories: federal, state and municipal. These areas were last updated in 2022, and a new update will be carried out soon. For further details on the source data, please consult the <br><a target='_blank' style='color: blue;' href='https://terrabrasilis.dpi.inpe.br/geonetwork/srv/eng/catalog.search#/metadata/62c97440-507d-4002-868d-3379050bce03'>metadata</a>.",
             "warning_rates":"New data.<br>Estimated deforestation rates in the Brazilian Legal Amazon for 2024/2025 period based on 282 priority tiles.<br><a target='_blank' style='color: blue;' href='https://data.inpe.br/biomasbr/notas-tecnicas/'>Learn more at technical note.</a>",
             "warning_increase":"See the new deforestation increment data for the Brazilian Legal Amazon and Amazon Biome for the 2024/2025 period, measured based on 282 priority tiles."
         }

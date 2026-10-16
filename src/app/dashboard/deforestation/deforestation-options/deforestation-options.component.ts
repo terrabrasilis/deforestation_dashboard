@@ -338,6 +338,15 @@ export class DeforestationOptionsComponent implements OnInit  {
     $("#"+id).closest('li').addClass('active');
 
     this.currentFilterKeys = null;
+
+    // call a modal to display disclaimer about UCs
+    if (id == "2"){
+      this._translate.get('dashboard.modals.disclaimer_ucs').subscribe((text: string) => {
+        let msg=text;
+        let dialogRef = this.dialog.open(DialogComponent, {width : '450px'});
+        dialogRef.componentInstance.content = this.dom.bypassSecurityTrustHtml(msg);
+      });
+    }
   }
 
 
