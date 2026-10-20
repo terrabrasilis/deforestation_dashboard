@@ -839,8 +839,10 @@ export class DeforestationOptionsComponent implements OnInit  {
     // get all loinames
     this.dataLoinamesObservable = this.dashboardApiProviderService.getLoinames(this.fileName);
     
-    // call function for map parameters    
-    forkJoin([this.dataObservable, this.dataLoinamesObservable]).subscribe(data => {      
+    // call function for map parameters
+    forkJoin([this.dataObservable, this.dataLoinamesObservable]).subscribe(data => {
+      // Order items by end date to avoid the unexpected behaviour in aggregate context.
+      data[0].periods.sort((a:any,b:any) => a.endDate.year - b.endDate.year );
       this.dataJson = data[0];
       this.dataLoinamesJson = data[1];
       this.loadData();
